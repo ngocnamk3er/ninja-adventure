@@ -5,6 +5,7 @@ public abstract class Enity {
     protected float y;
     protected float width;
     protected float height;
+    public Enity(){};
     public Enity(float x, float y, float width, float height) {
         this.x = x;
         this.y = y;
@@ -24,4 +25,5 @@ public abstract class Enity {
         this.y = y;
     }
     public abstract void render();
+    protected abstract void loadAnimations();
 }

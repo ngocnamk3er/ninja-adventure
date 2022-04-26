@@ -25,7 +25,7 @@ public class Coin extends Enity {
 
 		}
     }
-    private void loadAnimations() {
+    protected void loadAnimations() {
         animationImages =  new Image[6];
         for(int i = 0 ; i < 6 ; i++) {
             try {

@@ -21,7 +21,7 @@ public class Stone extends Enity {
         loadAnimations();
         this.gc=mapInteractionManager.getGc();
     }
-    private void loadAnimations() {
+    protected void loadAnimations() {
         try {
             animationImage =new Image(Player.class.getResourceAsStream("stone.png"));
         } catch (Exception e) {

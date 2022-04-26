@@ -92,6 +92,21 @@ public class Player extends Enity {
         this.removedEnities = mapInteractionManager.getRemovedEnities();
         this.stones = mapInteractionManager.getStones();
     }
+    public void setProperties( float x, float y, float width, float height,MapInteractionManager mapInteractionManager) {
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+        loadAnimations();
+        this.gc = mapInteractionManager.getGc();
+        this.mapData = mapInteractionManager.getMapData();
+        this.coins = mapInteractionManager.getCoins();
+        this.removedEnities = mapInteractionManager.getRemovedEnities();
+        this.stones = mapInteractionManager.getStones();
+    }
+
+    public Player() {
+    }
 
     public void update() {
         handleCollision();
@@ -391,7 +406,7 @@ public class Player extends Enity {
     //     this.push = push;
     // }
 
-    public void loadAnimations() {//load 1 bộ ảnh để tạo mảng 2 chiều để tạo animation
+    protected void loadAnimations() {//load 1 bộ ảnh để tạo mảng 2 chiều để tạo animation
         animationImages = new Image[14][7];
         for(int i = 0 ; i < 14 ; i++){
             if (i == RUN_L) {

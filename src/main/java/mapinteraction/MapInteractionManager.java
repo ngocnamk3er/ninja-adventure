@@ -1,6 +1,7 @@
 package mapinteraction;
 import java.util.ArrayList;
 
+import entities.Button;
 import entities.Coin;
 import entities.Enity;
 import entities.Player;
@@ -11,7 +12,8 @@ public class MapInteractionManager {
     private ArrayList<Enity> removedEnities = new ArrayList<>();
     private ArrayList<Coin> coins = new ArrayList<>();
     private ArrayList<Stone> stones = new ArrayList<>();
-    private Player player;
+    private ArrayList<Button> buttons = new ArrayList<>();
+    private Player player = new Player();
     private GraphicsContext gc;
     private int [][] mapData;
     public MapInteractionManager(GraphicsContext gc,int [][]mapData){
@@ -30,10 +32,14 @@ public class MapInteractionManager {
                     coins.add(new Coin(j*64, i*64, 32, 32, gc));
                 }
                 if(MapInteraction.MAP_INTERAC_DATA1[i][j] == 'p'){
-                    player = new Player(j*64, i*64, 64, 64,this);
+                    player.setProperties(j*64, i*64, 64, 64,this);
+                    
                 }
                 if(MapInteraction.MAP_INTERAC_DATA1[i][j] == 's'){
                     stones.add(new Stone(j*64, i*64, 64, 64, this));
+                }
+                if(MapInteraction.MAP_INTERAC_DATA1[i][j] == 'b'){
+                    buttons.add(new Button(j*64, i*64, 64, 64, this));
                 }
             }
         }
@@ -46,6 +52,9 @@ public class MapInteractionManager {
         for (Coin coin : coins) {
             coin.update();
         }
+        for(Button button:buttons){
+            button.update();
+        }
     }
     public void render(){
         gc.clearRect(0, 0, 21*64, 12*64);
@@ -55,6 +64,9 @@ public class MapInteractionManager {
         }
         for (Enity coin : coins) {
             coin.render();
+        }
+        for(Button button:buttons){
+            button.render();
         }
         for(Enity removedEnities:removedEnities){
             removedEnities.render();
