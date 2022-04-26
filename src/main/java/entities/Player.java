@@ -127,15 +127,30 @@ public class Player extends Enity {
     private void checkStones(){
         for(int i=0;i<stones.size();i++){
             Stone stone = stones.get(i);
+            // if(up&&this.y+ySpeed-stone.getY()<=64&&this.y-stone.getY()>=60&&Math.abs(this.x+xSpeed-stone.getX())<=48){
+            //     System.out.println("huc");
+            // }
             if(Math.abs(x+xSpeed-stone.getX())<=132&&Math.abs(y+ySpeed-stone.getY())<=132){
                 if(!up&&this.y+ySpeed-stone.getY()>=-64&&this.y+ySpeed/4-stone.getY()<=-48&&Math.abs(this.x+xSpeed-stone.getX())<=48){
                     standOnStone = i;
                     y = stone.getY() - 64;
-                }else if(Math.abs(this.y+ySpeed-stone.getY())<=48&Math.abs(this.x+xSpeed-stone.getX())<=60){
+                    // System.out.println("standing");
+                }else if(up&&this.y-stone.getY()<=64&&this.y-stone.getY()>0&&Math.abs(this.x+xSpeed-stone.getX())<=48){
+                    jump = false;
+                    ySpeed = 0;
+                    y = stone.getY() + 64;
+                    System.out.println("huc");
+                }else if(Math.abs(this.y+ySpeed-stone.getY())<=48&&Math.abs(this.x+xSpeed-stone.getX())<=58){
+                    // if(up){
+                    //     y = stone.getY()+64;
+                    //     ySpeed = 0;
+                    //     jump = false;
+                    // }else{}
                     if(pushStone == 1000||pushStone == i){
                         pushStone = i;
-                        push = true;
                         if(this.x>stone.getX()&&!right){
+                            push = true;
+                            x = stone.getX() + 58;
                             if(stone.isCanPush()){
                                 stone.setxSpeed(-2f);
                                 brakingSpeed = 6f;
@@ -145,6 +160,8 @@ public class Player extends Enity {
                             }
                         }
                         if(this.x<stone.getX()&&right){
+                            push = true;
+                            x = stone.getX() - 58;
                             if(stone.isCanPush()){
                                 stone.setxSpeed(2f);
                                 brakingSpeed = -6f;
@@ -156,7 +173,7 @@ public class Player extends Enity {
                     }
                     // System.out.println(pushStone);
                 }else{
-                    if(i==pushStone){
+                    if(pushStone==i){
                         pushStone = 1000;
                         push = false;
                         stone.setxSpeed(0);

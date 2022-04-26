@@ -40,6 +40,7 @@ public class Stone extends Enity {
         }
         if (canMove(x+xSpeed,y,63,63, mapData) == true) {
 		    x += xSpeed;
+            canPush = true;
         }else{
             canPush = false;
         }
@@ -47,11 +48,12 @@ public class Stone extends Enity {
 		    y += ySpeed;
         }else{
             int rowBrick = (int)(y+ySpeed)/64;//this is bug 
+            // ySpeed = 0;
             y = rowBrick*64;
         }
     }
     private void setInAir() {
-        if((!isSolid(x+16, y+66, mapData))&&(!isSolid(x+48, y+66, mapData))){
+        if((!isSolid(x, y+65, mapData))&&(!isSolid(x+63, y+65, mapData))){
             inAir = true;
         }else{
             inAir = false;
