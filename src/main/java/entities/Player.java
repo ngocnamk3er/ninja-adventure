@@ -113,7 +113,7 @@ public class Player extends Enity {
     }
 
     private void setInAir(float x, float y, int [][]mapData) {
-        if((!isSolid(x+16, y+66, mapData))&&(!isSolid(x+48, y+66, mapData))){
+        if((!isSolid(x+16, y+66, mapData))&&(!isSolid(x+48, y+66, mapData))&&standOnStone==1000){
             inAir = true;
         }else{
             inAir = false;
@@ -128,32 +128,42 @@ public class Player extends Enity {
         for(int i=0;i<stones.size();i++){
             Stone stone = stones.get(i);
             if(Math.abs(x+xSpeed-stone.getX())<=132&&Math.abs(y+ySpeed-stone.getY())<=132){
-                if(Math.abs(this.y+ySpeed-stone.getY())<60&&Math.abs(this.x+xSpeed-stone.getX())<=59){
-                    pushStone = i;
-                    push = true;
-                    if(this.x>stone.getX()&&!right){
-                        if(stone.isCanPush()){
-                            stone.setxSpeed(-2f);
-                            brakingSpeed = 6f;
-                        }else{
-                            brakingSpeed = 8f;
-                            stone.setxSpeed(0);
+                if(!up&&this.y+ySpeed-stone.getY()>=-64&&this.y+ySpeed/4-stone.getY()<=-48&&Math.abs(this.x+xSpeed-stone.getX())<=48){
+                    standOnStone = i;
+                    y = stone.getY() - 64;
+                }else if(Math.abs(this.y+ySpeed-stone.getY())<=48&Math.abs(this.x+xSpeed-stone.getX())<=60){
+                    if(pushStone == 1000||pushStone == i){
+                        pushStone = i;
+                        push = true;
+                        if(this.x>stone.getX()&&!right){
+                            if(stone.isCanPush()){
+                                stone.setxSpeed(-2f);
+                                brakingSpeed = 6f;
+                            }else{
+                                brakingSpeed = 8f;
+                                stone.setxSpeed(0);
+                            }
+                        }
+                        if(this.x<stone.getX()&&right){
+                            if(stone.isCanPush()){
+                                stone.setxSpeed(2f);
+                                brakingSpeed = -6f;
+                            }else{
+                                brakingSpeed = -8f;
+                                stone.setxSpeed(0);
+                            }
                         }
                     }
-                    if(this.x<stone.getX()&&right){
-                        if(stone.isCanPush()){
-                            stone.setxSpeed(2f);
-                            brakingSpeed = -6f;
-                        }else{
-                            brakingSpeed = -8f;
-                            stone.setxSpeed(0);
-                        }
-                    }
+                    // System.out.println(pushStone);
                 }else{
                     if(i==pushStone){
+                        pushStone = 1000;
                         push = false;
                         stone.setxSpeed(0);
                         brakingSpeed = 0;
+                    }
+                    if(standOnStone == i){
+                        standOnStone = 1000;
                     }
                 }
             }

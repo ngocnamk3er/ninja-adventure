@@ -10,7 +10,7 @@ public class Stone extends Enity {
     private Image animationImage;
     private GraphicsContext gc;
     private int[][] mapData;
-    private float gravity = 0.1f;
+    private float gravity = 0.7f;
     private float ySpeed = 0;
     private float xSpeed = 0;
     private boolean inAir;
@@ -28,9 +28,9 @@ public class Stone extends Enity {
             System.out.println(e.getMessage());
         }
     }
-    private void handleCollision(){
+    // private void handleCollision(){
         
-    }
+    // }
     private void updatePos(){
         setInAir();
         if(inAir){
