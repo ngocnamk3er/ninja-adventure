@@ -120,7 +120,7 @@ public class Door extends Enity {
 
     @Override
     protected void loadAnimations() {
-        animationImagesDoor = new Image[2][14];
+        animationImagesDoor = new Image[2][15];
         for(int i=0;i<2;i++){
             for(int j=0;j<getAmountSpritesOfDoor(i);j++){
                 if(i == CLOSED){
@@ -136,7 +136,7 @@ public class Door extends Enity {
         if(action == CLOSED){
             return 10;
         }else if (action == MOVING){
-            return 14;
+            return 15;
         }else{
             return 0;
         }
