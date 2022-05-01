@@ -43,7 +43,7 @@ public class Stone extends Enity {
             Stone stone = stones.get(i);
             if(stone.equals(this)==false){
                 if(Math.abs(x-stone.getX())<=96&&Math.abs(y-stone.getY())<=96){
-                    if(Math.abs(x-stone.getX())<64&&Math.abs(y-stone.getY())<=64){
+                    if(Math.abs(x-stone.getX())<64&&Math.abs(y-stone.getY())<=64&&y-stone.getY()<0){
                         underStones.add(i);
                     }else{
                         underStones.remove(i);
