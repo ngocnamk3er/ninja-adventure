@@ -70,5 +70,11 @@ public class Button extends Enity {
             }
         }
     }
+    public boolean isPressed() {
+        return pressed;
+    }
+    public void setPressed(boolean pressed) {
+        this.pressed = pressed;
+    }
     
 }

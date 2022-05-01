@@ -10,7 +10,7 @@ public class Stone extends Enity {
     private Image animationImage;
     private GraphicsContext gc;
     private int[][] mapData;
-    private float gravity = 0.7f;
+    private float gravity = 0.1f;
     private float ySpeed = 0;
     private float xSpeed = 0;
     private boolean inAir;
@@ -38,7 +38,7 @@ public class Stone extends Enity {
         }else{
             ySpeed = 0;
         }
-        if (canMove(x+xSpeed,y,63,63, mapData) == true) {
+        if (canMove(x + xSpeed,y,63,63, mapData) == true) {
 		    x += xSpeed;
             canPush = true;
         }else{
@@ -47,13 +47,12 @@ public class Stone extends Enity {
         if (canMove(x,y+ySpeed,63,63, mapData) == true) {
 		    y += ySpeed;
         }else{
-            int rowBrick = (int)(y+ySpeed)/64;//this is bug 
-            // ySpeed = 0;
+            int rowBrick = (int)(y+ySpeed)/64;
             y = rowBrick*64;
         }
     }
     private void setInAir() {
-        if((!isSolid(x, y+65, mapData))&&(!isSolid(x+63, y+65, mapData))){
+        if((!isSolid(x, y + 65, mapData))&&(!isSolid(x + 63, y + 65, mapData))){
             inAir = true;
         }else{
             inAir = false;

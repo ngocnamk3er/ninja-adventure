@@ -106,6 +106,7 @@ public class Player extends Enity {
     }
 
     public Player() {
+        
     }
 
     public void update() {
@@ -142,25 +143,16 @@ public class Player extends Enity {
     private void checkStones(){
         for(int i=0;i<stones.size();i++){
             Stone stone = stones.get(i);
-            // if(up&&this.y+ySpeed-stone.getY()<=64&&this.y-stone.getY()>=60&&Math.abs(this.x+xSpeed-stone.getX())<=48){
-            //     System.out.println("huc");
-            // }
             if(Math.abs(x+xSpeed-stone.getX())<=132&&Math.abs(y+ySpeed-stone.getY())<=132){
-                if(!up&&this.y+ySpeed-stone.getY()>=-64&&this.y+ySpeed/4-stone.getY()<=-48&&Math.abs(this.x+xSpeed-stone.getX())<=48){
+                if(!up&&this.y+ySpeed-stone.getY()>=-64 &&this.y+ySpeed/4-stone.getY()<=-48&&Math.abs(this.x+xSpeed-stone.getX())<=48){
                     standOnStone = i;
                     y = stone.getY() - 64;
-                    // System.out.println("standing");
+                    // System.out.println(y);
                 }else if(up&&this.y-stone.getY()<=64&&this.y-stone.getY()>0&&Math.abs(this.x+xSpeed-stone.getX())<=48){
                     jump = false;
                     ySpeed = 0;
                     y = stone.getY() + 64;
-                    System.out.println("huc");
                 }else if(Math.abs(this.y+ySpeed-stone.getY())<=48&&Math.abs(this.x+xSpeed-stone.getX())<=58){
-                    // if(up){
-                    //     y = stone.getY()+64;
-                    //     ySpeed = 0;
-                    //     jump = false;
-                    // }else{}
                     if(pushStone == 1000||pushStone == i){
                         pushStone = i;
                         if(this.x>stone.getX()&&!right){
@@ -186,7 +178,6 @@ public class Player extends Enity {
                             }
                         }
                     }
-                    // System.out.println(pushStone);
                 }else{
                     if(pushStone==i){
                         pushStone = 1000;
@@ -200,13 +191,12 @@ public class Player extends Enity {
                 }
             }
         }
-        // return false;
     }
     private void checkCoins(){
         double distance;
         for (int i=0;i<coins.size();i++) {
             Coin coin= coins.get(i);
-            distance = Math.sqrt(Math.pow(x-coin.getX(), 2.0) + Math.pow(y-coin.getY(), 2.0));
+            distance = Math.sqrt(Math.pow(x - coin.getX(), 2.0) + Math.pow(y-coin.getY(), 2.0));
             if(distance<=48){
                 removedEnities.add(new CoinPickUp(coin.getX(), coin.getY(), 32, 64, gc));
                 coins.remove(coin);
@@ -256,16 +246,17 @@ public class Player extends Enity {
                 xSpeed =- playerSpeedX+brakingSpeed;
             }
         }
-        if (canMove((x+xSpeed+16),(y+1),32,62, mapData) == true) {
+        if (canMove((x+xSpeed+16),(y+2),32,61, mapData) == true) {
             x += xSpeed;
         }
-        if (canMove((x+16),(y+ySpeed+1),32,62, mapData) == true) {
+        if (canMove((x+16),(y+ySpeed+2),32,61, mapData) == true) {
 		    y += ySpeed;
         }else{
             if(up){
                 ySpeed = 0;
             }else{
-                int rowBrick = (int)(y+ySpeed)/64;//this is bug 
+                // System.out.println(y+"-------------");
+                int rowBrick = (int)(y+ySpeed)/64;
                 y = rowBrick*64;
             }
         }
@@ -273,6 +264,7 @@ public class Player extends Enity {
             return;
         }
         moving = true;
+        // System.out.println(y);
 	}
     
     private void setAnimation() {
@@ -397,14 +389,6 @@ public class Player extends Enity {
     public void setGc(GraphicsContext gc) {
         this.gc = gc;
     }
-
-    // public boolean isPush() {
-    //     return push;
-    // }
-
-    // public void setPush(boolean push) {
-    //     this.push = push;
-    // }
 
     protected void loadAnimations() {//load 1 bộ ảnh để tạo mảng 2 chiều để tạo animation
         animationImages = new Image[14][7];

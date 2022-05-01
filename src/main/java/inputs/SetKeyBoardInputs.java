@@ -10,6 +10,8 @@ import main.MakeMainScene;
 public class SetKeyBoardInputs {
     private Player player;
     private Scene scene;
+    private boolean pressedA;
+    private boolean pressedD;
     public SetKeyBoardInputs(MakeMainScene makeMainScene){
         this.player=makeMainScene.getMapInteractionManager().getPlayer();
         this.scene=makeMainScene.getMainScene();
@@ -17,12 +19,23 @@ public class SetKeyBoardInputs {
 
             @Override
             public void handle(KeyEvent event) {
-                if(event.getCode()==KeyCode.A||event.getCode()==KeyCode.D){
-                    //nếu đang giữ A rồi D rồi thả D thì A không chạy nx;
-                    player.setRun(false);
+                if(event.getCode()==KeyCode.A){
+                    pressedA = false;
+                    if(pressedD == true){
+                        player.setRight(true);
+                    }
+                }
+                if(event.getCode()==KeyCode.D){
+                    pressedD = false;
+                    if(pressedA == true){
+                        player.setRight(false);
+                    }
                 }
                 if(event.getCode()==KeyCode.W){
                     player.setJump(false);
+                }
+                if(pressedA==false&&pressedD==false){
+                    player.setRun(false);
                 }
             }   
             
@@ -39,10 +52,12 @@ public class SetKeyBoardInputs {
                     case A:
                         player.setRun(true);
                         player.setRight(false);
+                        pressedA = true;
                         break;
                     case D:
                         player.setRun(true);
                         player.setRight(true);
+                        pressedD = true;
                         break;
                     case J:
                         player.setAttacking2(true);

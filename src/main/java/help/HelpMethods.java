@@ -11,7 +11,7 @@ public class HelpMethods {
         if(columnBrick < 0  ||  columnBrick >= 21){
             return true;
         }
-        if(mapData[rowBrick][columnBrick]<0 || mapData[rowBrick][columnBrick]>42 || mapData[rowBrick][columnBrick]!=16){
+        if(mapData[rowBrick][columnBrick] < 0 || mapData[rowBrick][columnBrick] > 42 || mapData[rowBrick][columnBrick] != 16){
             return true;
         }
         return false;

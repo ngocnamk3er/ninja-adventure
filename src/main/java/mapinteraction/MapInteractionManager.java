@@ -3,6 +3,7 @@ import java.util.ArrayList;
 
 import entities.Button;
 import entities.Coin;
+import entities.Door;
 import entities.Enity;
 import entities.Player;
 import entities.Stone;
@@ -14,6 +15,7 @@ public class MapInteractionManager {
     private ArrayList<Stone> stones = new ArrayList<>();
     private ArrayList<Button> buttons = new ArrayList<>();
     private Player player = new Player();
+    private Door door = new Door();
     private GraphicsContext gc;
     private int [][] mapData;
     public MapInteractionManager(GraphicsContext gc,int [][]mapData){
@@ -41,6 +43,9 @@ public class MapInteractionManager {
                 if(MapInteraction.MAP_INTERAC_DATA1[i][j] == 'b'){
                     buttons.add(new Button(j*64, i*64, 64, 64, this));
                 }
+                if(MapInteraction.MAP_INTERAC_DATA1[i][j] == 'd'){
+                    door.setProperties(j*64, i*64, 64, 64*3, this);
+                }
             }
         }
     }
@@ -55,10 +60,15 @@ public class MapInteractionManager {
         for(Button button:buttons){
             button.update();
         }
+        door.update();
     }
     public void render(){
-        gc.clearRect(0, 0, 21*64, 12*64);
-        player.render();
+        try {
+            gc.clearRect(0, 0, 21*64, 12*64);
+            // player.render();    
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
         for(Stone stone:stones){
             stone.render();
         }
@@ -68,9 +78,11 @@ public class MapInteractionManager {
         for(Button button:buttons){
             button.render();
         }
+        door.render();
         for(Enity removedEnities:removedEnities){
             removedEnities.render();
         }
+        player.render();  
     }
     public Player getPlayer() {
         return player;
@@ -107,6 +119,12 @@ public class MapInteractionManager {
     }
     public void setStones(ArrayList<Stone> stones) {
         this.stones = stones;
+    }
+    public ArrayList<Button> getButtons() {
+        return buttons;
+    }
+    public void setButtons(ArrayList<Button> buttons) {
+        this.buttons = buttons;
     }
     
 }
