@@ -52,6 +52,7 @@ public class Player extends Enity {
     private ArrayList<Enity> removedEnities;
     private ArrayList<Coin> coins;
     private ArrayList<Stone> stones;
+    private MapInteractionManager mapInteractionManager;
     //handle Collision
     private int standOnStone = 1000;
     private int pushStone = 1000;
@@ -91,18 +92,20 @@ public class Player extends Enity {
         this.coins = mapInteractionManager.getCoins();
         this.removedEnities = mapInteractionManager.getRemovedEnities();
         this.stones = mapInteractionManager.getStones();
+        this.mapInteractionManager = mapInteractionManager;
     }
     public void setProperties( float x, float y, float width, float height,MapInteractionManager mapInteractionManager) {
+        loadAnimations();
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
-        loadAnimations();
         this.gc = mapInteractionManager.getGc();
         this.mapData = mapInteractionManager.getMapData();
         this.coins = mapInteractionManager.getCoins();
         this.removedEnities = mapInteractionManager.getRemovedEnities();
         this.stones = mapInteractionManager.getStones();
+        this.mapInteractionManager = mapInteractionManager;
     }
 
     public Player() {
@@ -148,6 +151,8 @@ public class Player extends Enity {
                     standOnStone = i;
                     y = stone.getY() - 64;
                     // System.out.println(y);
+                    // mapInteractionManager.reset();
+                    // System.out.println("aaa");
                 }else if(up&&this.y-stone.getY()<=64&&this.y-stone.getY()>0&&Math.abs(this.x+xSpeed-stone.getX())<=48){
                     jump = false;
                     ySpeed = 0;

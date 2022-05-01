@@ -8,23 +8,42 @@ import entities.Enity;
 import entities.Player;
 import entities.Stone;
 import help.Constant.MapInteraction;
+import inputs.SetKeyBoardInputs;
 import javafx.scene.canvas.GraphicsContext;
+import main.MakeMainScene;
 public class MapInteractionManager {
-    private ArrayList<Enity> removedEnities = new ArrayList<>();
-    private ArrayList<Coin> coins = new ArrayList<>();
-    private ArrayList<Stone> stones = new ArrayList<>();
-    private ArrayList<Button> buttons = new ArrayList<>();
-    private Player player = new Player();
-    private Door door = new Door();
+    // private SetKeyBoardInputs setKeyBoardInputs;
+    private MakeMainScene makeMainScene;
+    private ArrayList<Enity> removedEnities;
+    private ArrayList<Coin> coins;
+    private ArrayList<Stone> stones;
+    private ArrayList<Button> buttons;
+    private Player player;
+    private Door door;
     private GraphicsContext gc;
     private int [][] mapData;
-    public MapInteractionManager(GraphicsContext gc,int [][]mapData){
-        // removedEnities = new ArrayList<>();
-        // stones = new ArrayList<>();
-        // coins = new ArrayList<>();
+    public MapInteractionManager(GraphicsContext gc,int [][]mapData, MakeMainScene makeMainScene){
+        this.makeMainScene = makeMainScene;
+        removedEnities = new ArrayList<>();
+        coins = new ArrayList<>();
+        stones = new ArrayList<>();
+        buttons = new ArrayList<>();
+        player = new Player();
+        door = new Door();
         this.gc = gc;
         this.mapData = mapData;
         loadDataMapInteraction();
+        new SetKeyBoardInputs(this);
+    }
+    public void reset(){
+        removedEnities = new ArrayList<>();
+        coins = new ArrayList<>();
+        stones = new ArrayList<>();
+        buttons = new ArrayList<>();
+        player = new Player();
+        door = new Door();
+        loadDataMapInteraction();
+        new SetKeyBoardInputs(this);
     }
     private void loadDataMapInteraction(){
         
@@ -125,6 +144,12 @@ public class MapInteractionManager {
     }
     public void setButtons(ArrayList<Button> buttons) {
         this.buttons = buttons;
+    }
+    public MakeMainScene getMakeMainScene() {
+        return makeMainScene;
+    }
+    public void setMakeMainScene(MakeMainScene makeMainScene) {
+        this.makeMainScene = makeMainScene;
     }
     
 }

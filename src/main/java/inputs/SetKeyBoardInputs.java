@@ -5,16 +5,16 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import main.MakeMainScene;
+import mapinteraction.MapInteractionManager;
 
 public class SetKeyBoardInputs {
     private Player player;
     private Scene scene;
     private boolean pressedA;
     private boolean pressedD;
-    public SetKeyBoardInputs(MakeMainScene makeMainScene){
-        this.player=makeMainScene.getMapInteractionManager().getPlayer();
-        this.scene=makeMainScene.getMainScene();
+    public SetKeyBoardInputs(MapInteractionManager mapInteractionManager){
+        this.player=mapInteractionManager.getPlayer();
+        this.scene=mapInteractionManager.getMakeMainScene().getMainScene();
         scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
 
             @Override

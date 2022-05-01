@@ -1,6 +1,5 @@
 package main;
 
-import inputs.SetKeyBoardInputs;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -14,8 +13,7 @@ public class MakeMainScene {
     private Canvas canvasbg;
     private GraphicsContext gc;
     private GraphicsContext gcbg;
-    private SetKeyBoardInputs setKeyBoardInputs;
-    private MapInteractionManager mapInteractionManager;
+    // private SetKeyBoardInputs setKeyBoardInputs;
     private MapManager mapManager;
     public MakeMainScene() {
         canvas=new Canvas(1344,768);
@@ -32,9 +30,7 @@ public class MakeMainScene {
         stackPane.getChildren().add(canvas);
 
         mainScene = new Scene(stackPane,1344,768);
-        mapInteractionManager = new MapInteractionManager(gc,mapManager.getMapData());
-        new GameLoop(mapInteractionManager).start();
-        setKeyBoardInputs = new SetKeyBoardInputs(this);
+        new GameLoop(new MapInteractionManager(gc,mapManager.getMapData(),this)).start();
     }
     public Scene getMainScene() {
         return mainScene;
@@ -42,12 +38,5 @@ public class MakeMainScene {
     public void setMainScene(Scene mainScene) {
         this.mainScene = mainScene;
     }
-    public MapInteractionManager getMapInteractionManager() {
-        return mapInteractionManager;
-    }
-    public void setMapInteractionManager(MapInteractionManager mapInteractionManager) {
-        this.mapInteractionManager = mapInteractionManager;
-    }
-    
-    
+
 }

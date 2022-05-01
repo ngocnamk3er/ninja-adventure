@@ -7,7 +7,6 @@ import static help.HelpMethods.*;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Set;
 
 public class Stone extends Enity {
 
