@@ -20,12 +20,12 @@ public class GameLoop extends Thread{
 
 		long previousTime = System.nanoTime();
 
-		// int frames = 0;
+		int frames = 0;
 		long lastCheck = System.currentTimeMillis();
 
 		double deltaF = 0;
 
-		while (true) {
+		while (Thread.interrupted()==false) {
 			long currentTime = System.nanoTime();
 
 			// deltaU += (currentTime - previousTime) / timePerUpdate;
@@ -35,14 +35,14 @@ public class GameLoop extends Thread{
 
 			if (deltaF >= 1) {// khi du 1/120 giay thi render va xu li va cham 
                 updateAndRender();
-				// frames++;
+				frames++;
 				deltaF--;
 			}
 
 			if (System.currentTimeMillis() - lastCheck >= 1000) {// bo dem FPS
 				lastCheck = System.currentTimeMillis();
-				// System.out.println("FPS: " + frames);
-				// frames = 0;
+				System.out.println("FPS: " + frames);
+				frames = 0;
 			}
 		}
 
