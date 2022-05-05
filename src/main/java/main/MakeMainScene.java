@@ -6,7 +6,6 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
 import map.MapManager;
 import mapinteraction.MapInteractionManager;
 
@@ -18,6 +17,7 @@ public class MakeMainScene extends Scene{
     private MapManager mapManager;
     private GameLoop gameLoop;
     private MapInteractionManager mapInteractionManager;
+    private CloseGameButton closeGameButton;
     public MakeMainScene(MainStage mainStage) {
         super(new Group(),1344,768);
         canvas=new Canvas(1344,768);
@@ -32,8 +32,8 @@ public class MakeMainScene extends Scene{
         stackPane.getChildren().add(canvasbg);
         stackPane.getChildren().add(canvas);
         setRoot(stackPane);
-        stackPane.getChildren().add(new CloseGameButton("1",mainStage));
-        // MakeGameLevel(1);
+        closeGameButton = new CloseGameButton("x",mainStage);
+        stackPane.getChildren().add(closeGameButton);
     }
     public void MakeGameLevel(int level){
         mapManager.loadDataMap();//level

@@ -8,8 +8,8 @@ import main.MainStage;
 public class CloseGameButton extends Button {
     public CloseGameButton(String text,MainStage mainStage){
         setText(text);
-		setPrefWidth(190);
-		setPrefHeight(49);
+		setPrefWidth(20);
+		setPrefHeight(20);
         setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {

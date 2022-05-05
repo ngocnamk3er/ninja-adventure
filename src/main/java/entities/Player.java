@@ -111,9 +111,9 @@ public class Player extends Enity {
             if(Math.abs(x+xSpeed-stone.getX())<=132&&Math.abs(y+ySpeed-stone.getY())<=132){
                 // System.out.println("xxx");
                 if(!up&&this.y+ySpeed-stone.getY()>=-64 &&this.y+ySpeed/4-stone.getY()<=-48&&Math.abs(this.x+xSpeed-stone.getX())<=48){
-                    // standOnStone = i;
+                    standOnStone = i;
                     y = stone.getY() - 64;
-                    mapInteractionManager.setInitialState();
+                    // mapInteractionManager.setInitialState();
                     break;
                     // System.out.println("aaaa");
                 }else if(up&&this.y-stone.getY()<=64&&this.y-stone.getY()>0&&Math.abs(this.x+xSpeed-stone.getX())<=48){
