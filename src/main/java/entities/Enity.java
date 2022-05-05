@@ -25,5 +25,4 @@ public abstract class Enity {
         this.y = y;
     }
     public abstract void render();
-    protected abstract void loadAnimations();
 }

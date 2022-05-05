@@ -6,7 +6,6 @@ import javafx.scene.image.Image;
 import mapinteraction.MapInteractionManager;
 
 import static help.HelpMethods.*;
-// import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 
@@ -58,44 +57,7 @@ public class Player extends Enity {
     private int pushStone = 1000;
     private float brakingSpeed = 0;
     
-    public final int getAmountSpritesOfPlayerAction(int x) {
-        if (x == IDLE_L || x == IDLE_R) {
-            return 4;
-        }
-        else if (x == RUN_L || x == RUN_R) {
-            return 6;
-        }
-        else if (x == ATTACK1_L || x == ATTACK1_R) {
-            return 4;
-        }
-        else if (x == ATTACK2_L || x == ATTACK2_R) {
-            return 4;
-        }
-        else if (x == PUSH_L || x == PUSH_R) {
-            return 6;
-        }
-        else if (x == JUMPUP_L || x == JUMPUP_R) {
-            return 3;
-        }
-        else if (x == JUMPDOWN_L || x == JUMPDOWN_R) {
-            return 3;
-        }else{
-            return 0;
-        }
-    }
-
-    public Player( float x, float y, float width, float height,MapInteractionManager mapInteractionManager) {
-        super(x, y, width, height);
-        loadAnimations();
-        this.gc = mapInteractionManager.getGc();
-        this.mapData = mapInteractionManager.getMapData();
-        this.coins = mapInteractionManager.getCoins();
-        this.removedEnities = mapInteractionManager.getRemovedEnities();
-        this.stones = mapInteractionManager.getStones();
-        this.mapInteractionManager = mapInteractionManager;
-    }
     public void setProperties( float x, float y, float width, float height,MapInteractionManager mapInteractionManager) {
-        loadAnimations();
         this.x = x;
         this.y = y;
         this.width = width;
@@ -147,12 +109,14 @@ public class Player extends Enity {
         for(int i=0;i<stones.size();i++){
             Stone stone = stones.get(i);
             if(Math.abs(x+xSpeed-stone.getX())<=132&&Math.abs(y+ySpeed-stone.getY())<=132){
+                // System.out.println("xxx");
                 if(!up&&this.y+ySpeed-stone.getY()>=-64 &&this.y+ySpeed/4-stone.getY()<=-48&&Math.abs(this.x+xSpeed-stone.getX())<=48){
-                    standOnStone = i;
+                    // standOnStone = i;
                     y = stone.getY() - 64;
                     // System.out.println(y);
-                    // mapInteractionManager.reset();
-                    // System.out.println("aaa");
+                    mapInteractionManager.reset();
+                    break;
+                    // System.out.println("aaaa");
                 }else if(up&&this.y-stone.getY()<=64&&this.y-stone.getY()>0&&Math.abs(this.x+xSpeed-stone.getX())<=48){
                     jump = false;
                     ySpeed = 0;
@@ -394,137 +358,7 @@ public class Player extends Enity {
     public void setGc(GraphicsContext gc) {
         this.gc = gc;
     }
-
-    protected void loadAnimations() {//load 1 bộ ảnh để tạo mảng 2 chiều để tạo animation
-        animationImages = new Image[14][7];
-        for(int i = 0 ; i < 14 ; i++){
-            if (i == RUN_L) {
-                try {
-                    for(int j=0;j<getAmountSpritesOfPlayerAction(i);j++) {
-                        animationImages[i][j]=new Image(Player.class.getResourceAsStream("RUN_L"+j+".png"));
-                    }
-                } catch (Exception e) {
-                    System.out.println(e.getMessage()+"["+i+"]");
-                }
-            }
-            if (i == RUN_R) {
-                try {
-                    for(int j=0;j<getAmountSpritesOfPlayerAction(i);j++) {
-                        animationImages[i][j]=new Image(Player.class.getResourceAsStream("RUN_R"+j+".png"));
-                    }
-                } catch (Exception e) {
-                    System.out.println(e.getMessage()+"["+i+"]");
-                }
-            }
-            if (i == IDLE_L) {
-                try {
-                    for(int j=0;j<getAmountSpritesOfPlayerAction(i);j++) {
-                        animationImages[i][j]=new Image(Player.class.getResourceAsStream("IDLE_L"+j+".png"));
-                    }
-                } catch (Exception e) {
-                    System.out.println(e.getMessage()+"["+i+"]");
-                }
-            }
-            if (i == IDLE_R) {
-                try {
-                    for(int j=0;j<getAmountSpritesOfPlayerAction(i);j++) {
-                        animationImages[i][j]=new Image(Player.class.getResourceAsStream("IDLE_R"+j+".png"));
-                    }
-                } catch (Exception e) {
-                    System.out.println(e.getMessage()+"["+i+"]");
-                }
-            }
-            if (i == ATTACK1_L) {
-                try {
-                    for(int j=0;j<getAmountSpritesOfPlayerAction(i);j++) {
-                        animationImages[i][j]=new Image(Player.class.getResourceAsStream("ATTACK1_L"+j+".png"));
-                    }
-                } catch (Exception e) {
-                    System.out.println(e.getMessage()+"["+i+"]");
-                }
-            }
-            if (i == ATTACK1_R) {
-                try {
-                    for(int j=0;j<getAmountSpritesOfPlayerAction(i);j++) {
-                        animationImages[i][j]=new Image(Player.class.getResourceAsStream("ATTACK1_R"+j+".png"));
-                    }
-                } catch (Exception e) {
-                    System.out.println(e.getMessage()+"["+i+"]");
-                }
-            }
-            if (i == PUSH_L) {
-                try {
-                    for(int j=0;j<getAmountSpritesOfPlayerAction(i);j++) {
-                        animationImages[i][j]=new Image(Player.class.getResourceAsStream("PUSH_L"+j+".png"));
-                    }
-                } catch (Exception e) {
-                    System.out.println(e.getMessage()+"["+i+"]");
-                }
-            }
-            if (i == PUSH_R) {
-                try {
-                    for(int j=0;j<getAmountSpritesOfPlayerAction(i);j++) {
-                        animationImages[i][j]=new Image(Player.class.getResourceAsStream("PUSH_R"+j+".png"));
-                    }
-                } catch (Exception e) {
-                    System.out.println(e.getMessage()+"["+i+"]");
-                }
-            }
-            if (i == JUMPUP_L) {
-                try {
-                    for(int j=0;j<getAmountSpritesOfPlayerAction(i);j++) {
-                        animationImages[i][j]=new Image(Player.class.getResourceAsStream("JUMPUP_L"+j+".png"));
-                    }
-                } catch (Exception e) {
-                    System.out.println(e.getMessage()+"["+i+"]");
-                }
-            }
-            if (i == JUMPUP_R) {
-                try {
-                    for(int j=0;j<getAmountSpritesOfPlayerAction(i);j++) {
-                        animationImages[i][j]=new Image(Player.class.getResourceAsStream("JUMPUP_R"+j+".png"));
-                    }
-                } catch (Exception e) {
-                    System.out.println(e.getMessage()+"["+i+"]");
-                }
-            }
-            if (i == JUMPDOWN_L) {
-                try {
-                    for(int j=0;j<getAmountSpritesOfPlayerAction(i);j++) {
-                        animationImages[i][j]=new Image(Player.class.getResourceAsStream("JUMPDOWN_L"+j+".png"));
-                    }
-                } catch (Exception e) {
-                    System.out.println(e.getMessage()+"["+i+"]");
-                }
-            }
-            if (i == JUMPDOWN_R) {
-                try {
-                    for(int j=0;j<getAmountSpritesOfPlayerAction(i);j++) {
-                        animationImages[i][j]=new Image(Player.class.getResourceAsStream("JUMPDOWN_R"+j+".png"));
-                    }
-                } catch (Exception e) {
-                    System.out.println(e.getMessage()+"["+i+"]");
-                }
-            }
-            if (i == ATTACK2_R) {
-                try {
-                    for(int j=0;j<getAmountSpritesOfPlayerAction(i);j++) {
-                        animationImages[i][j]=new Image(Player.class.getResourceAsStream("ATTACK2_R"+j+".png"));
-                    }
-                } catch (Exception e) {
-                    System.out.println(e.getMessage()+"["+i+"]");
-                }
-            }
-            if (i == ATTACK2_L) {
-                try {
-                    for (int j=0;j<getAmountSpritesOfPlayerAction(i);j++) {
-                        animationImages[i][j]=new Image(Player.class.getResourceAsStream("ATTACK2_L"+j+".png"));
-                    }
-                } catch (Exception e) {
-                    System.out.println(e.getMessage()+"["+i+"]");
-                }
-            }
-        }
-    } 
-    
+    public void setAnimationsImages(Image [][] aniImages){
+        animationImages = aniImages;
+    }
 }

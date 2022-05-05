@@ -15,7 +15,6 @@ public class Button extends Enity {
     private ArrayList<Stone> stones;
     public Button(float x, float y, float width, float height, MapInteractionManager mapInteractionManager) {
         super(x, y, width, height);
-        loadAnimations();
         this.gc=mapInteractionManager.getGc();
         this.stones = mapInteractionManager.getStones();
         this.player = mapInteractionManager.getPlayer();
@@ -59,16 +58,8 @@ public class Button extends Enity {
         
     }
 
-    @Override
-    protected void loadAnimations() {
-        animationImages =  new Image[2];
-        for(int i = 0 ; i < 2 ; i++) {
-            try {
-                animationImages[i]=new Image(Button.class.getResourceAsStream("button"+i+".png"));
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
-        }
+    public void setAnimationsImages(Image[] animationImages) {
+        this.animationImages = animationImages;
     }
     public boolean isPressed() {
         return pressed;

@@ -12,7 +12,6 @@ public class Coin extends Enity {
     public Coin(float x, float y, float width, float height, GraphicsContext gc) {
         super(x, y, width, height);
         this.gc = gc;
-        loadAnimations();
     }
     private void updateAnimationTick() {
 		aniTick++;
@@ -34,6 +33,9 @@ public class Coin extends Enity {
                 System.out.println(e.getMessage());
             }
         }
+    }
+    public void setAnimationsImages(Image [] aniImages){
+        animationImages = aniImages;
     }
     public void update(){
         updateAnimationTick();

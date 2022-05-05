@@ -41,7 +41,7 @@ public class GameLoop extends Thread{
 
 			if (System.currentTimeMillis() - lastCheck >= 1000) {// bo dem FPS
 				lastCheck = System.currentTimeMillis();
-				System.out.println("FPS: " + frames);
+				// System.out.println("FPS: " + frames);
 				frames = 0;
 			}
 		}

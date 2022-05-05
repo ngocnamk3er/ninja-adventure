@@ -24,7 +24,6 @@ public class Stone extends Enity {
     public Stone(float x, float y, float width, float height, MapInteractionManager mapInteractionManager) {
         super(x, y, width, height);
         this.mapData = mapInteractionManager.getMapData();
-        loadAnimations();
         this.gc=mapInteractionManager.getGc();
         this.stones = mapInteractionManager.getStones();
     }
@@ -34,6 +33,9 @@ public class Stone extends Enity {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+    public void setAnimationsImages(Image animationImage){
+        this.animationImage = animationImage;
     }
     private void handleCollision(){
         // System.out.println("Stone :");

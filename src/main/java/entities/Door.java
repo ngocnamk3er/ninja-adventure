@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import mapinteraction.MapInteractionManager;
-
+import static help.HelpMethods.*;
 public class Door extends Enity {
     private Image[][] animationImagesDoor;
     private int aniDoorIndex;
@@ -21,11 +21,6 @@ public class Door extends Enity {
     private int direction = DONTMOVE;
     private GraphicsContext gc;
     private ArrayList<Button> buttons;
-    // public Door(float x, float y, float width, float height, MapInteractionManager mapInteractionManager) {
-    //     super(x, y, width, height);
-    //     this.gc =  mapInteractionManager.getGc();
-    //     this.buttons = mapInteractionManager.getButtons();
-    // }
     public Door() {
     }
     public void setProperties(float x, float y, float width, float height, MapInteractionManager mapInteractionManager) {
@@ -35,7 +30,6 @@ public class Door extends Enity {
         this.width=width;
         this.gc =  mapInteractionManager.getGc();
         this.buttons = mapInteractionManager.getButtons();
-        loadAnimations();
     }
     public void update(){
         handleCollision();
@@ -72,6 +66,9 @@ public class Door extends Enity {
         if(startAni != doorAction) {
             aniDoorIndex = 0;
         }
+    }
+    public void setAnimationsImages(Image[][] animationImagesDoor){
+        this.animationImagesDoor = animationImagesDoor;
     }
     private void updateDoorAniTick() {
         if(direction == DOWN){
@@ -116,30 +113,6 @@ public class Door extends Enity {
     @Override
     public void render() {
         gc.drawImage(animationImagesDoor[doorAction][aniDoorIndex], x, y, width, height);
-    }
-
-    @Override
-    protected void loadAnimations() {
-        animationImagesDoor = new Image[2][15];
-        for(int i=0;i<2;i++){
-            for(int j=0;j<getAmountSpritesOfDoor(i);j++){
-                if(i == CLOSED){
-                    animationImagesDoor[i][j] =  new Image(Door.class.getResourceAsStream("door_closed"+j+".png"));
-                }else {
-                    animationImagesDoor[i][j] =  new Image(Door.class.getResourceAsStream("door_openning"+j+".png"));
-                }
-            }
-        }        
-    }
-
-    private int getAmountSpritesOfDoor(int action) {
-        if(action == CLOSED){
-            return 10;
-        }else if (action == MOVING){
-            return 15;
-        }else{
-            return 0;
-        }
     }
     
 }

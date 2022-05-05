@@ -10,9 +10,10 @@ import entities.Stone;
 import help.Constant.MapInteraction;
 import inputs.SetKeyBoardInputs;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import main.MakeMainScene;
+import static help.HelpMethods.*;
 public class MapInteractionManager {
-    // private SetKeyBoardInputs setKeyBoardInputs;
     private MakeMainScene makeMainScene;
     private ArrayList<Enity> removedEnities;
     private ArrayList<Coin> coins;
@@ -22,7 +23,20 @@ public class MapInteractionManager {
     private Door door;
     private GraphicsContext gc;
     private int [][] mapData;
+    private Image[][] animationImagesPlayer;
+    private Image[] animationImagesCoin;
+    private Image animationImageStone;
+    private Image[][] animationImagesDoor;
+    private Image[] animationImagesButton;
+    private void loadAnimations(){
+        loadAnimationsPlayer();
+        loadAnimationsCoins();
+        loadAnimationsStone();
+        loadAnimationsDoor();
+        loadAnimationsButton();
+    }
     public MapInteractionManager(GraphicsContext gc,int [][]mapData, MakeMainScene makeMainScene){
+        loadAnimations();
         this.makeMainScene = makeMainScene;
         removedEnities = new ArrayList<>();
         coins = new ArrayList<>();
@@ -36,12 +50,10 @@ public class MapInteractionManager {
         new SetKeyBoardInputs(this);
     }
     public void reset(){
-        removedEnities = new ArrayList<>();
-        coins = new ArrayList<>();
-        stones = new ArrayList<>();
-        buttons = new ArrayList<>();
-        player = new Player();
-        door = new Door();
+        removedEnities.clear();
+        coins.clear();
+        stones.clear();
+        buttons.clear();
         loadDataMapInteraction();
         new SetKeyBoardInputs(this);
     }
@@ -50,20 +62,28 @@ public class MapInteractionManager {
         for(int i=0;i<12;i++){
             for(int j=0;j<21;j++){
                 if(MapInteraction.MAP_INTERAC_DATA1[i][j] == 'c'){
-                    coins.add(new Coin(j*64, i*64, 32, 32, gc));
+                    Coin coin = new Coin(j*64, i*64, 32, 32, gc);
+                    coin.setAnimationsImages(animationImagesCoin);
+                    coins.add(coin);
                 }
                 if(MapInteraction.MAP_INTERAC_DATA1[i][j] == 'p'){
                     player.setProperties(j*64, i*64, 64, 64,this);
+                    player.setAnimationsImages(animationImagesPlayer);
                     
                 }
                 if(MapInteraction.MAP_INTERAC_DATA1[i][j] == 's'){
-                    stones.add(new Stone(j*64, i*64, 64, 64, this));
+                    Stone stone = new Stone(j*64, i*64, 64, 64, this);
+                    stone.setAnimationsImages(animationImageStone);
+                    stones.add(stone);
                 }
                 if(MapInteraction.MAP_INTERAC_DATA1[i][j] == 'b'){
-                    buttons.add(new Button(j*64, i*64, 64, 64, this));
+                    Button button = new Button(j*64, i*64, 64, 64, this);
+                    button.setAnimationsImages(animationImagesButton);
+                    buttons.add(button);
                 }
                 if(MapInteraction.MAP_INTERAC_DATA1[i][j] == 'd'){
                     door.setProperties(j*64, i*64, 64, 64*3, this);
+                    door.setAnimationsImages(animationImagesDoor);
                 }
             }
         }
@@ -151,5 +171,175 @@ public class MapInteractionManager {
     public void setMakeMainScene(MakeMainScene makeMainScene) {
         this.makeMainScene = makeMainScene;
     }
-    
+    private void loadAnimationsStone(){
+        try {
+            animationImageStone =new Image(Player.class.getResourceAsStream("stone.png"));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    private void loadAnimationsCoins() {
+        animationImagesCoin =  new Image[6];
+        for(int i = 0 ; i < 6 ; i++) {
+            try {
+                animationImagesCoin[i]=new Image(Coin.class.getResourceAsStream("coin"+i+".png"));
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+    private void loadAnimationsDoor() {
+        animationImagesDoor = new Image[2][15];
+        for(int i=0;i<2;i++){
+            for(int j=0;j<getAmountSpritesOfDoor(i);j++){
+                if(i == CLOSED){
+                    animationImagesDoor[i][j] =  new Image(Door.class.getResourceAsStream("door_closed"+j+".png"));
+                }else {
+                    animationImagesDoor[i][j] =  new Image(Door.class.getResourceAsStream("door_openning"+j+".png"));
+                }
+            }
+        } 
+    }
+    private void loadAnimationsButton() {
+        animationImagesButton =  new Image[2];
+        for(int i = 0 ; i < 2 ; i++) {
+            try {
+                animationImagesButton[i]=new Image(Button.class.getResourceAsStream("button"+i+".png"));
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+    protected void loadAnimationsPlayer() {//load 1 bộ ảnh để tạo mảng 2 chiều để tạo animation
+        animationImagesPlayer = new Image[14][7];
+        for(int i = 0 ; i < 14 ; i++){
+            if (i == RUN_L) {
+                try {
+                    for(int j=0;j<getAmountSpritesOfPlayerAction(i);j++) {
+                        animationImagesPlayer[i][j]=new Image(Player.class.getResourceAsStream("RUN_L"+j+".png"));
+                    }
+                } catch (Exception e) {
+                    System.out.println(e.getMessage()+"["+i+"]");
+                }
+            }
+            if (i == RUN_R) {
+                try {
+                    for(int j=0;j<getAmountSpritesOfPlayerAction(i);j++) {
+                        animationImagesPlayer[i][j]=new Image(Player.class.getResourceAsStream("RUN_R"+j+".png"));
+                    }
+                } catch (Exception e) {
+                    System.out.println(e.getMessage()+"["+i+"]");
+                }
+            }
+            if (i == IDLE_L) {
+                try {
+                    for(int j=0;j<getAmountSpritesOfPlayerAction(i);j++) {
+                        animationImagesPlayer[i][j]=new Image(Player.class.getResourceAsStream("IDLE_L"+j+".png"));
+                    }
+                } catch (Exception e) {
+                    System.out.println(e.getMessage()+"["+i+"]");
+                }
+            }
+            if (i == IDLE_R) {
+                try {
+                    for(int j=0;j<getAmountSpritesOfPlayerAction(i);j++) {
+                        animationImagesPlayer[i][j]=new Image(Player.class.getResourceAsStream("IDLE_R"+j+".png"));
+                    }
+                } catch (Exception e) {
+                    System.out.println(e.getMessage()+"["+i+"]");
+                }
+            }
+            if (i == ATTACK1_L) {
+                try {
+                    for(int j=0;j<getAmountSpritesOfPlayerAction(i);j++) {
+                        animationImagesPlayer[i][j]=new Image(Player.class.getResourceAsStream("ATTACK1_L"+j+".png"));
+                    }
+                } catch (Exception e) {
+                    System.out.println(e.getMessage()+"["+i+"]");
+                }
+            }
+            if (i == ATTACK1_R) {
+                try {
+                    for(int j=0;j<getAmountSpritesOfPlayerAction(i);j++) {
+                        animationImagesPlayer[i][j]=new Image(Player.class.getResourceAsStream("ATTACK1_R"+j+".png"));
+                    }
+                } catch (Exception e) {
+                    System.out.println(e.getMessage()+"["+i+"]");
+                }
+            }
+            if (i == PUSH_L) {
+                try {
+                    for(int j=0;j<getAmountSpritesOfPlayerAction(i);j++) {
+                        animationImagesPlayer[i][j]=new Image(Player.class.getResourceAsStream("PUSH_L"+j+".png"));
+                    }
+                } catch (Exception e) {
+                    System.out.println(e.getMessage()+"["+i+"]");
+                }
+            }
+            if (i == PUSH_R) {
+                try {
+                    for(int j=0;j<getAmountSpritesOfPlayerAction(i);j++) {
+                        animationImagesPlayer[i][j]=new Image(Player.class.getResourceAsStream("PUSH_R"+j+".png"));
+                    }
+                } catch (Exception e) {
+                    System.out.println(e.getMessage()+"["+i+"]");
+                }
+            }
+            if (i == JUMPUP_L) {
+                try {
+                    for(int j=0;j<getAmountSpritesOfPlayerAction(i);j++) {
+                        animationImagesPlayer[i][j]=new Image(Player.class.getResourceAsStream("JUMPUP_L"+j+".png"));
+                    }
+                } catch (Exception e) {
+                    System.out.println(e.getMessage()+"["+i+"]");
+                }
+            }
+            if (i == JUMPUP_R) {
+                try {
+                    for(int j=0;j<getAmountSpritesOfPlayerAction(i);j++) {
+                        animationImagesPlayer[i][j]=new Image(Player.class.getResourceAsStream("JUMPUP_R"+j+".png"));
+                    }
+                } catch (Exception e) {
+                    System.out.println(e.getMessage()+"["+i+"]");
+                }
+            }
+            if (i == JUMPDOWN_L) {
+                try {
+                    for(int j=0;j<getAmountSpritesOfPlayerAction(i);j++) {
+                        animationImagesPlayer[i][j]=new Image(Player.class.getResourceAsStream("JUMPDOWN_L"+j+".png"));
+                    }
+                } catch (Exception e) {
+                    System.out.println(e.getMessage()+"["+i+"]");
+                }
+            }
+            if (i == JUMPDOWN_R) {
+                try {
+                    for(int j=0;j<getAmountSpritesOfPlayerAction(i);j++) {
+                        animationImagesPlayer[i][j]=new Image(Player.class.getResourceAsStream("JUMPDOWN_R"+j+".png"));
+                    }
+                } catch (Exception e) {
+                    System.out.println(e.getMessage()+"["+i+"]");
+                }
+            }
+            if (i == ATTACK2_R) {
+                try {
+                    for(int j=0;j<getAmountSpritesOfPlayerAction(i);j++) {
+                        animationImagesPlayer[i][j]=new Image(Player.class.getResourceAsStream("ATTACK2_R"+j+".png"));
+                    }
+                } catch (Exception e) {
+                    System.out.println(e.getMessage()+"["+i+"]");
+                }
+            }
+            if (i == ATTACK2_L) {
+                try {
+                    for (int j=0;j<getAmountSpritesOfPlayerAction(i);j++) {
+                        animationImagesPlayer[i][j]=new Image(Player.class.getResourceAsStream("ATTACK2_L"+j+".png"));
+                    }
+                } catch (Exception e) {
+                    System.out.println(e.getMessage()+"["+i+"]");
+                }
+            }
+        }
+    } 
 }
+
