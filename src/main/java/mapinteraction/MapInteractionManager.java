@@ -56,6 +56,8 @@ public class MapInteractionManager {
         coins.clear();
         stones.clear();
         buttons.clear();
+        player = new Player();
+        door = new Door();
         for(int i=0;i<12;i++){
             for(int j=0;j<21;j++){
                 if(MapInteraction.MAP_INTERAC_DATA1[i][j] == 'c'){
