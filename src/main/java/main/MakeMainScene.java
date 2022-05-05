@@ -18,27 +18,35 @@ public class MakeMainScene extends Scene{
     private MapManager mapManager;
     private GameLoop gameLoop;
     private MapInteractionManager mapInteractionManager;
-    public MakeMainScene(Stage stage) {
+    public MakeMainScene(MainStage mainStage) {
         super(new Group(),1344,768);
         canvas=new Canvas(1344,768);
         canvasbg=new Canvas(1344,768);
-
         gc=canvas.getGraphicsContext2D();
         gcbg=canvasbg.getGraphicsContext2D();
-
+        
         mapManager=new MapManager(gcbg);
-        mapManager.render();
+        mapInteractionManager = new MapInteractionManager(gc,mapManager.getMapData(),this);
 
         StackPane stackPane=new StackPane();
         stackPane.getChildren().add(canvasbg);
         stackPane.getChildren().add(canvas);
         setRoot(stackPane);
-        mapInteractionManager = new MapInteractionManager(gc,mapManager.getMapData(),this);
+        stackPane.getChildren().add(new CloseGameButton("1",mainStage));
+        // MakeGameLevel(1);
+    }
+    public void MakeGameLevel(int level){
+        mapManager.loadDataMap();//level
+        mapManager.render();//level
+        mapInteractionManager.setInitialState();//level
         gameLoop = new GameLoop(mapInteractionManager);
         gameLoop.start();
-        stackPane.getChildren().add(new CloseGameButton("1",stage,gameLoop));
-        // gameLoop.wait();
-        // gameLoop.interrupt();
+    }
+    public GameLoop getGameLoop() {
+        return gameLoop;
+    }
+    public void setGameLoop(GameLoop gameLoop) {
+        this.gameLoop = gameLoop;
     }
     
 }

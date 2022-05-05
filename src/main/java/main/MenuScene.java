@@ -2,23 +2,21 @@ package main;
 
 import buttons.LevelButton;
 import javafx.scene.Group;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
+import javafx.scene.layout.TilePane;
 
 public class MenuScene extends Scene {
-    private GridPane gridPane;
-    public MenuScene(Stage stage) {
+    private TilePane tilePane;
+    public MenuScene(MainStage mainStage) {
         super(new Group(),1344,768);
-        gridPane = new GridPane();
-        gridPane.add(new LevelButton("1",stage),0,1);
-        gridPane.add(new LevelButton("2",stage),0,2);
-        gridPane.add(new LevelButton("3",stage),0,3);
-        gridPane.add(new LevelButton("4",stage),0,4);
-        gridPane.add(new LevelButton("5",stage),0,5);
-        gridPane.add(new LevelButton("6",stage),0,6);
-        setRoot(gridPane);
+        tilePane = new TilePane();
+        tilePane.getChildren().add(new LevelButton("1",mainStage));
+        tilePane.getChildren().add(new LevelButton("2",mainStage));
+        tilePane.getChildren().add(new LevelButton("3",mainStage));
+        tilePane.getChildren().add(new LevelButton("4",mainStage));
+        tilePane.getChildren().add(new LevelButton("5",mainStage));
+        tilePane.getChildren().add(new LevelButton("6",mainStage));
+        setRoot(tilePane);
     }
     
 }

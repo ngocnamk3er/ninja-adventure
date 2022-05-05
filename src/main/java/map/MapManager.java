@@ -12,11 +12,12 @@ public class MapManager {
     private Image maplayout1Image;
     
     public MapManager(GraphicsContext gc) {
+        mapData=new int[12][21];
         this.gc = gc;
         loadMaplayout0Image();
         loadMaplayout1Image();
-        loadDataMap();
         loadAllBrick();
+        // loadDataMap();
     }
     private void loadMaplayout1Image() {
         maplayout1Image=new Image(MapManager.class.getResourceAsStream("layout1.png"));
@@ -24,8 +25,7 @@ public class MapManager {
     private void loadMaplayout0Image() {
         maplayout0Image=new Image(MapManager.class.getResourceAsStream("layout0.png"));
     }
-    private void loadDataMap(){
-        mapData=new int[12][21];
+    public void loadDataMap(){
         for(int i=0;i<12;i++){
             for(int j=0;j<21;j++){
                 mapData[i][j]=Map.MAPDATA1[i][j];

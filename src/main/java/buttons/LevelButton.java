@@ -3,21 +3,17 @@ package buttons;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
-import main.MakeMainScene;
+import main.MainStage;
 
 public class LevelButton extends Button {
-    private MakeMainScene makeMainScene;
-    public LevelButton(String text,Stage stage){
+    public LevelButton(String text,MainStage mainStage){
         setText(text);
-		setPrefWidth(190);
-		setPrefHeight(49);
+		setPrefWidth(100);
+		setPrefHeight(120);
         setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				System.out.println(text);
-                makeMainScene = new MakeMainScene(stage);
-                stage.setScene(makeMainScene);
+                mainStage.setMakeMainScene(1);
 			}
 		});
     }

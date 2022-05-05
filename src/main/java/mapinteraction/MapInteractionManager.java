@@ -46,19 +46,16 @@ public class MapInteractionManager {
         door = new Door();
         this.gc = gc;
         this.mapData = mapData;
-        loadDataMapInteraction();
-        new SetKeyBoardInputs(this);
     }
-    public void reset(){
-        removedEnities.clear();
-        coins.clear();
-        stones.clear();
-        buttons.clear();
+    public void setInitialState(){
         loadDataMapInteraction();
         new SetKeyBoardInputs(this);
     }
     private void loadDataMapInteraction(){
-        
+        removedEnities.clear();
+        coins.clear();
+        stones.clear();
+        buttons.clear();
         for(int i=0;i<12;i++){
             for(int j=0;j<21;j++){
                 if(MapInteraction.MAP_INTERAC_DATA1[i][j] == 'c'){
