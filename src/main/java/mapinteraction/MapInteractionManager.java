@@ -1,6 +1,8 @@
 package mapinteraction;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
+
 import entities.Button;
 import entities.Coin;
 import entities.Door;
@@ -9,8 +11,12 @@ import entities.Player;
 import entities.Stone;
 import help.Constant.MapInteraction;
 import inputs.SetKeyBoardInputs;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+
 import main.MakeMainScene;
 import static help.HelpMethods.*;
 public class MapInteractionManager {
@@ -28,6 +34,8 @@ public class MapInteractionManager {
     private Image animationImageStone;
     private Image[][] animationImagesDoor;
     private Image[] animationImagesButton;
+    private BufferedImage bufferedImage;
+
     private void loadAnimations(){
         loadAnimationsPlayer();
         loadAnimationsCoins();
@@ -179,12 +187,17 @@ public class MapInteractionManager {
     }
     private void loadAnimationsCoins() {
         animationImagesCoin =  new Image[6];
-        for(int i = 0 ; i < 6 ; i++) {
-            try {
-                animationImagesCoin[i]=new Image(Coin.class.getResourceAsStream("coin"+i+".png"));
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
+        try {
+            bufferedImage = ImageIO.read(Coin.class.getResourceAsStream("coin.png"));
+            for(int i = 0 ; i < 6 ; i++) {
+                try {
+                    animationImagesCoin[i]=SwingFXUtils.toFXImage(bufferedImage.getSubimage(i*8, 0, 8, 8), null);
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
             }
+        } catch (IOException e1) {
+            e1.printStackTrace();
         }
     }
     private void loadAnimationsDoor() {
@@ -192,8 +205,14 @@ public class MapInteractionManager {
         for(int i=0;i<2;i++){
             for(int j=0;j<getAmountSpritesOfDoor(i);j++){
                 if(i == CLOSED){
-                    animationImagesDoor[i][j] =  new Image(Door.class.getResourceAsStream("door_closed"+j+".png"));
+                    try {
+                        bufferedImage = ImageIO.read(Coin.class.getResourceAsStream("door_closed.png"));
+                        animationImagesDoor[i][j] =  SwingFXUtils.toFXImage(bufferedImage.getSubimage(j*16, 0, 16, 48), null);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }else {
+
                     animationImagesDoor[i][j] =  new Image(Door.class.getResourceAsStream("door_openning"+j+".png"));
                 }
             }
@@ -214,8 +233,10 @@ public class MapInteractionManager {
         for(int i = 0 ; i < 14 ; i++){
             if (i == RUN_L) {
                 try {
-                    for(int j=0;j<getAmountSpritesOfPlayerAction(i);j++) {
-                        animationImagesPlayer[i][j]=new Image(Player.class.getResourceAsStream("RUN_L"+j+".png"));
+                    bufferedImage = ImageIO.read(Player.class.getResourceAsStream("HeroRunL.png"));
+                    int AmountSprites = getAmountSpritesOfPlayerAction(i);
+                    for(int j=0;j<AmountSprites;j++) {
+                        animationImagesPlayer[i][j]= SwingFXUtils.toFXImage(bufferedImage.getSubimage((AmountSprites-1-j)*16, 0, 16, 16), null);
                     }
                 } catch (Exception e) {
                     System.out.println(e.getMessage()+"["+i+"]");
@@ -223,8 +244,9 @@ public class MapInteractionManager {
             }
             if (i == RUN_R) {
                 try {
+                    bufferedImage = ImageIO.read(Player.class.getResourceAsStream("HeroRunR.png"));
                     for(int j=0;j<getAmountSpritesOfPlayerAction(i);j++) {
-                        animationImagesPlayer[i][j]=new Image(Player.class.getResourceAsStream("RUN_R"+j+".png"));
+                        animationImagesPlayer[i][j]= SwingFXUtils.toFXImage(bufferedImage.getSubimage(j*16, 0, 16, 16), null);
                     }
                 } catch (Exception e) {
                     System.out.println(e.getMessage()+"["+i+"]");
@@ -232,8 +254,10 @@ public class MapInteractionManager {
             }
             if (i == IDLE_L) {
                 try {
-                    for(int j=0;j<getAmountSpritesOfPlayerAction(i);j++) {
-                        animationImagesPlayer[i][j]=new Image(Player.class.getResourceAsStream("IDLE_L"+j+".png"));
+                    bufferedImage = ImageIO.read(Player.class.getResourceAsStream("HeroIdleL.png"));
+                    int AmountSprites = getAmountSpritesOfPlayerAction(i);
+                    for(int j=0;j<AmountSprites;j++) {
+                        animationImagesPlayer[i][j]= SwingFXUtils.toFXImage(bufferedImage.getSubimage((AmountSprites-1-j)*16, 0, 16, 16), null);
                     }
                 } catch (Exception e) {
                     System.out.println(e.getMessage()+"["+i+"]");
@@ -241,8 +265,9 @@ public class MapInteractionManager {
             }
             if (i == IDLE_R) {
                 try {
+                    bufferedImage = ImageIO.read(Player.class.getResourceAsStream("HeroIdleR.png"));
                     for(int j=0;j<getAmountSpritesOfPlayerAction(i);j++) {
-                        animationImagesPlayer[i][j]=new Image(Player.class.getResourceAsStream("IDLE_R"+j+".png"));
+                        animationImagesPlayer[i][j]= SwingFXUtils.toFXImage(bufferedImage.getSubimage(j*16, 0, 16, 16), null);
                     }
                 } catch (Exception e) {
                     System.out.println(e.getMessage()+"["+i+"]");
@@ -250,8 +275,10 @@ public class MapInteractionManager {
             }
             if (i == ATTACK1_L) {
                 try {
-                    for(int j=0;j<getAmountSpritesOfPlayerAction(i);j++) {
-                        animationImagesPlayer[i][j]=new Image(Player.class.getResourceAsStream("ATTACK1_L"+j+".png"));
+                    bufferedImage = ImageIO.read(Player.class.getResourceAsStream("HeroAttack1L.png"));
+                    int AmountSprites = getAmountSpritesOfPlayerAction(i);
+                    for(int j=0;j<AmountSprites;j++) {
+                        animationImagesPlayer[i][j]= SwingFXUtils.toFXImage(bufferedImage.getSubimage((AmountSprites-1-j)*16, 0, 16, 16), null);
                     }
                 } catch (Exception e) {
                     System.out.println(e.getMessage()+"["+i+"]");
@@ -259,8 +286,9 @@ public class MapInteractionManager {
             }
             if (i == ATTACK1_R) {
                 try {
+                    bufferedImage = ImageIO.read(Player.class.getResourceAsStream("HeroAttack1R.png"));
                     for(int j=0;j<getAmountSpritesOfPlayerAction(i);j++) {
-                        animationImagesPlayer[i][j]=new Image(Player.class.getResourceAsStream("ATTACK1_R"+j+".png"));
+                        animationImagesPlayer[i][j]= SwingFXUtils.toFXImage(bufferedImage.getSubimage(j*16, 0, 16, 16), null);
                     }
                 } catch (Exception e) {
                     System.out.println(e.getMessage()+"["+i+"]");
@@ -268,8 +296,10 @@ public class MapInteractionManager {
             }
             if (i == PUSH_L) {
                 try {
-                    for(int j=0;j<getAmountSpritesOfPlayerAction(i);j++) {
-                        animationImagesPlayer[i][j]=new Image(Player.class.getResourceAsStream("PUSH_L"+j+".png"));
+                    bufferedImage = ImageIO.read(Player.class.getResourceAsStream("HeroPushingL.png"));
+                    int AmountSprites = getAmountSpritesOfPlayerAction(i);
+                    for(int j=0;j<AmountSprites;j++) {
+                        animationImagesPlayer[i][j]= SwingFXUtils.toFXImage(bufferedImage.getSubimage((AmountSprites-1-j)*16, 0, 16, 16), null);
                     }
                 } catch (Exception e) {
                     System.out.println(e.getMessage()+"["+i+"]");
@@ -277,8 +307,9 @@ public class MapInteractionManager {
             }
             if (i == PUSH_R) {
                 try {
+                    bufferedImage = ImageIO.read(Player.class.getResourceAsStream("HeroPushingR.png"));
                     for(int j=0;j<getAmountSpritesOfPlayerAction(i);j++) {
-                        animationImagesPlayer[i][j]=new Image(Player.class.getResourceAsStream("PUSH_R"+j+".png"));
+                        animationImagesPlayer[i][j]= SwingFXUtils.toFXImage(bufferedImage.getSubimage(j*16, 0, 16, 16), null);
                     }
                 } catch (Exception e) {
                     System.out.println(e.getMessage()+"["+i+"]");
@@ -286,8 +317,10 @@ public class MapInteractionManager {
             }
             if (i == JUMPUP_L) {
                 try {
-                    for(int j=0;j<getAmountSpritesOfPlayerAction(i);j++) {
-                        animationImagesPlayer[i][j]=new Image(Player.class.getResourceAsStream("JUMPUP_L"+j+".png"));
+                    bufferedImage = ImageIO.read(Player.class.getResourceAsStream("HeroJumpUpL.png"));
+                    int AmountSprites = getAmountSpritesOfPlayerAction(i);
+                    for(int j=0;j<AmountSprites;j++) {
+                        animationImagesPlayer[i][j]= SwingFXUtils.toFXImage(bufferedImage.getSubimage((AmountSprites-1-j)*16, 0, 16, 16), null);
                     }
                 } catch (Exception e) {
                     System.out.println(e.getMessage()+"["+i+"]");
@@ -295,8 +328,9 @@ public class MapInteractionManager {
             }
             if (i == JUMPUP_R) {
                 try {
+                    bufferedImage = ImageIO.read(Player.class.getResourceAsStream("HeroJumpUpR.png"));
                     for(int j=0;j<getAmountSpritesOfPlayerAction(i);j++) {
-                        animationImagesPlayer[i][j]=new Image(Player.class.getResourceAsStream("JUMPUP_R"+j+".png"));
+                        animationImagesPlayer[i][j]= SwingFXUtils.toFXImage(bufferedImage.getSubimage(j*16, 0, 16, 16), null);
                     }
                 } catch (Exception e) {
                     System.out.println(e.getMessage()+"["+i+"]");
@@ -304,8 +338,10 @@ public class MapInteractionManager {
             }
             if (i == JUMPDOWN_L) {
                 try {
-                    for(int j=0;j<getAmountSpritesOfPlayerAction(i);j++) {
-                        animationImagesPlayer[i][j]=new Image(Player.class.getResourceAsStream("JUMPDOWN_L"+j+".png"));
+                    bufferedImage = ImageIO.read(Player.class.getResourceAsStream("HeroJumpDownL.png"));
+                    int AmountSprites = getAmountSpritesOfPlayerAction(i);
+                    for(int j=0;j<AmountSprites;j++) {
+                        animationImagesPlayer[i][j]= SwingFXUtils.toFXImage(bufferedImage.getSubimage((AmountSprites-1-j)*16, 0, 16, 16), null);
                     }
                 } catch (Exception e) {
                     System.out.println(e.getMessage()+"["+i+"]");
@@ -313,17 +349,9 @@ public class MapInteractionManager {
             }
             if (i == JUMPDOWN_R) {
                 try {
+                    bufferedImage = ImageIO.read(Player.class.getResourceAsStream("HeroJumpDownR.png"));
                     for(int j=0;j<getAmountSpritesOfPlayerAction(i);j++) {
-                        animationImagesPlayer[i][j]=new Image(Player.class.getResourceAsStream("JUMPDOWN_R"+j+".png"));
-                    }
-                } catch (Exception e) {
-                    System.out.println(e.getMessage()+"["+i+"]");
-                }
-            }
-            if (i == ATTACK2_R) {
-                try {
-                    for(int j=0;j<getAmountSpritesOfPlayerAction(i);j++) {
-                        animationImagesPlayer[i][j]=new Image(Player.class.getResourceAsStream("ATTACK2_R"+j+".png"));
+                        animationImagesPlayer[i][j]= SwingFXUtils.toFXImage(bufferedImage.getSubimage(j*16, 0, 16, 16), null);
                     }
                 } catch (Exception e) {
                     System.out.println(e.getMessage()+"["+i+"]");
@@ -331,8 +359,20 @@ public class MapInteractionManager {
             }
             if (i == ATTACK2_L) {
                 try {
-                    for (int j=0;j<getAmountSpritesOfPlayerAction(i);j++) {
-                        animationImagesPlayer[i][j]=new Image(Player.class.getResourceAsStream("ATTACK2_L"+j+".png"));
+                    bufferedImage = ImageIO.read(Player.class.getResourceAsStream("HeroAttack2L.png"));
+                    int AmountSprites = getAmountSpritesOfPlayerAction(i);
+                    for(int j=0;j<AmountSprites;j++) {
+                        animationImagesPlayer[i][j]= SwingFXUtils.toFXImage(bufferedImage.getSubimage((AmountSprites-1-j)*32, 0, 32, 16), null);
+                    }
+                } catch (Exception e) {
+                    System.out.println(e.getMessage()+"["+i+"]");
+                }
+            }
+            if (i == ATTACK2_R) {
+                try {
+                    bufferedImage = ImageIO.read(Player.class.getResourceAsStream("HeroAttack2R.png"));
+                    for(int j=0;j<getAmountSpritesOfPlayerAction(i);j++) {
+                        animationImagesPlayer[i][j]= SwingFXUtils.toFXImage(bufferedImage.getSubimage(j*32, 0, 32, 16), null);
                     }
                 } catch (Exception e) {
                     System.out.println(e.getMessage()+"["+i+"]");
