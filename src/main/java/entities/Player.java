@@ -3,6 +3,7 @@ package entities;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import main.MakeMainScene;
 import mapinteraction.MapInteractionManager;
 
 import static help.HelpMethods.*;
@@ -55,6 +56,7 @@ public class Player extends Enity {
     private ArrayList<Coin> coins;
     private ArrayList<Stone> stones;
     private MapInteractionManager mapInteractionManager;
+    private MakeMainScene makeMainScene;
     private Door door;
     //handle Collision
     private int standOnStone = 1000;
@@ -72,6 +74,7 @@ public class Player extends Enity {
         this.removedEnities = mapInteractionManager.getRemovedEnities();
         this.stones = mapInteractionManager.getStones();
         this.door = mapInteractionManager.getDoor();
+        this.makeMainScene = mapInteractionManager.getMakeMainScene();
         this.mapInteractionManager = mapInteractionManager;
     }
 
@@ -332,7 +335,7 @@ public class Player extends Enity {
         }else{
             gc.drawImage(animationImages[playerAction][aniIndex], x, y, 64, 64);
             if(death==true&&aniIndex==7){
-                playNextLevel();
+                playAgain();
             }
         }
     }
@@ -341,7 +344,7 @@ public class Player extends Enity {
         mapInteractionManager.setInitialState(mapInteractionManager.getLevelValue());
     }
     private void playNextLevel() {
-        mapInteractionManager.setInitialState(1);
+        makeMainScene.MakeGameNextLevel(mapInteractionManager.getLevelValue()+1);
     }
     public boolean isRight() {
         return right;

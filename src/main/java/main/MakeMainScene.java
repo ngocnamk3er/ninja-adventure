@@ -45,6 +45,11 @@ public class MakeMainScene extends Scene{
         gameLoop = new GameLoop(mapInteractionManager);
         gameLoop.start();
     }
+    public void MakeGameNextLevel(int levelValue){
+        mapManager.loadDataMap(levelValue);//level
+        mapManager.render();//level
+        mapInteractionManager.setInitialState(levelValue);//level
+    }
     public GameLoop getGameLoop() {
         return gameLoop;
     }
