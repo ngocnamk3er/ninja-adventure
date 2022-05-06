@@ -11,6 +11,7 @@ public class Door extends Enity {
     private int aniDoorIndex;
     private int aniTick;
     private int aniSpeed = 15;
+    private float yHitBox;
     private final int CLOSED = 0;
     private final int MOVING = 1;
     private final int UP = 1;
@@ -105,14 +106,29 @@ public class Door extends Enity {
                 }
     
             }          
-        }else{
-            return;
         }
+       if(direction == DONTMOVE){
+           yHitBox = y;
+        //    System.out.println(yHitBox);
+       }else{
+           if(aniDoorIndex<=12){
+                yHitBox = y + aniDoorIndex * 192f/12;
+           }else{
+               yHitBox = y + 192;
+           }
+       }
     }
     
     @Override
     public void render() {
         gc.drawImage(animationImagesDoor[doorAction][aniDoorIndex], x, y, width, height);
     }
+    public float getyHitBox() {
+        return yHitBox;
+    }
+    public void setyHitBox(float yHitBox) {
+        this.yHitBox = yHitBox;
+    }
+    
     
 }

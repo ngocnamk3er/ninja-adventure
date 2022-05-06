@@ -10,14 +10,16 @@ public class HelpMethods {
     public static final int PUSH_R = 4;
     public static final int JUMPDOWN_R = 5;
     public static final int JUMPUP_R = 6;
+    public static final int DEATH_R = 7;
     //left
-    public static final int IDLE_L = 7;
-    public static final int RUN_L = 8;
-    public static final int ATTACK1_L = 9;
-    public static final int ATTACK2_L = 10;
-    public static final int PUSH_L = 11;
-    public static final int JUMPDOWN_L = 12;
-    public static final int JUMPUP_L = 13;
+    public static final int IDLE_L = 8;
+    public static final int RUN_L = 9;
+    public static final int ATTACK1_L = 10;
+    public static final int ATTACK2_L = 11;
+    public static final int PUSH_L = 12;
+    public static final int JUMPDOWN_L = 13;
+    public static final int JUMPUP_L = 14;
+    public static final int DEATH_L = 15;
     //door
     public static final int CLOSED = 0;
     public static final int MOVING = 1;
@@ -65,6 +67,8 @@ public class HelpMethods {
         }
         else if (x == JUMPDOWN_L || x == JUMPDOWN_R) {
             return 3;
+        }else if (x == DEATH_L || x == DEATH_R) {
+            return 8;
         }else{
             return 0;
         }

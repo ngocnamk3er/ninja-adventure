@@ -35,7 +35,7 @@ public class MapInteractionManager {
     private Image[][] animationImagesDoor;
     private Image[] animationImagesButton;
     private BufferedImage bufferedImage;
-
+    private int levelValue;
     private void loadAnimations(){
         loadAnimationsPlayer();
         loadAnimationsCoins();
@@ -56,6 +56,7 @@ public class MapInteractionManager {
         this.mapData = mapData;
     }
     public void setInitialState(int levelValue){
+        this.levelValue = levelValue;
         loadDataMapInteraction(levelValue);
         new SetKeyBoardInputs(this);
     }
@@ -130,54 +131,9 @@ public class MapInteractionManager {
         }
         player.render();  
     }
-    public Player getPlayer() {
-        return player;
-    }
-    public void setPlayer(Player player) {
-        this.player = player;
-    }
-    public ArrayList<Coin> getCoins() {
-        return coins;
-    }
-    public void setCoins(ArrayList<Coin> coins) {
-        this.coins = coins;
-    }
-    public ArrayList<Enity> getRemovedEnities() {
-        return removedEnities;
-    }
-    public void setRemovedEnities(ArrayList<Enity> removedEnities) {
-        this.removedEnities = removedEnities;
-    }
-    public int[][] getMapData() {
-        return mapData;
-    }
-    public void setMapData(int[][] mapData) {
-        this.mapData = mapData;
-    }
-    public GraphicsContext getGc() {
-        return gc;
-    }
-    public void setGc(GraphicsContext gc) {
-        this.gc = gc;
-    }
-    public ArrayList<Stone> getStones() {
-        return stones;
-    }
-    public void setStones(ArrayList<Stone> stones) {
-        this.stones = stones;
-    }
-    public ArrayList<Button> getButtons() {
-        return buttons;
-    }
-    public void setButtons(ArrayList<Button> buttons) {
-        this.buttons = buttons;
-    }
-    public MakeMainScene getMakeMainScene() {
-        return makeMainScene;
-    }
-    public void setMakeMainScene(MakeMainScene makeMainScene) {
-        this.makeMainScene = makeMainScene;
-    }
+    
+
+
     private void loadAnimationsStone(){
         try {
             animationImageStone =new Image(Player.class.getResourceAsStream("stone.png"));
@@ -229,8 +185,8 @@ public class MapInteractionManager {
         }
     }
     protected void loadAnimationsPlayer() {//load 1 bộ ảnh để tạo mảng 2 chiều để tạo animation
-        animationImagesPlayer = new Image[14][7];
-        for(int i = 0 ; i < 14 ; i++){
+        animationImagesPlayer = new Image[16][8];
+        for(int i = 0 ; i < 16 ; i++){
             if (i == RUN_L) {
                 try {
                     bufferedImage = ImageIO.read(Player.class.getResourceAsStream("HeroRunL.png"));
@@ -378,7 +334,89 @@ public class MapInteractionManager {
                     System.out.println(e.getMessage()+"["+i+"]");
                 }
             }
+            if (i == DEATH_L) {
+                try {
+                    bufferedImage = ImageIO.read(Player.class.getResourceAsStream("HeroDeathL.png"));
+                    int AmountSprites = getAmountSpritesOfPlayerAction(i);
+                    for(int j=0;j<AmountSprites;j++) {
+                        animationImagesPlayer[i][j]= SwingFXUtils.toFXImage(bufferedImage.getSubimage((AmountSprites-1-j)*16, 0, 16, 16), null);
+                    }
+                } catch (Exception e) {
+                    System.out.println(e.getMessage()+"["+i+"]");
+                }
+            }
+            if (i == DEATH_R) {
+                try {
+                    bufferedImage = ImageIO.read(Player.class.getResourceAsStream("HeroDeathR.png"));
+                    for(int j=0;j<getAmountSpritesOfPlayerAction(i);j++) {
+                        animationImagesPlayer[i][j]= SwingFXUtils.toFXImage(bufferedImage.getSubimage(j*16, 0, 16, 16), null);
+                    }
+                } catch (Exception e) {
+                    System.out.println(e.getMessage()+"["+i+"]");
+                }
+            }
         }
     } 
+    public Player getPlayer() {
+        return player;
+    }
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+    public ArrayList<Coin> getCoins() {
+        return coins;
+    }
+    public void setCoins(ArrayList<Coin> coins) {
+        this.coins = coins;
+    }
+    public ArrayList<Enity> getRemovedEnities() {
+        return removedEnities;
+    }
+    public void setRemovedEnities(ArrayList<Enity> removedEnities) {
+        this.removedEnities = removedEnities;
+    }
+    public int[][] getMapData() {
+        return mapData;
+    }
+    public void setMapData(int[][] mapData) {
+        this.mapData = mapData;
+    }
+    public GraphicsContext getGc() {
+        return gc;
+    }
+    public void setGc(GraphicsContext gc) {
+        this.gc = gc;
+    }
+    public ArrayList<Stone> getStones() {
+        return stones;
+    }
+    public void setStones(ArrayList<Stone> stones) {
+        this.stones = stones;
+    }
+    public ArrayList<Button> getButtons() {
+        return buttons;
+    }
+    public void setButtons(ArrayList<Button> buttons) {
+        this.buttons = buttons;
+    }
+    public MakeMainScene getMakeMainScene() {
+        return makeMainScene;
+    }
+    public void setMakeMainScene(MakeMainScene makeMainScene) {
+        this.makeMainScene = makeMainScene;
+    }
+    public Door getDoor() {
+        return door;
+    }
+    public void setDoor(Door door) {
+        this.door = door;
+    }
+    public int getLevelValue() {
+        return levelValue;
+    }
+    public void setLevelValue(int levelValue) {
+        this.levelValue = levelValue;
+    }
+    
 }
 

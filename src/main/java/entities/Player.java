@@ -20,14 +20,16 @@ public class Player extends Enity {
     private final int PUSH_R = 4;
     private final int JUMPDOWN_R = 5;
     private final int JUMPUP_R = 6;
+    private final int DEATH_R = 7;
     //left
-    private final int IDLE_L = 7;
-    private final int RUN_L = 8;
-    private final int ATTACK1_L = 9;
-    private final int ATTACK2_L = 10;
-    private final int PUSH_L = 11;
-    private final int JUMPDOWN_L = 12;
-    private final int JUMPUP_L = 13;
+    private final int IDLE_L = 8;
+    private final int RUN_L = 9;
+    private final int ATTACK1_L = 10;
+    private final int ATTACK2_L = 11;
+    private final int PUSH_L = 12;
+    private final int JUMPDOWN_L = 13;
+    private final int JUMPUP_L = 14;
+    private final int DEATH_L = 15;
     
     private int playerAction = IDLE_L;
     private int aniTick = 0;
@@ -38,6 +40,7 @@ public class Player extends Enity {
     private float playerSpeedX = 0;
     private boolean right = true;
     private boolean moving = false;
+    private boolean death = false;
     private boolean run,up,down,push,attacking1,attacking2;
 
     //Mapdata
@@ -52,11 +55,12 @@ public class Player extends Enity {
     private ArrayList<Coin> coins;
     private ArrayList<Stone> stones;
     private MapInteractionManager mapInteractionManager;
+    private Door door;
     //handle Collision
     private int standOnStone = 1000;
     private int pushStone = 1000;
     private float brakingSpeed = 0;
-    
+    private boolean standOnDoor = false;
     public void setProperties( float x, float y, float width, float height,MapInteractionManager mapInteractionManager) {
         this.x = x;
         this.y = y;
@@ -67,6 +71,7 @@ public class Player extends Enity {
         this.coins = mapInteractionManager.getCoins();
         this.removedEnities = mapInteractionManager.getRemovedEnities();
         this.stones = mapInteractionManager.getStones();
+        this.door = mapInteractionManager.getDoor();
         this.mapInteractionManager = mapInteractionManager;
     }
 
@@ -94,7 +99,7 @@ public class Player extends Enity {
     }
 
     private void setInAir(float x, float y, int [][]mapData) {
-        if((!isSolid(x+16, y+66, mapData))&&(!isSolid(x+48, y+66, mapData))&&standOnStone==1000){
+        if((!isSolid(x+16, y+66, mapData))&&(!isSolid(x+48, y+66, mapData))&&standOnStone==1000&&standOnDoor==false){
             inAir = true;
         }else{
             inAir = false;
@@ -113,11 +118,16 @@ public class Player extends Enity {
                 if(!up&&this.y+ySpeed-stone.getY()>=-64 &&this.y+ySpeed/4-stone.getY()<=-48&&Math.abs(this.x+xSpeed-stone.getX())<=48){
                     standOnStone = i;
                     y = stone.getY() - 64;
-                    // break;
-                }else if(up&&this.y-stone.getY()<=64&&this.y-stone.getY()>0&&Math.abs(this.x+xSpeed-stone.getX())<=48){
-                    jump = false;
-                    ySpeed = 0;
-                    y = stone.getY() + 64;
+                }else if(this.y+ySpeed-stone.getY()<=64&&this.y+ySpeed-stone.getY()>0&&Math.abs(this.x+xSpeed-stone.getX())<=48){
+                    if(standOnDoor){
+                        death = true;
+                    }else{
+                        if(up){
+                            jump = false;
+                            ySpeed = 0;
+                            y = stone.getY() + 64;
+                        }
+                    }
                 }else if(Math.abs(this.y+ySpeed-stone.getY())<=48&&Math.abs(this.x+xSpeed-stone.getX())<=58){
                     if(pushStone == 1000||pushStone == i){
                         pushStone = i;
@@ -169,10 +179,29 @@ public class Player extends Enity {
             }
         }  	
     }
+    private void checkDoor() {
+        if(!up&&this.y+ySpeed-door.getyHitBox()>=-64 &&this.y+ySpeed/4-door.getyHitBox()<=-48&&Math.abs(this.x+xSpeed-door.getX())<48){
+            standOnDoor = true;
+            y = door.getyHitBox() - 64;
+        }else if(y+64>door.getyHitBox()&&y<door.getY()+192&&Math.abs(this.x+xSpeed-door.getX())<=48){
+            if(right&&x<door.getX()){
+                x = door.getX() - 48;
+                brakingSpeed = -8;
+            }else if(!right&&x>door.getX()){
+                x = door.getX() + 48;
+                brakingSpeed = 8;
+            }
+        }else{
+            standOnDoor = false;
+            brakingSpeed = 0;
+        }
+    }
     private void handleCollision(){
         checkCoins();
         checkStones();
+        checkDoor();
     }
+    
     public void setAnimationsImages(Image [][] aniImages){
         animationImages = aniImages;
     }
@@ -221,12 +250,16 @@ public class Player extends Enity {
         if (canMove((x+16),(y+ySpeed+2),32,61, mapData) == true) {
 		    y += ySpeed;
         }else{
-            if(up){
-                ySpeed = 0;
+            if(standOnDoor){
+                death = true;
             }else{
-                // System.out.println(y+"-------------");
-                int rowBrick = (int)(y+ySpeed)/64;
-                y = rowBrick*64;
+                if(up){
+                    ySpeed = 0;
+                }else{
+                    // System.out.println(y+"-------------");
+                    int rowBrick = (int)(y+ySpeed)/64;
+                    y = rowBrick*64;
+                }
             }
         }
         if(!inAir && !run && !attacking2){
@@ -257,6 +290,9 @@ public class Player extends Enity {
                     playerAction = ATTACK2_R;
                 }
             }
+            if(death){
+                playerAction = DEATH_R;
+            }
         } else {
             if (moving == false) {
                 playerAction = IDLE_L;
@@ -276,6 +312,9 @@ public class Player extends Enity {
                     playerAction = ATTACK2_L;
                 }
             }
+            if(death){
+                playerAction = DEATH_L;
+            }
         }
         if (startAni != playerAction) {
             aniIndex=0;
@@ -292,9 +331,18 @@ public class Player extends Enity {
             }
         }else{
             gc.drawImage(animationImages[playerAction][aniIndex], x, y, 64, 64);
+            if(death==true&&aniIndex==7){
+                playNextLevel();
+            }
         }
     }
 
+    private void playAgain() {
+        mapInteractionManager.setInitialState(mapInteractionManager.getLevelValue());
+    }
+    private void playNextLevel() {
+        mapInteractionManager.setInitialState(1);
+    }
     public boolean isRight() {
         return right;
     }
