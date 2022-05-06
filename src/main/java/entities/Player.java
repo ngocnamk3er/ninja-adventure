@@ -173,6 +173,9 @@ public class Player extends Enity {
         checkCoins();
         checkStones();
     }
+    public void setAnimationsImages(Image [][] aniImages){
+        animationImages = aniImages;
+    }
     private void updatePos() {
         moving = false;
         xSpeed = 0;
@@ -354,8 +357,5 @@ public class Player extends Enity {
 
     public void setGc(GraphicsContext gc) {
         this.gc = gc;
-    }
-    public void setAnimationsImages(Image [][] aniImages){
-        animationImages = aniImages;
     }
 }

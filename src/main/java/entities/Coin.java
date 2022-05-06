@@ -24,16 +24,6 @@ public class Coin extends Enity {
 
 		}
     }
-    protected void loadAnimations() {
-        animationImages =  new Image[6];
-        for(int i = 0 ; i < 6 ; i++) {
-            try {
-                animationImages[i]=new Image(Coin.class.getResourceAsStream("coin"+i+".png"));
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
-        }
-    }
     public void setAnimationsImages(Image [] aniImages){
         animationImages = aniImages;
     }

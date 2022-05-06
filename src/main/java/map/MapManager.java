@@ -25,10 +25,10 @@ public class MapManager {
     private void loadMaplayout0Image() {
         maplayout0Image=new Image(MapManager.class.getResourceAsStream("layout0.png"));
     }
-    public void loadDataMap(){
+    public void loadDataMap(int levelValue){
         for(int i=0;i<12;i++){
             for(int j=0;j<21;j++){
-                mapData[i][j]=Map.MAPDATA1[i][j];
+                mapData[i][j]=Map.MAPDATA[levelValue][i][j];
             }
         }
     }

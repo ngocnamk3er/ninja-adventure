@@ -27,13 +27,6 @@ public class Stone extends Enity {
         this.gc=mapInteractionManager.getGc();
         this.stones = mapInteractionManager.getStones();
     }
-    protected void loadAnimations() {
-        try {
-            animationImage =new Image(Player.class.getResourceAsStream("stone.png"));
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
     public void setAnimationsImages(Image animationImage){
         this.animationImage = animationImage;
     }

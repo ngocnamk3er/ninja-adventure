@@ -47,11 +47,11 @@ public class MapInteractionManager {
         this.gc = gc;
         this.mapData = mapData;
     }
-    public void setInitialState(){
-        loadDataMapInteraction();
+    public void setInitialState(int levelValue){
+        loadDataMapInteraction(levelValue);
         new SetKeyBoardInputs(this);
     }
-    private void loadDataMapInteraction(){
+    private void loadDataMapInteraction(int levelValue){
         removedEnities.clear();
         coins.clear();
         stones.clear();
@@ -60,27 +60,27 @@ public class MapInteractionManager {
         door = new Door();
         for(int i=0;i<12;i++){
             for(int j=0;j<21;j++){
-                if(MapInteraction.MAP_INTERAC_DATA1[i][j] == 'c'){
+                if(MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == 'c'){
                     Coin coin = new Coin(j*64, i*64, 32, 32, gc);
                     coin.setAnimationsImages(animationImagesCoin);
                     coins.add(coin);
                 }
-                if(MapInteraction.MAP_INTERAC_DATA1[i][j] == 'p'){
+                if(MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == 'p'){
                     player.setProperties(j*64, i*64, 64, 64,this);
                     player.setAnimationsImages(animationImagesPlayer);
                     
                 }
-                if(MapInteraction.MAP_INTERAC_DATA1[i][j] == 's'){
+                if(MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == 's'){
                     Stone stone = new Stone(j*64, i*64, 64, 64, this);
                     stone.setAnimationsImages(animationImageStone);
                     stones.add(stone);
                 }
-                if(MapInteraction.MAP_INTERAC_DATA1[i][j] == 'b'){
+                if(MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == 'b'){
                     Button button = new Button(j*64, i*64, 64, 64, this);
                     button.setAnimationsImages(animationImagesButton);
                     buttons.add(button);
                 }
-                if(MapInteraction.MAP_INTERAC_DATA1[i][j] == 'd'){
+                if(MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == 'd'){
                     door.setProperties(j*64, i*64, 64, 64*3, this);
                     door.setAnimationsImages(animationImagesDoor);
                 }

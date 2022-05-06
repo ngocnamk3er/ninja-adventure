@@ -5,6 +5,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import map.MapManager;
 import mapinteraction.MapInteractionManager;
@@ -28,17 +29,19 @@ public class MakeMainScene extends Scene{
         mapManager=new MapManager(gcbg);
         mapInteractionManager = new MapInteractionManager(gc,mapManager.getMapData(),this);
 
-        StackPane stackPane=new StackPane();
+        Pane stackPane=new Pane();
         stackPane.getChildren().add(canvasbg);
         stackPane.getChildren().add(canvas);
         setRoot(stackPane);
-        closeGameButton = new CloseGameButton("x",mainStage);
+        closeGameButton = new CloseGameButton(mainStage);
         stackPane.getChildren().add(closeGameButton);
+        closeGameButton.setLayoutX(1344-58);
+        closeGameButton.setLayoutY(10);
     }
-    public void MakeGameLevel(int level){
-        mapManager.loadDataMap();//level
+    public void MakeGameLevel(int levelValue){
+        mapManager.loadDataMap(levelValue);//level
         mapManager.render();//level
-        mapInteractionManager.setInitialState();//level
+        mapInteractionManager.setInitialState(levelValue);//level
         gameLoop = new GameLoop(mapInteractionManager);
         gameLoop.start();
     }

@@ -7,6 +7,7 @@ public class MainStage extends Stage {
     private MakeMainScene makeMainScene;
     private MenuScene menuScene;
     public MainStage(){
+        setResizable(false);
         makeMainScene = new MakeMainScene(this);
         menuScene = new MenuScene(this);
         setScene(menuScene);
@@ -15,8 +16,8 @@ public class MainStage extends Stage {
         setScene(menuScene);
         makeMainScene.getGameLoop().interrupt();
     }
-    public void setMakeMainScene(int level){
+    public void setMakeMainScene(int levelValue){
         setScene(makeMainScene);
-        makeMainScene.MakeGameLevel(level);
+        makeMainScene.MakeGameLevel(levelValue);
     }
 }
