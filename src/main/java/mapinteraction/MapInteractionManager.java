@@ -107,21 +107,18 @@ public class MapInteractionManager {
     }
     public void update(){
         player.update();
-        if(stones.size()!=0){
-            for(Stone stone:stones){
-                stone.update();
-            }
+        for(Stone stone:stones){
+            stone.update();
         }
-        if(coins.size()!=0){
-            for (Coin coin : coins) {
-                coin.update();
-            }
+    
+        for (Coin coin : coins) {
+            coin.update();
         }
-        if(buttons.size()!=0){
-            for(Button button:buttons){
-                button.update();
-            }
+
+        for(Button button:buttons){
+            button.update();
         }
+
         if(door!=null){
             door.update();
         }
@@ -134,21 +131,18 @@ public class MapInteractionManager {
             System.out.println(e.getMessage());
         }
         strangeDoor.render();
-        if(stones.size()!=0){
-            for(Stone stone:stones){
-                stone.render();
-            }
+        for(Stone stone:stones){
+            stone.render();
         }
-        if(coins.size()!=0){
-            for (Enity coin : coins) {
-                coin.render();
-            }
+
+        for (Enity coin : coins) {
+            coin.render();
         }
-        if(buttons.size()!=0){
-            for(Button button:buttons){
-                button.render();
-            }
+        
+        for(Button button:buttons){
+            button.render();
         }
+        
         if(door!=null){
             door.render();
         }

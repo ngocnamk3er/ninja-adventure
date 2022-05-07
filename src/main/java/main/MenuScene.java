@@ -20,7 +20,6 @@ public class MenuScene extends Scene {
         pane = new Pane();
         background = new Background(new BackgroundImage(new Image(MakeMainScene.class.getResourceAsStream("menuBG.png")),BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,BackgroundSize.DEFAULT));
         backgroundLevelButton = new Background(new BackgroundImage(new Image(LevelButton.class.getResourceAsStream("levelButton.png")),BackgroundRepeat.REPEAT,BackgroundRepeat.NO_REPEAT,BackgroundPosition.DEFAULT,BackgroundSize.DEFAULT));
-
         pane.setBackground(background);
         for(int i=0;i<36;i++){
             LevelButton levelButton = new LevelButton(Integer.toString(i+1),mainStage,backgroundLevelButton);
@@ -29,6 +28,7 @@ public class MenuScene extends Scene {
             levelButton.setLayoutY(300+i/12*120);
         }
         setRoot(pane);
+        // setCursor();
     }
     
 }
