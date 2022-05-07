@@ -2,6 +2,7 @@ package main;
 
 import buttons.LevelButton;
 import javafx.scene.Group;
+import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Background;
@@ -28,7 +29,7 @@ public class MenuScene extends Scene {
             levelButton.setLayoutY(300+i/12*120);
         }
         setRoot(pane);
-        // setCursor();
+        setCursor(new ImageCursor(new Image(MenuScene.class.getResourceAsStream("cursorImage.png"))));
     }
     
 }
