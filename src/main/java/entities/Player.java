@@ -42,6 +42,7 @@ public class Player extends Enity {
     private boolean right = true;
     private boolean moving = false;
     private boolean death = false;
+    private boolean nextLevel = false;
     private boolean run,up,down,push,attacking1,attacking2;
 
     //Mapdata
@@ -58,6 +59,7 @@ public class Player extends Enity {
     private MapInteractionManager mapInteractionManager;
     private MakeMainScene makeMainScene;
     private Door door;
+    private StrangeDoor strangeDoor;
     //handle Collision
     private int standOnStone = 1000;
     private int pushStone = 1000;
@@ -75,6 +77,7 @@ public class Player extends Enity {
         this.stones = mapInteractionManager.getStones();
         this.door = mapInteractionManager.getDoor();
         this.makeMainScene = mapInteractionManager.getMakeMainScene();
+        this.strangeDoor = mapInteractionManager.getStrangeDoor();
         this.mapInteractionManager = mapInteractionManager;
     }
 
@@ -199,10 +202,18 @@ public class Player extends Enity {
             brakingSpeed = 0;
         }
     }
+    private void checkStrangeDoor() {
+        if(Math.abs((x+32)-(strangeDoor.getX()+64))<48&&Math.abs((y+32)-(strangeDoor.getY()+64))<48){
+            nextLevel = true;
+        }
+    }
     private void handleCollision(){
         checkCoins();
         checkStones();
-        checkDoor();
+        if(door!=null){
+            checkDoor();
+        }
+        checkStrangeDoor();
     }
     
     public void setAnimationsImages(Image [][] aniImages){
@@ -212,6 +223,9 @@ public class Player extends Enity {
         moving = false;
         xSpeed = 0;
         setInAir(this.x, this.y, mapData);
+        if(death||nextLevel){
+            return;
+        }
         if(!inAir){
             ySpeed = 0;
             down = false;
@@ -293,7 +307,7 @@ public class Player extends Enity {
                     playerAction = ATTACK2_R;
                 }
             }
-            if(death){
+            if(death||nextLevel){
                 playerAction = DEATH_R;
             }
         } else {
@@ -315,7 +329,7 @@ public class Player extends Enity {
                     playerAction = ATTACK2_L;
                 }
             }
-            if(death){
+            if(death||nextLevel){
                 playerAction = DEATH_L;
             }
         }
@@ -336,6 +350,9 @@ public class Player extends Enity {
             gc.drawImage(animationImages[playerAction][aniIndex], x, y, 64, 64);
             if(death==true&&aniIndex==7){
                 playAgain();
+            }
+            if(nextLevel==true&&aniIndex==7){
+                playNextLevel();
             }
         }
     }

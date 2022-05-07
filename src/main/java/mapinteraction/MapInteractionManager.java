@@ -9,6 +9,7 @@ import entities.Door;
 import entities.Enity;
 import entities.Player;
 import entities.Stone;
+import entities.StrangeDoor;
 import help.Constant.MapInteraction;
 import inputs.SetKeyBoardInputs;
 import javafx.embed.swing.SwingFXUtils;
@@ -27,6 +28,7 @@ public class MapInteractionManager {
     private ArrayList<Button> buttons;
     private Player player;
     private Door door;
+    private StrangeDoor strangeDoor;
     private GraphicsContext gc;
     private int [][] mapData;
     private Image[][] animationImagesPlayer;
@@ -35,6 +37,7 @@ public class MapInteractionManager {
     private Image[][] animationImagesDoor;
     private Image[] animationImagesButton;
     private BufferedImage bufferedImage;
+    private Image animationImageStrangeDoor;
     private int levelValue;
     private void loadAnimations(){
         loadAnimationsPlayer();
@@ -42,6 +45,7 @@ public class MapInteractionManager {
         loadAnimationsStone();
         loadAnimationsDoor();
         loadAnimationsButton();
+        loadAnimationsStrangDoor();
     }
     public MapInteractionManager(GraphicsContext gc,int [][]mapData, MakeMainScene makeMainScene){
         loadAnimations();
@@ -52,6 +56,7 @@ public class MapInteractionManager {
         buttons = new ArrayList<>();
         player = new Player();
         door = new Door();
+        strangeDoor = new StrangeDoor();
         this.gc = gc;
         this.mapData = mapData;
     }
@@ -61,12 +66,12 @@ public class MapInteractionManager {
         new SetKeyBoardInputs(this);
     }
     private void loadDataMapInteraction(int levelValue){
-        removedEnities.clear();
-        coins.clear();
-        stones.clear();
-        buttons.clear();
+        removedEnities = new ArrayList<>();
+        coins = new ArrayList<>();
+        stones = new ArrayList<>();
+        buttons = new ArrayList<>();
         player = new Player();
-        door = new Door();
+        door = null;
         for(int i=0;i<12;i++){
             for(int j=0;j<21;j++){
                 if(MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == 'c'){
@@ -90,24 +95,36 @@ public class MapInteractionManager {
                     buttons.add(button);
                 }
                 if(MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == 'd'){
+                    door = new Door();
                     door.setProperties(j*64, i*64, 64, 64*3, this);
                     door.setAnimationsImages(animationImagesDoor);
+                }
+                if(MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == 'D'){
+                    strangeDoor.setProperties(j*64, i*64, gc,animationImageStrangeDoor);
                 }
             }
         }
     }
     public void update(){
         player.update();
-        for(Stone stone:stones){
-            stone.update();
+        if(stones.size()!=0){
+            for(Stone stone:stones){
+                stone.update();
+            }
         }
-        for (Coin coin : coins) {
-            coin.update();
+        if(coins.size()!=0){
+            for (Coin coin : coins) {
+                coin.update();
+            }
         }
-        for(Button button:buttons){
-            button.update();
+        if(buttons.size()!=0){
+            for(Button button:buttons){
+                button.update();
+            }
         }
-        door.update();
+        if(door!=null){
+            door.update();
+        }
     }
     public void render(){
         try {
@@ -116,16 +133,25 @@ public class MapInteractionManager {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        for(Stone stone:stones){
-            stone.render();
+        strangeDoor.render();
+        if(stones.size()!=0){
+            for(Stone stone:stones){
+                stone.render();
+            }
         }
-        for (Enity coin : coins) {
-            coin.render();
+        if(coins.size()!=0){
+            for (Enity coin : coins) {
+                coin.render();
+            }
         }
-        for(Button button:buttons){
-            button.render();
+        if(buttons.size()!=0){
+            for(Button button:buttons){
+                button.render();
+            }
         }
-        door.render();
+        if(door!=null){
+            door.render();
+        }
         for(Enity removedEnities:removedEnities){
             removedEnities.render();
         }
@@ -133,10 +159,16 @@ public class MapInteractionManager {
     }
     
 
-
+    private void loadAnimationsStrangDoor() {
+        try {
+            animationImageStrangeDoor =new Image(Player.class.getResourceAsStream("StrangeDoor.png"));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
     private void loadAnimationsStone(){
         try {
-            animationImageStone =new Image(Player.class.getResourceAsStream("stone.png"));
+            animationImageStone =new Image(Stone.class.getResourceAsStream("stone.png"));
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -162,7 +194,7 @@ public class MapInteractionManager {
             for(int j=0;j<getAmountSpritesOfDoor(i);j++){
                 if(i == CLOSED){
                     try {
-                        bufferedImage = ImageIO.read(Coin.class.getResourceAsStream("door_closed.png"));
+                        bufferedImage = ImageIO.read(Door.class.getResourceAsStream("door_closed.png"));
                         animationImagesDoor[i][j] =  SwingFXUtils.toFXImage(bufferedImage.getSubimage(j*16, 0, 16, 48), null);
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -416,6 +448,12 @@ public class MapInteractionManager {
     }
     public void setLevelValue(int levelValue) {
         this.levelValue = levelValue;
+    }
+    public StrangeDoor getStrangeDoor() {
+        return strangeDoor;
+    }
+    public void setStrangeDoor(StrangeDoor strangeDoor) {
+        this.strangeDoor = strangeDoor;
     }
     
 }

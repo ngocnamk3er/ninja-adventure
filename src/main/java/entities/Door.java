@@ -41,7 +41,8 @@ public class Door extends Enity {
         checkButtons();
     }
     private void checkButtons() {
-        for(Button button:buttons){
+        for(int i=0;i<buttons.size();i++){
+            Button button = buttons.get(i);
             if(button.isPressed()==false){
                 if(direction == prepareUp){
                     direction = UP;
