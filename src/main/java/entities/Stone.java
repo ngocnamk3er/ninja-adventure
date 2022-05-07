@@ -13,12 +13,13 @@ public class Stone extends Enity {
     private Image animationImage;
     private GraphicsContext gc;
     private int[][] mapData;
-    private float gravity = 0.1f;
+    private float gravity = 0.7f;
     private float ySpeed = 0;
     private float xSpeed = 0;
     private boolean inAir;
     private boolean canPush = true;
     private ArrayList<Stone> stones;
+    private Player player;
     private HashSet<Integer> nextStones = new HashSet<>();
     private HashSet<Integer> underStones = new HashSet<>();
     public Stone(float x, float y, float width, float height, MapInteractionManager mapInteractionManager) {
@@ -26,13 +27,19 @@ public class Stone extends Enity {
         this.mapData = mapInteractionManager.getMapData();
         this.gc=mapInteractionManager.getGc();
         this.stones = mapInteractionManager.getStones();
+        this.player = mapInteractionManager.getPlayer();
     }
     public void setAnimationsImages(Image animationImage){
         this.animationImage = animationImage;
     }
-    private void handleCollision(){
-        // System.out.println("Stone :");
-        // System.out.println("------------------------------");
+    public void checkPlayer(){
+        if(ySpeed>0){
+            if(Math.abs(x-player.getX())<=48&&Math.abs(y-player.getY())<64&&y<player.getY()){
+                player.setDeath(true);
+            } 
+        }
+    }
+    public void checkStones(){
         for(int i=0;i<stones.size();i++){
             Stone stone = stones.get(i);
             if(stone.equals(this)==false){
@@ -50,7 +57,10 @@ public class Stone extends Enity {
                 }
             }
         }
-        // System.out.println("------------------------------");
+    }
+    private void handleCollision(){
+        checkPlayer();
+        checkStones();
     }
     private void updatePos(){
         setInAir();

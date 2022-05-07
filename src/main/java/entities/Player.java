@@ -426,4 +426,13 @@ public class Player extends Enity {
     public void setGc(GraphicsContext gc) {
         this.gc = gc;
     }
+
+    public boolean isDeath() {
+        return death;
+    }
+
+    public void setDeath(boolean death) {
+        this.death = death;
+    }
+    
 }
