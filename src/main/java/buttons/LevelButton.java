@@ -4,6 +4,7 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import main.MainStage;
 
@@ -16,6 +17,7 @@ public class LevelButton extends Button {
 		setPrefHeight(80);
 		setBackground(backgroundLevelButton);
 		setFont(Font.loadFont(LevelButton.class.getResourceAsStream("m6x11.ttf"), 25));
+		setTextFill(Color.WHITE);
         setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {

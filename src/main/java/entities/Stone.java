@@ -35,6 +35,7 @@ public class Stone extends Enity {
     public void checkPlayer(){
         if(ySpeed>0){
             if(Math.abs(x-player.getX())<=48&&Math.abs(y-player.getY())<64&&y<player.getY()){
+                ySpeed = 0;
                 player.setDeath(true);
             } 
         }
