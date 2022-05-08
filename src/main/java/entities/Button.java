@@ -13,11 +13,12 @@ public class Button extends Enity {
     private GraphicsContext gc;
     private Player player;
     private ArrayList<Stone> stones;
-    public Button(float x, float y, float width, float height, MapInteractionManager mapInteractionManager) {
+    public Button(float x, float y, float width, float height,Image[] animationImages, MapInteractionManager mapInteractionManager) {
         super(x, y, width, height);
         this.gc=mapInteractionManager.getGc();
         this.stones = mapInteractionManager.getStones();
         this.player = mapInteractionManager.getPlayer();
+        this.animationImages = animationImages;
     }
     private boolean checkStones(){
         for(Stone stone:stones){
@@ -56,10 +57,6 @@ public class Button extends Enity {
             gc.drawImage(animationImages[1], x, y + 58, 64, 16);
         }
         
-    }
-
-    public void setAnimationsImages(Image[] animationImages) {
-        this.animationImages = animationImages;
     }
     public boolean isPressed() {
         return pressed;

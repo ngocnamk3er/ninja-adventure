@@ -22,14 +22,12 @@ public class Stone extends Enity {
     private Player player;
     private HashSet<Integer> nextStones = new HashSet<>();
     private HashSet<Integer> underStones = new HashSet<>();
-    public Stone(float x, float y, float width, float height, MapInteractionManager mapInteractionManager) {
+    public Stone(float x, float y, float width, float height,Image animationImage,MapInteractionManager mapInteractionManager) {
         super(x, y, width, height);
         this.mapData = mapInteractionManager.getMapData();
         this.gc=mapInteractionManager.getGc();
         this.stones = mapInteractionManager.getStones();
         this.player = mapInteractionManager.getPlayer();
-    }
-    public void setAnimationsImages(Image animationImage){
         this.animationImage = animationImage;
     }
     public void checkPlayer(){

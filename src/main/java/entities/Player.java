@@ -65,7 +65,7 @@ public class Player extends Enity {
     private int pushStone = 1000;
     private float brakingSpeed = 0;
     private boolean standOnDoor = false;
-    public void setProperties( float x, float y, float width, float height,MapInteractionManager mapInteractionManager) {
+    public void setProperties( float x, float y, float width, float height,Image[][] animationImages,MapInteractionManager mapInteractionManager) {
         this.x = x;
         this.y = y;
         this.width = width;
@@ -78,6 +78,7 @@ public class Player extends Enity {
         this.door = mapInteractionManager.getDoor();
         this.makeMainScene = mapInteractionManager.getMakeMainScene();
         this.strangeDoor = mapInteractionManager.getStrangeDoor();
+        this.animationImages = animationImages;
         this.mapInteractionManager = mapInteractionManager;
     }
 
@@ -214,10 +215,6 @@ public class Player extends Enity {
             checkDoor();
         }
         checkStrangeDoor();
-    }
-    
-    public void setAnimationsImages(Image [][] aniImages){
-        animationImages = aniImages;
     }
     private void updatePos() {
         moving = false;

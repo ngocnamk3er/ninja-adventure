@@ -7,7 +7,7 @@ import javafx.scene.image.Image;
 import mapinteraction.MapInteractionManager;
 import static help.HelpMethods.*;
 public class Door extends Enity {
-    private Image[][] animationImagesDoor;
+    private Image[][] animationImages;
     private int aniDoorIndex;
     private int aniTick;
     private int aniSpeed = 15;
@@ -24,13 +24,14 @@ public class Door extends Enity {
     private ArrayList<Button> buttons;
     public Door() {
     }
-    public void setProperties(float x, float y, float width, float height, MapInteractionManager mapInteractionManager) {
+    public void setProperties(float x, float y, float width, float height,Image[][] animationImages, MapInteractionManager mapInteractionManager) {
         this.x = x;
         this.y = y;
         this.height = height;
         this.width=width;
         this.gc =  mapInteractionManager.getGc();
         this.buttons = mapInteractionManager.getButtons();
+        this.animationImages = animationImages;
     }
     public void update(){
         handleCollision();
@@ -68,9 +69,6 @@ public class Door extends Enity {
         if(startAni != doorAction) {
             aniDoorIndex = 0;
         }
-    }
-    public void setAnimationsImages(Image[][] animationImagesDoor){
-        this.animationImagesDoor = animationImagesDoor;
     }
     private void updateDoorAniTick() {
         if(direction == DOWN){
@@ -122,7 +120,7 @@ public class Door extends Enity {
     
     @Override
     public void render() {
-        gc.drawImage(animationImagesDoor[doorAction][aniDoorIndex], x, y, width, height);
+        gc.drawImage(animationImages[doorAction][aniDoorIndex], x, y, width, height);
     }
     public float getyHitBox() {
         return yHitBox;

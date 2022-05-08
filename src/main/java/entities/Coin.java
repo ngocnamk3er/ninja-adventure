@@ -9,9 +9,10 @@ public class Coin extends Enity {
     private int aniTick=0;
     private int aniSpeed=5;
     private int aniIndex=0;
-    public Coin(float x, float y, float width, float height, GraphicsContext gc) {
+    public Coin(float x, float y, float width, float height, GraphicsContext gc, Image[] animationImages) {
         super(x, y, width, height);
         this.gc = gc;
+        this.animationImages = animationImages;
     }
     private void updateAnimationTick() {
 		aniTick++;
@@ -23,9 +24,6 @@ public class Coin extends Enity {
 			}
 
 		}
-    }
-    public void setAnimationsImages(Image [] aniImages){
-        animationImages = aniImages;
     }
     public void update(){
         updateAnimationTick();

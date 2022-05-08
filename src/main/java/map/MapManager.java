@@ -1,15 +1,20 @@
 package map;
 
 import help.Constant.Map;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 public class MapManager {
     private GraphicsContext gc;
     private int[][] mapData;
     private Image[] allBrick;
     private Image maplayout0Image;
     private Image maplayout1Image;
+    private BufferedImage bufferedImage;
     
     public MapManager(GraphicsContext gc) {
         mapData=new int[12][21];
@@ -33,9 +38,14 @@ public class MapManager {
         }
     }
     private void loadAllBrick(){
-        allBrick=new Image[43];
-        for(int i=0;i<43;i++){
-            allBrick[i]=new Image(MapManager.class.getResourceAsStream("brick"+i+".png"));
+        allBrick=new Image[48];
+        try {
+            bufferedImage = ImageIO.read(MapManager.class.getResourceAsStream("AllBricks.png"));
+            for(int i=0;i<48;i++){
+                allBrick[i]=SwingFXUtils.toFXImage(bufferedImage.getSubimage(i%12*64, i/12*64, 64, 64), null);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
     public void render(){

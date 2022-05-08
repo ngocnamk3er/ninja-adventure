@@ -75,29 +75,24 @@ public class MapInteractionManager {
         for(int i=0;i<12;i++){
             for(int j=0;j<21;j++){
                 if(MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == 'c'){
-                    Coin coin = new Coin(j*64, i*64, 32, 32, gc);
-                    coin.setAnimationsImages(animationImagesCoin);
+                    Coin coin = new Coin(j*64, i*64, 32, 32,gc,animationImagesCoin);
                     coins.add(coin);
                 }
                 if(MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == 'p'){
-                    player.setProperties(j*64, i*64, 64, 64,this);
-                    player.setAnimationsImages(animationImagesPlayer);
+                    player.setProperties(j*64, i*64, 64, 64,animationImagesPlayer,this);
                     
                 }
                 if(MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == 's'){
-                    Stone stone = new Stone(j*64, i*64, 64, 64, this);
-                    stone.setAnimationsImages(animationImageStone);
+                    Stone stone = new Stone(j*64, i*64, 64, 64,animationImageStone ,this);
                     stones.add(stone);
                 }
                 if(MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == 'b'){
-                    Button button = new Button(j*64, i*64, 64, 64, this);
-                    button.setAnimationsImages(animationImagesButton);
+                    Button button = new Button(j*64, i*64, 64, 64,animationImagesButton,this);
                     buttons.add(button);
                 }
                 if(MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == 'd'){
                     door = new Door();
-                    door.setProperties(j*64, i*64, 64, 64*3, this);
-                    door.setAnimationsImages(animationImagesDoor);
+                    door.setProperties(j*64, i*64, 64, 64*3,animationImagesDoor,this);
                 }
                 if(MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == 'D'){
                     strangeDoor.setProperties(j*64, i*64, gc,animationImageStrangeDoor);
@@ -194,8 +189,12 @@ public class MapInteractionManager {
                         e.printStackTrace();
                     }
                 }else {
-
-                    animationImagesDoor[i][j] =  new Image(Door.class.getResourceAsStream("door_openning"+j+".png"));
+                    try {
+                        bufferedImage = ImageIO.read(Door.class.getResourceAsStream("door_openning.png"));
+                        animationImagesDoor[i][j] =  SwingFXUtils.toFXImage(bufferedImage.getSubimage(j*16, 0, 16, 48), null);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         } 
