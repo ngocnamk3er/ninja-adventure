@@ -22,7 +22,6 @@ import main.MakeMainScene;
 import static help.HelpMethods.*;
 public class MapInteractionManager {
     private MakeMainScene makeMainScene;
-    private ArrayList<Enity> removedEnities;
     private ArrayList<Coin> coins;
     private ArrayList<Stone> stones;
     private ArrayList<Button> buttons;
@@ -50,7 +49,6 @@ public class MapInteractionManager {
     public MapInteractionManager(GraphicsContext gc,int [][]mapData, MakeMainScene makeMainScene){
         loadAnimations();
         this.makeMainScene = makeMainScene;
-        removedEnities = new ArrayList<>();
         coins = new ArrayList<>();
         stones = new ArrayList<>();
         buttons = new ArrayList<>();
@@ -66,7 +64,6 @@ public class MapInteractionManager {
         new SetKeyBoardInputs(this);
     }
     private void loadDataMapInteraction(int levelValue){
-        removedEnities = new ArrayList<>();
         coins = new ArrayList<>();
         stones = new ArrayList<>();
         buttons = new ArrayList<>();
@@ -141,9 +138,7 @@ public class MapInteractionManager {
         if(door!=null){
             door.render();
         }
-        for(Enity removedEnities:removedEnities){
-            removedEnities.render();
-        }
+        
         player.render();  
     }
     
@@ -401,12 +396,6 @@ public class MapInteractionManager {
     }
     public void setCoins(ArrayList<Coin> coins) {
         this.coins = coins;
-    }
-    public ArrayList<Enity> getRemovedEnities() {
-        return removedEnities;
-    }
-    public void setRemovedEnities(ArrayList<Enity> removedEnities) {
-        this.removedEnities = removedEnities;
     }
     public int[][] getMapData() {
         return mapData;
