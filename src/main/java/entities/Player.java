@@ -13,6 +13,8 @@ import java.util.ArrayList;
 public class Player extends Enity {
     private Image[][] animationImages;
     private GraphicsContext gc;
+    private float width = 64;
+    private float height = 64;
     //right
     private final int IDLE_R = 0;
     private final int RUN_R = 1;
@@ -64,11 +66,10 @@ public class Player extends Enity {
     private int pushStone = 1000;
     private float brakingSpeed = 0;
     private boolean standOnDoor = false;
-    public void setProperties( float x, float y, float width, float height,Image[][] animationImages,MapInteractionManager mapInteractionManager) {
+
+    public void setProperties( float x, float y,Image[][] animationImages,MapInteractionManager mapInteractionManager) {
         this.x = x;
         this.y = y;
-        this.width = width;
-        this.height = height;
         this.gc = mapInteractionManager.getGc();
         this.mapData = mapInteractionManager.getMapData();
         this.coins = mapInteractionManager.getCoins();
@@ -78,10 +79,6 @@ public class Player extends Enity {
         this.strangeDoor = mapInteractionManager.getStrangeDoor();
         this.animationImages = animationImages;
         this.mapInteractionManager = mapInteractionManager;
-    }
-
-    public Player() {
-        
     }
 
     public void update() {
@@ -335,12 +332,12 @@ public class Player extends Enity {
     public void render() {
         if (attacking2 == true) {
             if(right){
-                gc.drawImage(animationImages[playerAction][aniIndex], x, y, 128, 64);
+                gc.drawImage(animationImages[playerAction][aniIndex], x, y, width*2, height);
             }else{
-                gc.drawImage(animationImages[playerAction][aniIndex], x-64, y, 128, 64);
+                gc.drawImage(animationImages[playerAction][aniIndex], x-width, y, width*2, height);
             }
         }else{
-            gc.drawImage(animationImages[playerAction][aniIndex], x, y, 64, 64);
+            gc.drawImage(animationImages[playerAction][aniIndex], x, y, width, height);
             if(death==true&&aniIndex==7){
                 playAgain();
             }

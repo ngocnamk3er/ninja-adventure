@@ -20,15 +20,13 @@ public class Door extends Enity {
     private final int prepareUp = 2;
     private int doorAction = CLOSED;
     private int direction = DONTMOVE;
+    private float width = 64;
+    private float height = 192;
     private GraphicsContext gc;
     private ArrayList<Button> buttons;
-    public Door() {
-    }
-    public void setProperties(float x, float y, float width, float height,Image[][] animationImages, MapInteractionManager mapInteractionManager) {
+    public void setProperties(float x, float y,Image[][] animationImages, MapInteractionManager mapInteractionManager) {
         this.x = x;
         this.y = y;
-        this.height = height;
-        this.width=width;
         this.gc =  mapInteractionManager.getGc();
         this.buttons = mapInteractionManager.getButtons();
         this.animationImages = animationImages;

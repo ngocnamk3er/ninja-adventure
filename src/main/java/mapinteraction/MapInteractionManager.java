@@ -72,24 +72,24 @@ public class MapInteractionManager {
         for(int i=0;i<12;i++){
             for(int j=0;j<21;j++){
                 if(MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == 'c'){
-                    Coin coin = new Coin(j*64, i*64, 32, 32,gc,animationImagesCoin);
+                    Coin coin = new Coin(j*64, i*64,gc,animationImagesCoin);
                     coins.add(coin);
                 }
                 if(MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == 'p'){
-                    player.setProperties(j*64, i*64, 64, 64,animationImagesPlayer,this);
+                    player.setProperties(j*64, i*64,animationImagesPlayer,this);
                     
                 }
                 if(MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == 's'){
-                    Stone stone = new Stone(j*64, i*64, 64, 64,animationImageStone ,this);
+                    Stone stone = new Stone(j*64, i*64,animationImageStone ,this);
                     stones.add(stone);
                 }
                 if(MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == 'b'){
-                    Button button = new Button(j*64, i*64, 64, 64,animationImagesButton,this);
+                    Button button = new Button(j*64, i*64,animationImagesButton,this);
                     buttons.add(button);
                 }
                 if(MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == 'd'){
                     door = new Door();
-                    door.setProperties(j*64, i*64, 64, 64*3,animationImagesDoor,this);
+                    door.setProperties(j*64, i*64,animationImagesDoor,this);
                 }
                 if(MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == 'D'){
                     strangeDoor.setProperties(j*64, i*64, gc,animationImageStrangeDoor);

@@ -13,8 +13,10 @@ public class Coin extends Enity {
     private int coinAction;
     private final int IDLE = 0;
     private final int PICKEDUP = 1;
-    public Coin(float x, float y, float width, float height, GraphicsContext gc, Image[][] animationImages) {
-        super(x, y, width, height);
+    private float width = 32;
+    private float height = 32;
+    public Coin(float x, float y, GraphicsContext gc, Image[][] animationImages) {
+        super(x, y);
         this.gc = gc;
         this.animationImages = animationImages;
     }

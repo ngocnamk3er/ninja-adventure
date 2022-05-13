@@ -6,11 +6,9 @@ public abstract class Enity {
     protected float width;
     protected float height;
     public Enity(){};
-    public Enity(float x, float y, float width, float height) {
+    public Enity(float x, float y) {
         this.x = x;
         this.y = y;
-        this.width = width;
-        this.height = height;
     }
     public float getX() {
         return x;

@@ -13,8 +13,10 @@ public class Button extends Enity {
     private GraphicsContext gc;
     private Player player;
     private ArrayList<Stone> stones;
-    public Button(float x, float y, float width, float height,Image[] animationImages, MapInteractionManager mapInteractionManager) {
-        super(x, y, width, height);
+    private float width = 64;
+    private float height = 64;
+    public Button(float x, float y,Image[] animationImages, MapInteractionManager mapInteractionManager) {
+        super(x, y);
         this.gc=mapInteractionManager.getGc();
         this.stones = mapInteractionManager.getStones();
         this.player = mapInteractionManager.getPlayer();
@@ -52,9 +54,9 @@ public class Button extends Enity {
     @Override
     public void render() {
         if(!pressed){
-            gc.drawImage(animationImages[0], x, y + 58, 64, 16);
+            gc.drawImage(animationImages[0], x, y + 56, width, height/4);
         }else{
-            gc.drawImage(animationImages[1], x, y + 58, 64, 16);
+            gc.drawImage(animationImages[1], x, y + 56, width, height/4);
         }
         
     }
