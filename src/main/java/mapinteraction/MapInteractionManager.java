@@ -32,7 +32,7 @@ public class MapInteractionManager {
     private GraphicsContext gc;
     private int [][] mapData;
     private Image[][] animationImagesPlayer;
-    private Image[] animationImagesCoin;
+    private Image[][] animationImagesCoin;
     private Image animationImageStone;
     private Image[][] animationImagesDoor;
     private Image[] animationImagesButton;
@@ -163,12 +163,20 @@ public class MapInteractionManager {
         }
     }
     private void loadAnimationsCoins() {
-        animationImagesCoin =  new Image[6];
+        animationImagesCoin =  new Image[2][6];
         try {
             bufferedImage = ImageIO.read(Coin.class.getResourceAsStream("coin.png"));
             for(int i = 0 ; i < 6 ; i++) {
                 try {
-                    animationImagesCoin[i]=SwingFXUtils.toFXImage(bufferedImage.getSubimage(i*8, 0, 8, 8), null);
+                    animationImagesCoin[0][i]=SwingFXUtils.toFXImage(bufferedImage.getSubimage(i*8, 0, 8, 8), null);
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+            bufferedImage = ImageIO.read(Coin.class.getResourceAsStream("coin_pickup.png"));
+            for(int i = 0 ; i < 6 ; i++) {
+                try {
+                    animationImagesCoin[1][i]=SwingFXUtils.toFXImage(bufferedImage.getSubimage(i*8, 0, 8, 16), null);
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }

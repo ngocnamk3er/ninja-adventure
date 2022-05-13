@@ -81,6 +81,7 @@ public class Stone extends Enity {
             y = rowBrick*64;
         }
         // System.out.println(y);
+        
     }
     private void setInAir() {
         if((!isSolid(x, y + 64, mapData))&&(!isSolid(x + 63, y + 64, mapData))&&underStones.isEmpty()){
