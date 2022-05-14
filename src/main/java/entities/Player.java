@@ -57,7 +57,7 @@ public class Player extends Enity {
     //other objects
     private ArrayList<Coin> coins;
     private ArrayList<Stone> stones;
-    private ArrayList<Enemy> enimies;
+    private ArrayList<Enemy> enemies;
     private MapInteractionManager mapInteractionManager;
     private MakeMainScene makeMainScene;
     private Door door;
@@ -80,7 +80,7 @@ public class Player extends Enity {
         this.door = mapInteractionManager.getDoor();
         this.makeMainScene = mapInteractionManager.getMakeMainScene();
         this.strangeDoor = mapInteractionManager.getStrangeDoor();
-        this.enimies = mapInteractionManager.getEnemies();
+        this.enemies = mapInteractionManager.getEnemies();
         this.animationImages = animationImages;
         this.mapInteractionManager = mapInteractionManager;
     }
@@ -207,22 +207,26 @@ public class Player extends Enity {
             nextLevel = true;
         }
     }
-    private void checkEnimies() {
-        for(int i=0;i<enimies.size();i++){
-            Enemy enimy = enimies.get(i);
-            if(enimy.isDeath()==false){
+    private void checkEnemies() {
+        for(int i=0;i<enemies.size();i++){
+            Enemy enemy = enemies.get(i);
+            if(enemy.isDeath()==false){
                 if(attacking2==true){
                     setSwordPos();
-                    if(Math.abs(xSword-enimy.getX())<32&&Math.abs((ySword+height/2)-(enimy.getY()+enimy.getHeight()/2))<32){
-                        if(enimy.isHit()==false){
-                            enimy.setHit(true);
+                    if(Math.abs(xSword-enemy.getX())<32&&Math.abs((ySword+height/2)-(enemy.getY()+enemy.getHeight()/2))<32){
+                        if(enemy.isHit()==false){
+                            enemy.setHit(true);
                         }
                     }
                 }else{
-                    if(Math.abs(x-enimy.getX())<48&&Math.abs(y-enimy.getY())<48){
-                        if(ySpeed>0&&y<enimy.getY()){
-                            enimy.setDeath(true);
-                            ySpeed = -ySpeed/2;
+                    if(Math.abs(x-enemy.getX())<48&&Math.abs(y-enemy.getY())<64){
+                        if(ySpeed>0&&y<enemy.getY()){
+                            if(enemy instanceof Enemy3){
+                                ySpeed = -20;
+                            }else{
+                                enemy.setDeath(true);
+                                ySpeed = -ySpeed/2;
+                            }
                         }else{
                             death = true;
                         }
@@ -241,7 +245,7 @@ public class Player extends Enity {
     }
 
     private void handleCollision(){
-        checkEnimies();
+        checkEnemies();
         checkCoins();
         checkStones();
         checkDoor();

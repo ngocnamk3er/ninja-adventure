@@ -2,7 +2,6 @@ package entities;
 
 import java.util.ArrayList;
 
-import javafx.beans.binding.DoubleExpression;
 import javafx.scene.image.Image;
 import static help.HelpMethods.*;
 public abstract class Enemy extends Enity {
@@ -16,7 +15,7 @@ public abstract class Enemy extends Enity {
     protected int aniIndex = 0;
     protected int aniSpeed = 6;
     protected int enimyAction = 0;
-    protected int healthPoints = 3;
+    protected int healthPoints = 2;
     protected ArrayList<Stone> stones;
     protected Door door;
     protected int [][] mapData;
