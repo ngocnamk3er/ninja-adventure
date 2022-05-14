@@ -2,6 +2,7 @@ package entities;
 
 import java.util.ArrayList;
 
+import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
 import mapinteraction.MapInteractionManager;
 public class Door extends Enity {
@@ -19,6 +20,11 @@ public class Door extends Enity {
     private int doorAction = CLOSED;
     private int direction = DONTMOVE;
     private ArrayList<Button> buttons;
+    public Door(){
+        this.gc = new Canvas().getGraphicsContext2D();
+        buttons = new ArrayList<>();
+        animationImages = new Image[2][15];
+    }
     public void setProperties(float x, float y,Image[][] animationImages, MapInteractionManager mapInteractionManager) {
         this.x = x;
         this.y = y;

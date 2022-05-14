@@ -49,7 +49,6 @@ public class MapManager {
         }
     }
     public void render(){
-        // gc.clearRect(0, 0, 21*64, 12*64);
         gc.drawImage(maplayout0Image,0,0 ,21*64, 12*64);
         gc.drawImage(maplayout1Image,0,0, 21*64, 12*64);
         for(int i=0;i<12;i++){

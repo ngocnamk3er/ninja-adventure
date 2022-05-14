@@ -6,7 +6,7 @@ public abstract class Enity {
     protected float x;
     protected float y;
     protected float width;
-    protected float height=2;
+    protected float height;
     protected GraphicsContext gc;
     public Enity(){};
     public Enity(float x, float y) {
