@@ -1,11 +1,10 @@
 package entities;
 
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import mapinteraction.MapInteractionManager;
 
 public class Coin extends Enity {
     private Image[][] animationImages;
-    private GraphicsContext gc;
     private int aniTick=0;
     private int aniSpeed=5;
     private int aniIndex=0;
@@ -13,12 +12,12 @@ public class Coin extends Enity {
     private int coinAction;
     private final int IDLE = 0;
     private final int PICKEDUP = 1;
-    private float width = 32;
-    private float height = 32;
     private boolean disappear = false;
-    public Coin(float x, float y, GraphicsContext gc, Image[][] animationImages) {
+    public Coin(float x, float y, MapInteractionManager mapInteractionManager, Image[][] animationImages) {
         super(x, y);
-        this.gc = gc;
+        width = 32;
+        height = 32;
+        this.gc = mapInteractionManager.getGc();
         this.animationImages = animationImages;
     }
     private void setAnimation(){

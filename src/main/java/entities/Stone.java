@@ -11,7 +11,6 @@ import java.util.HashSet;
 public class Stone extends Enity {
 
     private Image animationImage;
-    private GraphicsContext gc;
     private int[][] mapData;
     private float gravity = 0.7f;
     private float ySpeed = 0;
@@ -22,8 +21,6 @@ public class Stone extends Enity {
     private Player player;
     private HashSet<Integer> nextStones = new HashSet<>();
     private HashSet<Integer> underStones = new HashSet<>();
-    private float width = 64;
-    private float height = 64;
     public Stone(float x, float y,Image animationImage,MapInteractionManager mapInteractionManager) {
         super(x, y);
         this.mapData = mapInteractionManager.getMapData();
@@ -31,6 +28,8 @@ public class Stone extends Enity {
         this.stones = mapInteractionManager.getStones();
         this.player = mapInteractionManager.getPlayer();
         this.animationImage = animationImage;
+        width = 64;
+        height = 64;
     }
     public void checkPlayer(){
         if(ySpeed>0){

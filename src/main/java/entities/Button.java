@@ -3,20 +3,18 @@ package entities;
 import java.util.ArrayList;
 
 
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import mapinteraction.MapInteractionManager;
 
 public class Button extends Enity {
     private boolean pressed;
     private Image[] animationImages;
-    private GraphicsContext gc;
     private Player player;
     private ArrayList<Stone> stones;
-    private float width = 64;
-    private float height = 64;
     public Button(float x, float y,Image[] animationImages, MapInteractionManager mapInteractionManager) {
         super(x, y);
+        width = 64;
+        height = 64;
         this.gc=mapInteractionManager.getGc();
         this.stones = mapInteractionManager.getStones();
         this.player = mapInteractionManager.getPlayer();

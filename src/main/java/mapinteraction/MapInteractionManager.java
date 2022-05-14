@@ -6,7 +6,8 @@ import javax.imageio.ImageIO;
 import entities.Button;
 import entities.Coin;
 import entities.Door;
-import entities.Enimy;
+import entities.Enemy1;
+import entities.Enemy2;
 import entities.Enity;
 import entities.Player;
 import entities.Stone;
@@ -16,19 +17,18 @@ import inputs.SetKeyBoardInputs;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.image.WritableImage;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import main.MakeMainScene;
-import static help.HelpMethods.*;
 public class MapInteractionManager {
     private MakeMainScene makeMainScene;
     private ArrayList<Coin> coins;
     private ArrayList<Stone> stones;
     private ArrayList<Button> buttons;
-    private ArrayList<Enimy> enimies;
+    private ArrayList<Enemy1> enemy1s;
+    private ArrayList<Enemy2> enemy2s;
     private Player player;
     private Door door;
     private StrangeDoor strangeDoor;
@@ -42,7 +42,8 @@ public class MapInteractionManager {
     private BufferedImage bufferedImage;
     private Image animationImageStrangeDoor;
     private int levelValue;
-    private Image[][] animationImagesEnimy;
+    private Image[][] animationImagesEnimy1;
+    private Image[][] animationImagesEnimy2;
     private void loadAnimations(){
         loadAnimationsPlayer();
         loadAnimationsCoins();
@@ -50,15 +51,18 @@ public class MapInteractionManager {
         loadAnimationsDoor();
         loadAnimationsButton();
         loadAnimationsStrangDoor();
-        loadAnimationsEnimy();
+        loadAnimationsEnimy1();
+        loadAnimationsEnimy2();
     }
+
     public MapInteractionManager(GraphicsContext gc,int [][]mapData, MakeMainScene makeMainScene){
         loadAnimations();
         this.makeMainScene = makeMainScene;
         coins = new ArrayList<>();
         stones = new ArrayList<>();
         buttons = new ArrayList<>();
-        enimies = new ArrayList<>();
+        enemy1s = new ArrayList<>();
+        enemy2s = new ArrayList<>();
         player = new Player();
         door = new Door();
         strangeDoor = new StrangeDoor();
@@ -73,14 +77,15 @@ public class MapInteractionManager {
     private void loadDataMapInteraction(int levelValue){
         coins = new ArrayList<>();
         stones = new ArrayList<>();
-        enimies = new ArrayList<>();
+        enemy1s = new ArrayList<>();
+        enemy2s = new ArrayList<>();
         buttons = new ArrayList<>();
         player = new Player();
         door = null;
         for(int i=0;i<12;i++){
             for(int j=0;j<21;j++){
                 if(MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == 'c'){
-                    Coin coin = new Coin(j*64, i*64,gc,animationImagesCoin);
+                    Coin coin = new Coin(j*64, i*64,this,animationImagesCoin);
                     coins.add(coin);
                 }
                 if(MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == 'p'){
@@ -102,9 +107,13 @@ public class MapInteractionManager {
                 if(MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == 'D'){
                     strangeDoor.setProperties(j*64, i*64, gc,animationImageStrangeDoor);
                 }
-                if(MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == 'e'){
-                    Enimy enimy = new Enimy(j*64, i*64,animationImagesEnimy ,this);
-                    enimies.add(enimy);
+                if(MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == '1'){
+                    Enemy1 enimy1 = new Enemy1(j*64, i*64,animationImagesEnimy1 ,this);
+                    enemy1s.add(enimy1);
+                }
+                if(MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == '2'){
+                    Enemy2 enimy2 = new Enemy2(j*64, i*64,animationImagesEnimy2 ,this);
+                    enemy2s.add(enimy2);
                 }
             }
         }
@@ -126,8 +135,11 @@ public class MapInteractionManager {
         if(door!=null){
             door.update();
         }
-        for(Enimy enimy:enimies){
-            enimy.update();
+        for(Enemy1 enimy1:enemy1s){
+            enimy1.update();
+        }
+        for(Enemy2 enemy2:enemy2s){
+            enemy2.update();
         }
     }
     public void render(){
@@ -149,8 +161,11 @@ public class MapInteractionManager {
         for(Button button:buttons){
             button.render();
         }
-        for(Enimy enimy:enimies){
-            enimy.render();
+        for(Enemy1 enemy1:enemy1s){
+            enemy1.render();
+        }
+        for(Enemy2 enemy2:enemy2s){
+            enemy2.render();
         }
         if(door!=null){
             door.render();
@@ -158,93 +173,130 @@ public class MapInteractionManager {
         
         player.render();  
     }
-    
-    private void loadAnimationsEnimy() {
-        animationImagesEnimy = new Image[8][15];
-        for(int i=0;i<8;i++){
-            if(i==Enimy.IDLE_R){
+    private void loadAnimationsEnimy2() {
+        animationImagesEnimy2 = new Image[3][6];
+        for(int i=0;i<3;i++){
+            if(i==Enemy2.RUN){
                 try {
-                    bufferedImage = ImageIO.read(Enimy.class.getResourceAsStream("slimeIdleR.png"));
-                    int AmountSprites = Enimy.getAmountSpritesOfEnimyAction(i);
+                    bufferedImage = ImageIO.read(Enemy2.class.getResourceAsStream("wormRun.png"));
+                    int AmountSprites = Enemy2.getAmountSpritesOfEnimy2Action(i);
                     for(int j=0;j<AmountSprites;j++) {
-                        animationImagesEnimy[i][j]= SwingFXUtils.toFXImage(bufferedImage.getSubimage((AmountSprites-1-j)*16, 0, 16, 16), null);
+                        animationImagesEnimy2[i][j]= SwingFXUtils.toFXImage(bufferedImage.getSubimage(j*16, 0, 16, 8), null);
                     }
                 } catch (Exception e) {
                     System.out.println(e.getMessage()+"["+i+"]");
                 }
             }
-            if(i==Enimy.RUN_R){
+            if(i==Enemy2.HIT){
                 try {
-                    bufferedImage = ImageIO.read(Enimy.class.getResourceAsStream("slimeRunR.png"));
-                    int AmountSprites = Enimy.getAmountSpritesOfEnimyAction(i);
+                    bufferedImage = ImageIO.read(Enemy2.class.getResourceAsStream("wormHit.png"));
+                    int AmountSprites = Enemy2.getAmountSpritesOfEnimy2Action(i);
                     for(int j=0;j<AmountSprites;j++) {
-                        animationImagesEnimy[i][j]= SwingFXUtils.toFXImage(bufferedImage.getSubimage((AmountSprites-1-j)*16, 0, 16, 24), null);
+                        animationImagesEnimy2[i][j]= SwingFXUtils.toFXImage(bufferedImage.getSubimage(j*16, 0, 16, 8), null);
+                    }
+                } catch (Exception e) {
+                    System.out.println(e.getMessage()+"["+i+"]");
+                }
+            }
+            if(i==Enemy2.DEATH){
+                try {
+                    bufferedImage = ImageIO.read(Enemy2.class.getResourceAsStream("wormDeath.png"));
+                    int AmountSprites = Enemy2.getAmountSpritesOfEnimy2Action(i);
+                    for(int j=0;j<AmountSprites;j++) {
+                        animationImagesEnimy2[i][j]= SwingFXUtils.toFXImage(bufferedImage.getSubimage(j*16, 0, 16, 8), null);
+                    }
+                } catch (Exception e) {
+                    System.out.println(e.getMessage()+"["+i+"]");
+                }
+            }
+        }
+    }
+    private void loadAnimationsEnimy1() {
+        animationImagesEnimy1 = new Image[8][15];
+        for(int i=0;i<8;i++){
+            if(i==Enemy1.IDLE_R){
+                try {
+                    bufferedImage = ImageIO.read(Enemy1.class.getResourceAsStream("slimeIdleR.png"));
+                    int AmountSprites = Enemy1.getAmountSpritesOfEnimy1Action(i);
+                    for(int j=0;j<AmountSprites;j++) {
+                        animationImagesEnimy1[i][j]= SwingFXUtils.toFXImage(bufferedImage.getSubimage((AmountSprites-1-j)*16, 0, 16, 16), null);
+                    }
+                } catch (Exception e) {
+                    System.out.println(e.getMessage()+"["+i+"]");
+                }
+            }
+            if(i==Enemy1.RUN_R){
+                try {
+                    bufferedImage = ImageIO.read(Enemy1.class.getResourceAsStream("slimeRunR.png"));
+                    int AmountSprites = Enemy1.getAmountSpritesOfEnimy1Action(i);
+                    for(int j=0;j<AmountSprites;j++) {
+                        animationImagesEnimy1[i][j]= SwingFXUtils.toFXImage(bufferedImage.getSubimage((AmountSprites-1-j)*16, 0, 16, 24), null);
                     }
                 } catch (Exception e) {
                     System.out.println(e.getMessage()+"["+i+"]");
                 }           
             }
-            if(i==Enimy.DEATH_R){
+            if(i==Enemy1.DEATH_R){
                 try {
-                    bufferedImage = ImageIO.read(Enimy.class.getResourceAsStream("slimeDeathR.png"));
-                    int AmountSprites = Enimy.getAmountSpritesOfEnimyAction(i);
+                    bufferedImage = ImageIO.read(Enemy1.class.getResourceAsStream("slimeDeathR.png"));
+                    int AmountSprites = Enemy1.getAmountSpritesOfEnimy1Action(i);
                     for(int j=0;j<AmountSprites;j++) {
-                        animationImagesEnimy[i][j]= SwingFXUtils.toFXImage(bufferedImage.getSubimage((AmountSprites-1-j)*16, 0, 16, 16), null);
+                        animationImagesEnimy1[i][j]= SwingFXUtils.toFXImage(bufferedImage.getSubimage((AmountSprites-1-j)*16, 0, 16, 16), null);
                     }
                 } catch (Exception e) {
                     System.out.println(e.getMessage()+"["+i+"]");
                 }    
             }
-            if(i==Enimy.HIT_R){
+            if(i==Enemy1.HIT_R){
                 try {
-                    bufferedImage = ImageIO.read(Enimy.class.getResourceAsStream("slimeHitR.png"));
-                    int AmountSprites = Enimy.getAmountSpritesOfEnimyAction(i);
+                    bufferedImage = ImageIO.read(Enemy1.class.getResourceAsStream("slimeHitR.png"));
+                    int AmountSprites = Enemy1.getAmountSpritesOfEnimy1Action(i);
                     for(int j=0;j<AmountSprites;j++) {
-                        animationImagesEnimy[i][j]= SwingFXUtils.toFXImage(bufferedImage.getSubimage((AmountSprites-1-j)*16, 0, 16, 16), null);
+                        animationImagesEnimy1[i][j]= SwingFXUtils.toFXImage(bufferedImage.getSubimage((AmountSprites-1-j)*16, 0, 16, 16), null);
                     }
                 } catch (Exception e) {
                     System.out.println(e.getMessage()+"["+i+"]");
                 }   
             }
-            if(i==Enimy.IDLE_L){
+            if(i==Enemy1.IDLE_L){
                 try {
-                    bufferedImage = ImageIO.read(Enimy.class.getResourceAsStream("slimeIdleL.png"));
-                    int AmountSprites = Enimy.getAmountSpritesOfEnimyAction(i);
+                    bufferedImage = ImageIO.read(Enemy1.class.getResourceAsStream("slimeIdleL.png"));
+                    int AmountSprites = Enemy1.getAmountSpritesOfEnimy1Action(i);
                     for(int j=0;j<AmountSprites;j++) {
-                        animationImagesEnimy[i][j]= SwingFXUtils.toFXImage(bufferedImage.getSubimage(j*16, 0, 16, 16), null);
+                        animationImagesEnimy1[i][j]= SwingFXUtils.toFXImage(bufferedImage.getSubimage(j*16, 0, 16, 16), null);
                     }
                 } catch (Exception e) {
                     System.out.println(e.getMessage()+"["+i+"]");
                 }
             }
-            if(i==Enimy.RUN_L){
+            if(i==Enemy1.RUN_L){
                 try {
-                    bufferedImage = ImageIO.read(Enimy.class.getResourceAsStream("slimeRunL.png"));
-                    int AmountSprites = Enimy.getAmountSpritesOfEnimyAction(i);
+                    bufferedImage = ImageIO.read(Enemy1.class.getResourceAsStream("slimeRunL.png"));
+                    int AmountSprites = Enemy1.getAmountSpritesOfEnimy1Action(i);
                     for(int j=0;j<AmountSprites;j++) {
-                        animationImagesEnimy[i][j]= SwingFXUtils.toFXImage(bufferedImage.getSubimage(j*16, 0, 16, 24), null);
+                        animationImagesEnimy1[i][j]= SwingFXUtils.toFXImage(bufferedImage.getSubimage(j*16, 0, 16, 24), null);
                     }
                 } catch (Exception e) {
                     System.out.println(e.getMessage()+"["+i+"]");
                 }           
             }
-            if(i==Enimy.DEATH_L){
+            if(i==Enemy1.DEATH_L){
                 try {
-                    bufferedImage = ImageIO.read(Enimy.class.getResourceAsStream("slimeDeathL.png"));
-                    int AmountSprites = Enimy.getAmountSpritesOfEnimyAction(i);
+                    bufferedImage = ImageIO.read(Enemy1.class.getResourceAsStream("slimeDeathL.png"));
+                    int AmountSprites = Enemy1.getAmountSpritesOfEnimy1Action(i);
                     for(int j=0;j<AmountSprites;j++) {
-                        animationImagesEnimy[i][j]= SwingFXUtils.toFXImage(bufferedImage.getSubimage(j*16, 0, 16, 16), null);
+                        animationImagesEnimy1[i][j]= SwingFXUtils.toFXImage(bufferedImage.getSubimage(j*16, 0, 16, 16), null);
                     }
                 } catch (Exception e) {
                     System.out.println(e.getMessage()+"["+i+"]");
                 }    
             }
-            if(i==Enimy.HIT_L){
+            if(i==Enemy1.HIT_L){
                 try {
-                    bufferedImage = ImageIO.read(Enimy.class.getResourceAsStream("slimeHitL.png"));
-                    int AmountSprites = Enimy.getAmountSpritesOfEnimyAction(i);
+                    bufferedImage = ImageIO.read(Enemy1.class.getResourceAsStream("slimeHitL.png"));
+                    int AmountSprites = Enemy1.getAmountSpritesOfEnimy1Action(i);
                     for(int j=0;j<AmountSprites;j++) {
-                        animationImagesEnimy[i][j]= SwingFXUtils.toFXImage(bufferedImage.getSubimage(j*16, 0, 16, 16), null);
+                        animationImagesEnimy1[i][j]= SwingFXUtils.toFXImage(bufferedImage.getSubimage(j*16, 0, 16, 16), null);
                     }
                 } catch (Exception e) {
                     System.out.println(e.getMessage()+"["+i+"]");
@@ -554,11 +606,11 @@ public class MapInteractionManager {
     public void setStrangeDoor(StrangeDoor strangeDoor) {
         this.strangeDoor = strangeDoor;
     }
-    public ArrayList<Enimy> getEnimies() {
-        return enimies;
+    public ArrayList<Enemy1> getEnemy1s() {
+        return enemy1s;
     }
-    public void setEnimies(ArrayList<Enimy> enimies) {
-        this.enimies = enimies;
+    public void setEnemy1s(ArrayList<Enemy1> enemy1s) {
+        this.enemy1s = enemy1s;
     }
     
 }

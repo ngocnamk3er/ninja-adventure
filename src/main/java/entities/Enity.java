@@ -1,10 +1,13 @@
 package entities;
 
+import javafx.scene.canvas.GraphicsContext;
+
 public abstract class Enity {
     protected float x;
     protected float y;
     protected float width;
-    protected float height;
+    protected float height=2;
+    protected GraphicsContext gc;
     public Enity(){};
     public Enity(float x, float y) {
         this.x = x;
@@ -22,5 +25,19 @@ public abstract class Enity {
     public void setY(float y) {
         this.y = y;
     }
+    
+    public float getWidth() {
+        return width;
+    }
+    public void setWidth(float width) {
+        this.width = width;
+    }
+    public float getHeight() {
+        return height;
+    }
+    public void setHeight(float height) {
+        this.height = height;
+    }
     public abstract void render();
+    public abstract void update();
 }

@@ -22,5 +22,9 @@ public class StrangeDoor extends Enity {
     public void setAnimationImage(Image animationImage) {
         this.animationImage = animationImage;
     }
+    @Override
+    public void update() {
+        
+    }
     
 }

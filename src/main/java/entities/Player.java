@@ -1,7 +1,6 @@
 package entities;
 
 
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import main.MakeMainScene;
 import mapinteraction.MapInteractionManager;
@@ -12,7 +11,6 @@ import java.util.ArrayList;
 
 public class Player extends Enity {
     private Image[][] animationImages;
-    private GraphicsContext gc;
     private float width = 64;
     private float height = 64;
     //right
@@ -59,7 +57,7 @@ public class Player extends Enity {
     //other objects
     private ArrayList<Coin> coins;
     private ArrayList<Stone> stones;
-    private ArrayList<Enimy> enimies;
+    private ArrayList<Enemy1> enimies;
     private MapInteractionManager mapInteractionManager;
     private MakeMainScene makeMainScene;
     private Door door;
@@ -73,6 +71,8 @@ public class Player extends Enity {
     public void setProperties( float x, float y,Image[][] animationImages,MapInteractionManager mapInteractionManager) {
         this.x = x;
         this.y = y;
+        width = 64;
+        height = 64;
         this.gc = mapInteractionManager.getGc();
         this.mapData = mapInteractionManager.getMapData();
         this.coins = mapInteractionManager.getCoins();
@@ -80,7 +80,7 @@ public class Player extends Enity {
         this.door = mapInteractionManager.getDoor();
         this.makeMainScene = mapInteractionManager.getMakeMainScene();
         this.strangeDoor = mapInteractionManager.getStrangeDoor();
-        this.enimies = mapInteractionManager.getEnimies();
+        this.enimies = mapInteractionManager.getEnemy1s();
         this.animationImages = animationImages;
         this.mapInteractionManager = mapInteractionManager;
     }
@@ -209,7 +209,7 @@ public class Player extends Enity {
     }
     private void checkEnimies() {
         for(int i=0;i<enimies.size();i++){
-            Enimy enimy = enimies.get(i);
+            Enemy1 enimy = enimies.get(i);
             if(enimy.isDeath()==false){
                 if(attacking2==true){
                     setSwordPos();
@@ -475,14 +475,6 @@ public class Player extends Enity {
 
     public void setJump(boolean jump) {
         this.jump = jump;
-    }
-
-    public GraphicsContext getGc() {
-        return gc;
-    }
-
-    public void setGc(GraphicsContext gc) {
-        this.gc = gc;
     }
 
     public boolean isDeath() {
