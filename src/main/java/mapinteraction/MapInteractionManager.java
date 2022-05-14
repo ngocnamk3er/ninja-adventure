@@ -10,6 +10,7 @@ import entities.Enemy;
 import entities.Enemy1;
 import entities.Enemy2;
 import entities.Enemy3;
+import entities.Enemy4;
 import entities.Enity;
 import entities.Player;
 import entities.Stone;
@@ -46,6 +47,7 @@ public class MapInteractionManager {
     private Image[][] animationImagesEnimy1;
     private Image[][] animationImagesEnimy2;
     private Image[][] animationImagesEnimy3;
+    private Image[] animationImagesEnimy4;
     private void loadAnimations(){
         loadAnimationsPlayer();
         loadAnimationsCoins();
@@ -56,9 +58,8 @@ public class MapInteractionManager {
         loadAnimationsEnimy1();
         loadAnimationsEnimy2();
         loadAnimationsEnimy3();
+        loadAnimationsEnimy4();
     }
-
-
     public MapInteractionManager(GraphicsContext gc,int [][]mapData, MakeMainScene makeMainScene){
         loadAnimations();
         this.makeMainScene = makeMainScene;
@@ -120,6 +121,12 @@ public class MapInteractionManager {
                     Enemy3 enimy3 = new Enemy3(j*64, i*64,animationImagesEnimy3 ,this);
                     enemies.add(enimy3);
                 }
+                if(MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == '4'){
+                    Enemy4 enimy4 = new Enemy4(j*64, i*64,animationImagesEnimy4 ,this);
+                    enemies.add(enimy4);
+                    enimy4 = new Enemy4(j*64, i*64-32,animationImagesEnimy4 ,this);
+                    enemies.add(enimy4);
+                }
             }
         }
     }
@@ -165,6 +172,18 @@ public class MapInteractionManager {
         }
         door.render();
         player.render();  
+    }
+    private void loadAnimationsEnimy4() {
+        animationImagesEnimy4 = new Image[6];
+        try {
+            bufferedImage = ImageIO.read(Enemy4.class.getResourceAsStream("mushroomIdle.png"));
+            int AmountSprites = Enemy4.getAmountSpritesOfEnimy4Action();
+            for(int j=0;j<AmountSprites;j++) {
+                animationImagesEnimy4[j] = SwingFXUtils.toFXImage(bufferedImage.getSubimage(j*16, 0, 16, 16), null);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     private void loadAnimationsEnimy3() {
         animationImagesEnimy3 = new Image[6][8];

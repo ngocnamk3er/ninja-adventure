@@ -219,16 +219,28 @@ public class Player extends Enity {
                         }
                     }
                 }else{
-                    if(Math.abs(x-enemy.getX())<48&&Math.abs(y-enemy.getY())<64){
-                        if(ySpeed>0&&y<enemy.getY()){
-                            if(enemy instanceof Enemy3){
-                                ySpeed = -20;
-                            }else{
-                                enemy.setDeath(true);
-                                ySpeed = -ySpeed/2;
+                    if(Math.abs(x+xSpeed-enemy.getX())<=48&&Math.abs(y-enemy.getY())<64){
+                        if(enemy instanceof Enemy4){
+                            if(ySpeed<=0){
+                                if(right){
+                                    x = enemy.getX() - 48; 
+                                }else{
+                                    x = enemy.getX() + 48;
+                                }
                             }
+                            y = y - 2;
+                            ySpeed = -20;
                         }else{
-                            death = true;
+                            if(ySpeed>0&&y<enemy.getY()){
+                                if(enemy instanceof Enemy3){
+                                    ySpeed = -20;
+                                }else{
+                                    enemy.setDeath(true);
+                                    ySpeed = -ySpeed/2;
+                                }
+                            }else{
+                                death = true;
+                            }
                         }
                     }   
                 }   
