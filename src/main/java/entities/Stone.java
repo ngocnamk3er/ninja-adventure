@@ -1,6 +1,5 @@
 package entities;
 
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import mapinteraction.MapInteractionManager;
 import static help.HelpMethods.*;
@@ -18,7 +17,10 @@ public class Stone extends Enity {
     private boolean inAir;
     private boolean canPush = true;
     private ArrayList<Stone> stones;
+    private ArrayList<Enemy> enemies;
     private Player player;
+    private Door door;
+    private boolean nextDoor = false;
     private HashSet<Integer> nextStones = new HashSet<>();
     private HashSet<Integer> underStones = new HashSet<>();
     public Stone(float x, float y,Image animationImage,MapInteractionManager mapInteractionManager) {
@@ -27,7 +29,9 @@ public class Stone extends Enity {
         this.gc=mapInteractionManager.getGc();
         this.stones = mapInteractionManager.getStones();
         this.player = mapInteractionManager.getPlayer();
+        this.enemies = mapInteractionManager.getEnemies();
         this.animationImage = animationImage;
+        this.door = mapInteractionManager.getDoor();
         width = 64;
         height = 64;
     }
@@ -58,8 +62,26 @@ public class Stone extends Enity {
             }
         }
     }
+    private void checkEnimies() {
+        for(int i=0;i<enemies.size();i++){
+            Enemy enemy = enemies.get(i);
+            if(ySpeed>0&&Math.abs(x-enemy.getX())<=64&y<enemy.getY()&&Math.abs(y-enemy.getY())<height){
+                enemy.setDeath(true);
+            }
+        }
+    }
+    private void checkDoor() {
+        // System.out.println(door.getX());
+        if(Math.abs(x-door.getX())<=64&&y+height>door.getyHitBox()&&y<door.getY()+door.getHeight()){
+            nextDoor = true;
+        }else{
+            nextDoor = false;
+        }
+    }
     private void handleCollision(){
+        checkEnimies();
         checkPlayer();
+        checkDoor();
         checkStones();
     }
     private void updatePos(){
@@ -69,13 +91,13 @@ public class Stone extends Enity {
         }else{
             ySpeed = 0;
         }
-        if (canMove(x + xSpeed,y,63,63, mapData) == true && nextStones.isEmpty()) {
+        if (canMove(x + xSpeed,y,63,63, mapData) == true && nextStones.isEmpty() && nextDoor == false) {
 		    x += xSpeed;
             canPush = true;
         }else{
             canPush = false;
         }
-        if (canMove(x,y+ySpeed,63,63, mapData) == true&&underStones.isEmpty()) {
+        if (canMove(x,y+ySpeed,63,63, mapData) == true && underStones.isEmpty()) {
 		    y += ySpeed;
         }else{
             int rowBrick = (int)(y+ySpeed)/64;

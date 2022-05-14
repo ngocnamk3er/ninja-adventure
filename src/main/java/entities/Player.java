@@ -57,7 +57,7 @@ public class Player extends Enity {
     //other objects
     private ArrayList<Coin> coins;
     private ArrayList<Stone> stones;
-    private ArrayList<Enemy1> enimies;
+    private ArrayList<Enemy> enimies;
     private MapInteractionManager mapInteractionManager;
     private MakeMainScene makeMainScene;
     private Door door;
@@ -80,7 +80,7 @@ public class Player extends Enity {
         this.door = mapInteractionManager.getDoor();
         this.makeMainScene = mapInteractionManager.getMakeMainScene();
         this.strangeDoor = mapInteractionManager.getStrangeDoor();
-        this.enimies = mapInteractionManager.getEnemy1s();
+        this.enimies = mapInteractionManager.getEnemies();
         this.animationImages = animationImages;
         this.mapInteractionManager = mapInteractionManager;
     }
@@ -209,11 +209,11 @@ public class Player extends Enity {
     }
     private void checkEnimies() {
         for(int i=0;i<enimies.size();i++){
-            Enemy1 enimy = enimies.get(i);
+            Enemy enimy = enimies.get(i);
             if(enimy.isDeath()==false){
                 if(attacking2==true){
                     setSwordPos();
-                    if(Math.abs(xSword-enimy.getX())<32&&Math.abs(ySword-enimy.getY())<32){
+                    if(Math.abs(xSword-enimy.getX())<32&&Math.abs((ySword+height/2)-(enimy.getY()+enimy.getHeight()/2))<32){
                         if(enimy.isHit()==false){
                             enimy.setHit(true);
                         }
@@ -244,9 +244,7 @@ public class Player extends Enity {
         checkEnimies();
         checkCoins();
         checkStones();
-        if(door!=null){
-            checkDoor();
-        }
+        checkDoor();
         checkStrangeDoor();
     }
     private void updatePos() {

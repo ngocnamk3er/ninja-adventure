@@ -6,6 +6,7 @@ import javax.imageio.ImageIO;
 import entities.Button;
 import entities.Coin;
 import entities.Door;
+import entities.Enemy;
 import entities.Enemy1;
 import entities.Enemy2;
 import entities.Enity;
@@ -27,8 +28,7 @@ public class MapInteractionManager {
     private ArrayList<Coin> coins;
     private ArrayList<Stone> stones;
     private ArrayList<Button> buttons;
-    private ArrayList<Enemy1> enemy1s;
-    private ArrayList<Enemy2> enemy2s;
+    private ArrayList<Enemy> enemies;
     private Player player;
     private Door door;
     private StrangeDoor strangeDoor;
@@ -61,8 +61,7 @@ public class MapInteractionManager {
         coins = new ArrayList<>();
         stones = new ArrayList<>();
         buttons = new ArrayList<>();
-        enemy1s = new ArrayList<>();
-        enemy2s = new ArrayList<>();
+        enemies = new ArrayList<>();
         player = new Player();
         door = new Door();
         strangeDoor = new StrangeDoor();
@@ -77,11 +76,10 @@ public class MapInteractionManager {
     private void loadDataMapInteraction(int levelValue){
         coins = new ArrayList<>();
         stones = new ArrayList<>();
-        enemy1s = new ArrayList<>();
-        enemy2s = new ArrayList<>();
+        enemies = new ArrayList<>();
         buttons = new ArrayList<>();
         player = new Player();
-        door = null;
+        door = new Door();
         for(int i=0;i<12;i++){
             for(int j=0;j<21;j++){
                 if(MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == 'c'){
@@ -101,7 +99,6 @@ public class MapInteractionManager {
                     buttons.add(button);
                 }
                 if(MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == 'd'){
-                    door = new Door();
                     door.setProperties(j*64, i*64,animationImagesDoor,this);
                 }
                 if(MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == 'D'){
@@ -109,11 +106,11 @@ public class MapInteractionManager {
                 }
                 if(MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == '1'){
                     Enemy1 enimy1 = new Enemy1(j*64, i*64,animationImagesEnimy1 ,this);
-                    enemy1s.add(enimy1);
+                    enemies.add(enimy1);
                 }
                 if(MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == '2'){
                     Enemy2 enimy2 = new Enemy2(j*64, i*64,animationImagesEnimy2 ,this);
-                    enemy2s.add(enimy2);
+                    enemies.add(enimy2);
                 }
             }
         }
@@ -131,16 +128,10 @@ public class MapInteractionManager {
         for(Button button:buttons){
             button.update();
         }
-
-        if(door!=null){
-            door.update();
+        for(Enemy enemy:enemies){
+            enemy.update();
         }
-        for(Enemy1 enimy1:enemy1s){
-            enimy1.update();
-        }
-        for(Enemy2 enemy2:enemy2s){
-            enemy2.update();
-        }
+        door.update();
     }
     public void render(){
         try {
@@ -161,16 +152,10 @@ public class MapInteractionManager {
         for(Button button:buttons){
             button.render();
         }
-        for(Enemy1 enemy1:enemy1s){
-            enemy1.render();
+        for(Enemy enemy:enemies){
+            enemy.render();
         }
-        for(Enemy2 enemy2:enemy2s){
-            enemy2.render();
-        }
-        if(door!=null){
-            door.render();
-        }
-        
+        door.render();
         player.render();  
     }
     private void loadAnimationsEnimy2() {
@@ -606,11 +591,13 @@ public class MapInteractionManager {
     public void setStrangeDoor(StrangeDoor strangeDoor) {
         this.strangeDoor = strangeDoor;
     }
-    public ArrayList<Enemy1> getEnemy1s() {
-        return enemy1s;
+
+    public ArrayList<Enemy> getEnemies() {
+        return enemies;
     }
-    public void setEnemy1s(ArrayList<Enemy1> enemy1s) {
-        this.enemy1s = enemy1s;
+
+    public void setEnemies(ArrayList<Enemy> enemies) {
+        this.enemies = enemies;
     }
     
 }

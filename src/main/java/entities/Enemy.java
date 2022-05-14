@@ -2,6 +2,7 @@ package entities;
 
 import java.util.ArrayList;
 
+import javafx.beans.binding.DoubleExpression;
 import javafx.scene.image.Image;
 import static help.HelpMethods.*;
 public abstract class Enemy extends Enity {
@@ -21,8 +22,7 @@ public abstract class Enemy extends Enity {
     protected int [][] mapData;
     protected float SpeedX;
     protected float xSpeed;
-
-
+    
     public boolean isDeath() {
         return death;
     }
@@ -42,7 +42,12 @@ public abstract class Enemy extends Enity {
             death = true;
         }
     }
-    protected void handleCollision() {
+    private void checkDoor(){
+        if(Math.abs(x+xSpeed-door.getX())<width&&y+height>door.getyHitBox()&&y<door.getyHitBox()+door.getHeight()-(door.getY()-door.getyHitBox())){
+            right=!right;
+        }
+    }
+    private void checkStones(){
         for(int i=0;i<stones.size();i++){
             Stone stone = stones.get(i);
             if(Math.abs(x+xSpeed-stone.getX())<width&&y+height>stone.getY()&&y<stone.getY()+stone.getHeight()){
@@ -50,6 +55,12 @@ public abstract class Enemy extends Enity {
             }
         }
     }
+    protected void handleCollision() {
+        if(!death){
+            checkDoor();
+            checkStones();
+        }
+    }   
     protected void updatePos() {
         xSpeed = 0;
         if(death||hit){
