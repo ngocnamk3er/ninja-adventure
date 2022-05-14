@@ -16,25 +16,27 @@ public class Player extends Enity {
     private float width = 64;
     private float height = 64;
     //right
-    private final int IDLE_R = 0;
-    private final int RUN_R = 1;
-    private final int ATTACK1_R = 2;
-    private final int ATTACK2_R = 3;
-    private final int PUSH_R = 4;
-    private final int JUMPDOWN_R = 5;
-    private final int JUMPUP_R = 6;
-    private final int DEATH_R = 7;
+    public static final int IDLE_R = 0;
+    public static final int RUN_R = 1;
+    public static final int ATTACK1_R = 2;
+    public static final int ATTACK2_R = 3;
+    public static final int PUSH_R = 4;
+    public static final int JUMPDOWN_R = 5;
+    public static final int JUMPUP_R = 6;
+    public static final int DEATH_R = 7;
     //left
-    private final int IDLE_L = 8;
-    private final int RUN_L = 9;
-    private final int ATTACK1_L = 10;
-    private final int ATTACK2_L = 11;
-    private final int PUSH_L = 12;
-    private final int JUMPDOWN_L = 13;
-    private final int JUMPUP_L = 14;
-    private final int DEATH_L = 15;
+    public static final int IDLE_L = 8;
+    public static final int RUN_L = 9;
+    public static final int ATTACK1_L = 10;
+    public static final int ATTACK2_L = 11;
+    public static final int PUSH_L = 12;
+    public static final int JUMPDOWN_L = 13;
+    public static final int JUMPUP_L = 14;
+    public static final int DEATH_L = 15;
     
-    private int playerAction = IDLE_L;
+    private float xSword;
+    private float ySword;
+    private int playerAction;
     private int aniTick = 0;
     private int aniIndex = 0;
     private int aniSpeed = 4;
@@ -57,6 +59,7 @@ public class Player extends Enity {
     //other objects
     private ArrayList<Coin> coins;
     private ArrayList<Stone> stones;
+    private ArrayList<Enimy> enimies;
     private MapInteractionManager mapInteractionManager;
     private MakeMainScene makeMainScene;
     private Door door;
@@ -77,14 +80,15 @@ public class Player extends Enity {
         this.door = mapInteractionManager.getDoor();
         this.makeMainScene = mapInteractionManager.getMakeMainScene();
         this.strangeDoor = mapInteractionManager.getStrangeDoor();
+        this.enimies = mapInteractionManager.getEnimies();
         this.animationImages = animationImages;
         this.mapInteractionManager = mapInteractionManager;
     }
 
     public void update() {
-        handleCollision();
         updateAnimationTick();
         updatePos();
+        handleCollision();
         setAnimation();
     }
     private void updateAnimationTick() {
@@ -173,9 +177,11 @@ public class Player extends Enity {
         double distance;
         for (int i=0;i<coins.size();i++) {
             Coin coin= coins.get(i);
-            distance = Math.sqrt(Math.pow(x - coin.getX(), 2.0) + Math.pow(y-coin.getY(), 2.0));
-            if(distance<=48){
-                coin.setPickedUp(true);
+            if(coin.isPickedUp()==false){
+                distance = Math.sqrt(Math.pow(x - coin.getX(), 2.0) + Math.pow(y-coin.getY(), 2.0));
+                if(distance<=48){
+                    coin.setPickedUp(true);
+                }
             }
         }  	
     }
@@ -201,7 +207,41 @@ public class Player extends Enity {
             nextLevel = true;
         }
     }
+    private void checkEnimies() {
+        for(int i=0;i<enimies.size();i++){
+            Enimy enimy = enimies.get(i);
+            if(enimy.isDeath()==false){
+                if(attacking2==true){
+                    setSwordPos();
+                    if(Math.abs(xSword-enimy.getX())<32&&Math.abs(ySword-enimy.getY())<32){
+                        if(enimy.isHit()==false){
+                            enimy.setHit(true);
+                        }
+                    }
+                }else{
+                    if(Math.abs(x-enimy.getX())<48&&Math.abs(y-enimy.getY())<48){
+                        if(ySpeed>0&&y<enimy.getY()){
+                            enimy.setDeath(true);
+                            ySpeed = -ySpeed/2;
+                        }else{
+                            death = true;
+                        }
+                    }   
+                }   
+            }
+        }
+    }
+    private void setSwordPos() {
+        if(right){
+            xSword = x + 64;
+        }else{
+            xSword = x - 64;
+        }
+        ySword = y;
+    }
+
     private void handleCollision(){
+        checkEnimies();
         checkCoins();
         checkStones();
         if(door!=null){
@@ -214,6 +254,7 @@ public class Player extends Enity {
         xSpeed = 0;
         setInAir(this.x, this.y, mapData);
         if(death||nextLevel){
+            attacking2 = false;
             return;
         }
         if(!inAir){
@@ -352,6 +393,33 @@ public class Player extends Enity {
     }
     private void playNextLevel() {
         makeMainScene.MakeGameNextLevel(mapInteractionManager.getLevelValue()+1);
+    }
+    public static int getAmountSpritesOfPlayerAction(int x) {
+        if (x == IDLE_L || x == IDLE_R) {
+            return 4;
+        }
+        else if (x == RUN_L || x == RUN_R) {
+            return 6;
+        }
+        else if (x == ATTACK1_L || x == ATTACK1_R) {
+            return 4;
+        }
+        else if (x == ATTACK2_L || x == ATTACK2_R) {
+            return 4;
+        }
+        else if (x == PUSH_L || x == PUSH_R) {
+            return 6;
+        }
+        else if (x == JUMPUP_L || x == JUMPUP_R) {
+            return 3;
+        }
+        else if (x == JUMPDOWN_L || x == JUMPDOWN_R) {
+            return 3;
+        }else if (x == DEATH_L || x == DEATH_R) {
+            return 8;
+        }else{
+            return 0;
+        }
     }
     public boolean isRight() {
         return right;

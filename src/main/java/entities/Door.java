@@ -5,15 +5,14 @@ import java.util.ArrayList;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import mapinteraction.MapInteractionManager;
-import static help.HelpMethods.*;
 public class Door extends Enity {
     private Image[][] animationImages;
     private int aniDoorIndex;
     private int aniTick;
     private int aniSpeed = 15;
     private float yHitBox;
-    private final int CLOSED = 0;
-    private final int MOVING = 1;
+    public static final int CLOSED = 0;
+    private static  final int MOVING = 1;
     private final int UP = 1;
     private final int DOWN = -1;
     private final int DONTMOVE = 0;
@@ -119,6 +118,15 @@ public class Door extends Enity {
     @Override
     public void render() {
         gc.drawImage(animationImages[doorAction][aniDoorIndex], x, y, width, height);
+    }
+    public static int getAmountSpritesOfDoor(int action) {
+        if(action == CLOSED){
+            return 10;
+        }else if (action == MOVING){
+            return 15;
+        }else{
+            return 0;
+        }
     }
     public float getyHitBox() {
         return yHitBox;

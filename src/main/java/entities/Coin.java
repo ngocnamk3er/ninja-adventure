@@ -15,6 +15,7 @@ public class Coin extends Enity {
     private final int PICKEDUP = 1;
     private float width = 32;
     private float height = 32;
+    private boolean disappear = false;
     public Coin(float x, float y, GraphicsContext gc, Image[][] animationImages) {
         super(x, y);
         this.gc = gc;
@@ -39,22 +40,22 @@ public class Coin extends Enity {
 			if (aniIndex >= 6) {
 				aniIndex = 0;
                 if(coinAction == PICKEDUP){
-                    aniIndex = 6;
+                    disappear = true;
                 }
 			}
 
 		}
     }
     public void update(){
-        setAnimation();
-        updateAnimationTick();
+        if(!disappear){
+            setAnimation();
+            updateAnimationTick();
+        }
     }
     public void render() {
-        if(pickedUp==false){
-            gc.drawImage(animationImages[0][aniIndex], x+16, y+16, width,height);
-        }else{
-            if(aniIndex>=6){
-                return;
+        if(!disappear){
+            if(pickedUp==false){
+                gc.drawImage(animationImages[0][aniIndex], x+16, y+16, width,height);
             }else{
                 gc.drawImage(animationImages[1][aniIndex], x+16, y, width,height*2);
             }
