@@ -67,6 +67,7 @@ public class Player extends Enity {
     private int pushStone = 1000;
     private float brakingSpeed = 0;
     private boolean standOnDoor = false;
+    private int standOnMushRoom = 1000;
 
     public void setProperties( float x, float y,Image[][] animationImages,MapInteractionManager mapInteractionManager) {
         this.x = x;
@@ -105,7 +106,7 @@ public class Player extends Enity {
     }
 
     private void setInAir(float x, float y, int [][]mapData) {
-        if((!isSolid(x+16, y+66, mapData))&&(!isSolid(x+48, y+66, mapData))&&standOnStone==1000&&standOnDoor==false){
+        if((!isSolid(x+16, y+66, mapData))&&(!isSolid(x+48, y+66, mapData))&&standOnStone==1000&&standOnDoor==false&&standOnMushRoom==1000){
             inAir = true;
         }else{
             inAir = false;
@@ -219,17 +220,17 @@ public class Player extends Enity {
                         }
                     }
                 }else{
-                    if(Math.abs(x+xSpeed-enemy.getX())<=48&&Math.abs(y-enemy.getY())<64){
+                    if(Math.abs(x+xSpeed-enemy.getX())<=48&&Math.abs(y-enemy.getY())<32){
+                        // System.out.println(standOnMushRoom);
                         if(enemy instanceof Enemy4){
-                            if(ySpeed<=0){
-                                if(right){
-                                    x = enemy.getX() - 48; 
-                                }else{
-                                    x = enemy.getX() + 48;
+                            if(ySpeed>0&&ySpeed<4){
+                                standOnMushRoom = i;
+                            }else{
+                                if(standOnMushRoom==1000){
+                                    y = y - 2;
+                                    ySpeed = -20;
                                 }
                             }
-                            y = y - 2;
-                            ySpeed = -20;
                         }else{
                             if(ySpeed>0&&y<enemy.getY()){
                                 if(enemy instanceof Enemy3){
@@ -242,7 +243,11 @@ public class Player extends Enity {
                                 death = true;
                             }
                         }
-                    }   
+                    }else{
+                        if(standOnMushRoom == i){
+                            standOnMushRoom = 1000;
+                        }
+                    }
                 }   
             }
         }
