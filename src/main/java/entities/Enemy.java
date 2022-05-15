@@ -61,7 +61,6 @@ public abstract class Enemy extends Enity {
         }
     }   
     protected void updatePos() {
-        xSpeed = 0;
         if(death||hit){
             return;
         }
@@ -82,5 +81,14 @@ public abstract class Enemy extends Enity {
         }else{
             right = !right;
         }
+        
+    }
+
+    public float getxSpeed() {
+        return xSpeed;
+    }
+
+    public void setxSpeed(float xSpeed) {
+        this.xSpeed = xSpeed;
     }
 }

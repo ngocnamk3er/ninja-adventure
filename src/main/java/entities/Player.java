@@ -66,6 +66,7 @@ public class Player extends Enity {
     private int standOnStone = 1000;
     private int pushStone = 1000;
     private float brakingSpeed = 0;
+    private float speedCarried = 0;
     private boolean standOnDoor = false;
     private int standOnMushRoom = 1000;
 
@@ -242,11 +243,11 @@ public class Player extends Enity {
                     }else {
                         if(Math.abs(x+xSpeed-enemy.getX())<=48&&Math.abs(y-enemy.getY())<=height){
                             if(ySpeed>=0&&y<enemy.getY()-height/2){
-                                System.out.println(y);
-                                System.out.println(enemy.getY());
                                 y = enemy.getY() - height;
                                 if(ySpeed<5){
                                     standOnMushRoom = i;
+                                    speedCarried = enemy.getxSpeed();
+                                    // System.out.println(speedCarried);
                                 }else{
                                     ySpeed = -20;  
                                 }      
@@ -263,18 +264,18 @@ public class Player extends Enity {
                     }
                 }else if(enemy instanceof Enemy4){
                     if(Math.abs(x+xSpeed-enemy.getX())<=48&&Math.abs(y-enemy.getY())<=32){
-                        y=enemy.getY()-32;
+                        y=enemy.getY()-height/2;
                         if(ySpeed>0&&ySpeed<4){
                             standOnMushRoom = i;
                         }else{
                             if(standOnMushRoom==1000){
-                                y = y - 1;
                                 ySpeed = -20;
                             }
                         }
                     }else{
                         if(standOnMushRoom == i){
                             standOnMushRoom = 1000;
+                            speedCarried = 0;
                         }
                     }
                 }
@@ -335,9 +336,13 @@ public class Player extends Enity {
         if (run) {
             playerSpeedX = 8;
             if (right) {
-                xSpeed = playerSpeedX+brakingSpeed;
+                xSpeed = playerSpeedX+brakingSpeed+speedCarried;
             } else {
-                xSpeed =- playerSpeedX+brakingSpeed;
+                xSpeed =- playerSpeedX+brakingSpeed+speedCarried;
+            }
+        }else{
+            if(standOnMushRoom!=1000){
+                xSpeed = speedCarried;
             }
         }
         if (canMove((x+xSpeed+16),(y+2),32,61, mapData) == true) {
