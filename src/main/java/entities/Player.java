@@ -241,7 +241,9 @@ public class Player extends Enity {
                         }
                     }else {
                         if(Math.abs(x+xSpeed-enemy.getX())<=48&&Math.abs(y-enemy.getY())<=height){
-                            if(ySpeed>=0&&y<enemy.getY()){
+                            if(ySpeed>=0&&y<enemy.getY()-height/2){
+                                System.out.println(y);
+                                System.out.println(enemy.getY());
                                 y = enemy.getY() - height;
                                 if(ySpeed<5){
                                     standOnMushRoom = i;
