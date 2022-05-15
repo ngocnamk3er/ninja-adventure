@@ -266,7 +266,7 @@ public class MapInteractionManager {
                     System.out.println(e.getMessage()+"["+i+"]");
                 }
             }
-            if(i==Enemy2.HIT){
+            else if(i==Enemy2.HIT){
                 try {
                     bufferedImage = ImageIO.read(Enemy2.class.getResourceAsStream("wormHit.png"));
                     int AmountSprites = Enemy2.getAmountSpritesOfEnimy2Action(i);
@@ -277,7 +277,7 @@ public class MapInteractionManager {
                     System.out.println(e.getMessage()+"["+i+"]");
                 }
             }
-            if(i==Enemy2.DEATH){
+            else if(i==Enemy2.DEATH){
                 try {
                     bufferedImage = ImageIO.read(Enemy2.class.getResourceAsStream("wormDeath.png"));
                     int AmountSprites = Enemy2.getAmountSpritesOfEnimy2Action(i);
@@ -304,7 +304,7 @@ public class MapInteractionManager {
                     System.out.println(e.getMessage()+"["+i+"]");
                 }
             }
-            if(i==Enemy1.RUN_R){
+            else if(i==Enemy1.RUN_R){
                 try {
                     bufferedImage = ImageIO.read(Enemy1.class.getResourceAsStream("slimeRunR.png"));
                     int AmountSprites = Enemy1.getAmountSpritesOfEnimy1Action(i);
@@ -315,7 +315,7 @@ public class MapInteractionManager {
                     System.out.println(e.getMessage()+"["+i+"]");
                 }           
             }
-            if(i==Enemy1.DEATH_R){
+            else if(i==Enemy1.DEATH_R){
                 try {
                     bufferedImage = ImageIO.read(Enemy1.class.getResourceAsStream("slimeDeathR.png"));
                     int AmountSprites = Enemy1.getAmountSpritesOfEnimy1Action(i);
@@ -326,7 +326,7 @@ public class MapInteractionManager {
                     System.out.println(e.getMessage()+"["+i+"]");
                 }    
             }
-            if(i==Enemy1.HIT_R){
+            else if(i==Enemy1.HIT_R){
                 try {
                     bufferedImage = ImageIO.read(Enemy1.class.getResourceAsStream("slimeHitR.png"));
                     int AmountSprites = Enemy1.getAmountSpritesOfEnimy1Action(i);
@@ -337,7 +337,7 @@ public class MapInteractionManager {
                     System.out.println(e.getMessage()+"["+i+"]");
                 }   
             }
-            if(i==Enemy1.IDLE_L){
+            else if(i==Enemy1.IDLE_L){
                 try {
                     bufferedImage = ImageIO.read(Enemy1.class.getResourceAsStream("slimeIdleL.png"));
                     int AmountSprites = Enemy1.getAmountSpritesOfEnimy1Action(i);
@@ -348,7 +348,7 @@ public class MapInteractionManager {
                     System.out.println(e.getMessage()+"["+i+"]");
                 }
             }
-            if(i==Enemy1.RUN_L){
+            else if(i==Enemy1.RUN_L){
                 try {
                     bufferedImage = ImageIO.read(Enemy1.class.getResourceAsStream("slimeRunL.png"));
                     int AmountSprites = Enemy1.getAmountSpritesOfEnimy1Action(i);
@@ -359,7 +359,7 @@ public class MapInteractionManager {
                     System.out.println(e.getMessage()+"["+i+"]");
                 }           
             }
-            if(i==Enemy1.DEATH_L){
+            else if(i==Enemy1.DEATH_L){
                 try {
                     bufferedImage = ImageIO.read(Enemy1.class.getResourceAsStream("slimeDeathL.png"));
                     int AmountSprites = Enemy1.getAmountSpritesOfEnimy1Action(i);
@@ -370,7 +370,7 @@ public class MapInteractionManager {
                     System.out.println(e.getMessage()+"["+i+"]");
                 }    
             }
-            if(i==Enemy1.HIT_L){
+            else if(i==Enemy1.HIT_L){
                 try {
                     bufferedImage = ImageIO.read(Enemy1.class.getResourceAsStream("slimeHitL.png"));
                     int AmountSprites = Enemy1.getAmountSpritesOfEnimy1Action(i);
@@ -466,7 +466,7 @@ public class MapInteractionManager {
                     System.out.println(e.getMessage()+"["+i+"]");
                 }
             }
-            if (i == Player.RUN_R) {
+            else if (i == Player.RUN_R) {
                 try {
                     bufferedImage = ImageIO.read(Player.class.getResourceAsStream("HeroRunR.png"));
                     for(int j=0;j<Player.getAmountSpritesOfPlayerAction(i);j++) {
@@ -476,7 +476,7 @@ public class MapInteractionManager {
                     System.out.println(e.getMessage()+"["+i+"]");
                 }
             }
-            if (i == Player.IDLE_L) {
+            else if (i == Player.IDLE_L) {
                 try {
                     bufferedImage = ImageIO.read(Player.class.getResourceAsStream("HeroIdleL.png"));
                     int AmountSprites = Player.getAmountSpritesOfPlayerAction(i);
@@ -487,7 +487,7 @@ public class MapInteractionManager {
                     System.out.println(e.getMessage()+"["+i+"]");
                 }
             }
-            if (i == Player.IDLE_R) {
+            else if (i == Player.IDLE_R) {
                 try {
                     bufferedImage = ImageIO.read(Player.class.getResourceAsStream("HeroIdleR.png"));
                     for(int j=0;j<Player.getAmountSpritesOfPlayerAction(i);j++) {
@@ -497,7 +497,7 @@ public class MapInteractionManager {
                     System.out.println(e.getMessage()+"["+i+"]");
                 }
             }
-            if (i == Player.ATTACK1_L) {
+            else if (i == Player.ATTACK1_L) {
                 try {
                     bufferedImage = ImageIO.read(Player.class.getResourceAsStream("HeroAttack1L.png"));
                     int AmountSprites = Player.getAmountSpritesOfPlayerAction(i);
@@ -508,7 +508,7 @@ public class MapInteractionManager {
                     System.out.println(e.getMessage()+"["+i+"]");
                 }
             }
-            if (i == Player.ATTACK1_R) {
+            else if (i == Player.ATTACK1_R) {
                 try {
                     bufferedImage = ImageIO.read(Player.class.getResourceAsStream("HeroAttack1R.png"));
                     for(int j=0;j<Player.getAmountSpritesOfPlayerAction(i);j++) {
@@ -518,7 +518,7 @@ public class MapInteractionManager {
                     System.out.println(e.getMessage()+"["+i+"]");
                 }
             }
-            if (i == Player.PUSH_L) {
+            else if (i == Player.PUSH_L) {
                 try {
                     bufferedImage = ImageIO.read(Player.class.getResourceAsStream("HeroPushingL.png"));
                     int AmountSprites = Player.getAmountSpritesOfPlayerAction(i);
@@ -529,7 +529,7 @@ public class MapInteractionManager {
                     System.out.println(e.getMessage()+"["+i+"]");
                 }
             }
-            if (i == Player.PUSH_R) {
+            else if (i == Player.PUSH_R) {
                 try {
                     bufferedImage = ImageIO.read(Player.class.getResourceAsStream("HeroPushingR.png"));
                     for(int j=0;j<Player.getAmountSpritesOfPlayerAction(i);j++) {
@@ -539,7 +539,7 @@ public class MapInteractionManager {
                     System.out.println(e.getMessage()+"["+i+"]");
                 }
             }
-            if (i == Player.JUMPUP_L) {
+            else if (i == Player.JUMPUP_L) {
                 try {
                     bufferedImage = ImageIO.read(Player.class.getResourceAsStream("HeroJumpUpL.png"));
                     int AmountSprites = Player.getAmountSpritesOfPlayerAction(i);
@@ -550,7 +550,7 @@ public class MapInteractionManager {
                     System.out.println(e.getMessage()+"["+i+"]");
                 }
             }
-            if (i == Player.JUMPUP_R) {
+            else if (i == Player.JUMPUP_R) {
                 try {
                     bufferedImage = ImageIO.read(Player.class.getResourceAsStream("HeroJumpUpR.png"));
                     for(int j=0;j<Player.getAmountSpritesOfPlayerAction(i);j++) {
@@ -560,7 +560,7 @@ public class MapInteractionManager {
                     System.out.println(e.getMessage()+"["+i+"]");
                 }
             }
-            if (i == Player.JUMPDOWN_L) {
+            else if (i == Player.JUMPDOWN_L) {
                 try {
                     bufferedImage = ImageIO.read(Player.class.getResourceAsStream("HeroJumpDownL.png"));
                     int AmountSprites = Player.getAmountSpritesOfPlayerAction(i);
@@ -571,7 +571,7 @@ public class MapInteractionManager {
                     System.out.println(e.getMessage()+"["+i+"]");
                 }
             }
-            if (i == Player.JUMPDOWN_R) {
+            else if (i == Player.JUMPDOWN_R) {
                 try {
                     bufferedImage = ImageIO.read(Player.class.getResourceAsStream("HeroJumpDownR.png"));
                     for(int j=0;j<Player.getAmountSpritesOfPlayerAction(i);j++) {
@@ -581,7 +581,7 @@ public class MapInteractionManager {
                     System.out.println(e.getMessage()+"["+i+"]");
                 }
             }
-            if (i == Player.ATTACK2_L) {
+            else if (i == Player.ATTACK2_L) {
                 try {
                     bufferedImage = ImageIO.read(Player.class.getResourceAsStream("HeroAttack2L.png"));
                     int AmountSprites = Player.getAmountSpritesOfPlayerAction(i);
@@ -592,7 +592,7 @@ public class MapInteractionManager {
                     System.out.println(e.getMessage()+"["+i+"]");
                 }
             }
-            if (i == Player.ATTACK2_R) {
+            else if (i == Player.ATTACK2_R) {
                 try {
                     bufferedImage = ImageIO.read(Player.class.getResourceAsStream("HeroAttack2R.png"));
                     for(int j=0;j<Player.getAmountSpritesOfPlayerAction(i);j++) {
@@ -602,7 +602,7 @@ public class MapInteractionManager {
                     System.out.println(e.getMessage()+"["+i+"]");
                 }
             }
-            if (i ==Player. DEATH_L) {
+            else if (i ==Player. DEATH_L) {
                 try {
                     bufferedImage = ImageIO.read(Player.class.getResourceAsStream("HeroDeathL.png"));
                     int AmountSprites = Player.getAmountSpritesOfPlayerAction(i);
@@ -613,7 +613,7 @@ public class MapInteractionManager {
                     System.out.println(e.getMessage()+"["+i+"]");
                 }
             }
-            if (i == Player.DEATH_R) {
+            else if (i == Player.DEATH_R) {
                 try {
                     bufferedImage = ImageIO.read(Player.class.getResourceAsStream("HeroDeathR.png"));
                     for(int j=0;j<Player.getAmountSpritesOfPlayerAction(i);j++) {

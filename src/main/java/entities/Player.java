@@ -212,35 +212,62 @@ public class Player extends Enity {
         for(int i=0;i<enemies.size();i++){
             Enemy enemy = enemies.get(i);
             if(enemy.isDeath()==false){
-                if(attacking2==true){
-                    setSwordPos();
-                    if(Math.abs(xSword-enemy.getX())<32&&Math.abs((ySword+height/2)-(enemy.getY()+enemy.getHeight()/2))<32){
-                        if(enemy.isHit()==false){
-                            enemy.setHit(true);
+                if(enemy instanceof Enemy1 || enemy instanceof Enemy2){
+                    if(attacking2==true){
+                        setSwordPos();
+                        if(Math.abs(xSword-enemy.getX())<32&&Math.abs((ySword+height/2)-(enemy.getY()+enemy.getHeight()/2))<32){
+                            if(enemy.isHit()==false){
+                                enemy.setHit(true);
+                            }
+                        }
+                    }else {
+                        if(Math.abs(x+xSpeed-enemy.getX())<=48&&Math.abs(y+ySpeed-enemy.getY())<height){
+                            if(ySpeed>0&&y<enemy.getY()){
+                                enemy.setDeath(true);
+                                y = enemy.getY() - height;
+                                ySpeed = -ySpeed/2;        
+                            }else{
+                                death = true;
+                            }
                         }
                     }
-                }else{
-                    if(Math.abs(x+xSpeed-enemy.getX())<=48&&Math.abs(y-enemy.getY())<32){
-                        // System.out.println(standOnMushRoom);
-                        if(enemy instanceof Enemy4){
-                            if(ySpeed>0&&ySpeed<4){
-                                standOnMushRoom = i;
+                }else if(enemy instanceof Enemy3){
+                    if(attacking2==true){
+                        setSwordPos();
+                        if(Math.abs(xSword-enemy.getX())<32&&Math.abs((ySword+height/2)-(enemy.getY()+enemy.getHeight()/2))<32){
+                            if(enemy.isHit()==false){
+                                enemy.setHit(true);
+                            }
+                        }
+                    }else {
+                        if(Math.abs(x+xSpeed-enemy.getX())<=48&&Math.abs(y-enemy.getY())<=height){
+                            if(ySpeed>=0&&y<enemy.getY()){
+                                y = enemy.getY() - height;
+                                if(ySpeed<5){
+                                    standOnMushRoom = i;
+                                }else{
+                                    ySpeed = -20;  
+                                }      
                             }else{
-                                if(standOnMushRoom==1000){
-                                    y = y - 2;
-                                    ySpeed = -20;
+                                if(standOnMushRoom!=i){
+                                    death = true;
                                 }
                             }
                         }else{
-                            if(ySpeed>0&&y<enemy.getY()){
-                                if(enemy instanceof Enemy3){
-                                    ySpeed = -20;
-                                }else{
-                                    enemy.setDeath(true);
-                                    ySpeed = -ySpeed/2;
-                                }
-                            }else{
-                                death = true;
+                            if(standOnMushRoom == i){
+                                standOnMushRoom = 1000;
+                            }
+                        }
+                    }
+                }else if(enemy instanceof Enemy4){
+                    if(Math.abs(x+xSpeed-enemy.getX())<=48&&Math.abs(y-enemy.getY())<=32){
+                        y=enemy.getY()-32;
+                        if(ySpeed>0&&ySpeed<4){
+                            standOnMushRoom = i;
+                        }else{
+                            if(standOnMushRoom==1000){
+                                y = y - 1;
+                                ySpeed = -20;
                             }
                         }
                     }else{
@@ -248,7 +275,7 @@ public class Player extends Enity {
                             standOnMushRoom = 1000;
                         }
                     }
-                }   
+                }
             }
         }
     }
