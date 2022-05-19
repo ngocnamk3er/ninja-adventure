@@ -66,7 +66,11 @@ public class Stone extends Enity {
         for(int i=0;i<enemies.size();i++){
             Enemy enemy = enemies.get(i);
             if(ySpeed>0&&Math.abs(x-enemy.getX())<=64&y<enemy.getY()&&Math.abs(y-enemy.getY())<height){
-                enemy.setDeath(true);
+                if(enemy instanceof Enemy1 || enemy instanceof Enemy2 || enemy instanceof Enemy3){
+                    enemy.setDeath(true);
+                }else{
+                    ySpeed = -20;
+                }
             }
         }
     }
@@ -132,6 +136,12 @@ public class Stone extends Enity {
     }
     public void setCanPush(boolean canPush) {
         this.canPush = canPush;
+    }
+    public float getySpeed() {
+        return ySpeed;
+    }
+    public void setySpeed(float ySpeed) {
+        this.ySpeed = ySpeed;
     }
     
 }

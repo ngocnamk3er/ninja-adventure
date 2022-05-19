@@ -126,6 +126,7 @@ public class Player extends Enity {
             if(Math.abs(x+xSpeed-stone.getX())<=132&&Math.abs(y+ySpeed-stone.getY())<=132){
                 if(!up&&this.y+ySpeed-stone.getY()>=-64 &&this.y+ySpeed/4-stone.getY()<=-48&&Math.abs(this.x+xSpeed-stone.getX())<=48){
                     standOnStone = i;
+                    stone.setySpeed(0);
                     y = stone.getY() - 64;
                 }else if(this.y+ySpeed-stone.getY()<=64&&this.y+ySpeed-stone.getY()>0&&Math.abs(this.x+xSpeed-stone.getX())<=48){
                     if(standOnDoor){
@@ -137,7 +138,7 @@ public class Player extends Enity {
                             y = stone.getY() + 64;
                         }
                     }
-                }else if(Math.abs(this.y+ySpeed-stone.getY())<=48&&Math.abs(this.x-stone.getX())<=58){
+                }else if(Math.abs(this.y+ySpeed-stone.getY())<=64&&Math.abs(this.x-stone.getX())<=58){
                     if(pushStone == 1000||pushStone == i){
                         pushStone = i;
                         if(this.x>stone.getX()&&!right){
@@ -224,7 +225,7 @@ public class Player extends Enity {
                             }
                         }
                     }else {
-                        if(Math.abs(x+xSpeed-enemy.getX())<=48&&Math.abs(y+ySpeed-enemy.getY())<height){
+                        if(Math.abs(x+xSpeed-enemy.getX())<=48&&y<enemy.getY()+enemy.getHeight()&&y+height>enemy.getY()){
                             if(ySpeed>0&&y<enemy.getY()){
                                 enemy.setDeath(true);
                                 y = enemy.getY() - height;
@@ -243,13 +244,12 @@ public class Player extends Enity {
                             }
                         }
                     }else {
-                        if(Math.abs(x+xSpeed-enemy.getX())<=48&&Math.abs(y-enemy.getY())<=height){
+                        if(Math.abs(x+xSpeed-enemy.getX())<=48&&y<enemy.getY()+enemy.getHeight()&&y+height>=enemy.getY()){
                             if(ySpeed>=0&&y<enemy.getY()-height/2){
                                 y = enemy.getY() - height;
                                 if(ySpeed<5){
                                     standOnMushRoom = i;
                                     speedCarried = enemy.getxSpeed();
-                                    // System.out.println(speedCarried);
                                 }else{
                                     ySpeed = -20;  
                                 }      
@@ -268,7 +268,7 @@ public class Player extends Enity {
                 }else if(enemy instanceof Enemy4){
                     if(Math.abs(x+xSpeed-enemy.getX())<=48&&Math.abs(y-enemy.getY())<=32){
                         y=enemy.getY()-height/2;
-                        if(ySpeed>0&&ySpeed<4){
+                        if(ySpeed>=0&&ySpeed<4){
                             standOnMushRoom = i;
                         }else{
                             if(standOnMushRoom==1000){
