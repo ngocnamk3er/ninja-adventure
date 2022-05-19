@@ -138,7 +138,7 @@ public class Player extends Enity {
                             y = stone.getY() + 64;
                         }
                     }
-                }else if(Math.abs(this.y+ySpeed-stone.getY())<=64&&Math.abs(this.x-stone.getX())<=58){
+                }else if(Math.abs(this.y+ySpeed-stone.getY())<=48&&Math.abs(this.x-stone.getX())<=58){
                     if(pushStone == 1000||pushStone == i){
                         pushStone = i;
                         if(this.x>stone.getX()&&!right){
@@ -266,19 +266,20 @@ public class Player extends Enity {
                         }
                     }
                 }else if(enemy instanceof Enemy4){
+                    // System.out.println(standOnMushRoom);
                     if(Math.abs(x+xSpeed-enemy.getX())<=48&&Math.abs(y-enemy.getY())<=32){
-                        y=enemy.getY()-height/2;
-                        if(ySpeed>=0&&ySpeed<4){
+                        if(ySpeed>0&&ySpeed<4){
                             standOnMushRoom = i;
+                            y = enemy.getY() - height/2;
                         }else{
                             if(standOnMushRoom==1000){
+                                y = y - 2;
                                 ySpeed = -20;
                             }
                         }
                     }else{
-                        if(standOnMushRoom == i){
+                        if(standOnMushRoom==i){
                             standOnMushRoom = 1000;
-                            speedCarried = 0;
                         }
                     }
                 }
