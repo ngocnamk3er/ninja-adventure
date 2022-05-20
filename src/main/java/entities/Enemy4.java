@@ -4,8 +4,10 @@ import javafx.scene.image.Image;
 import mapinteraction.MapInteractionManager;
 
 public class Enemy4 extends Enemy {
-    protected Image[] animationImages;
-    public Enemy4( float x, float y,Image[] animationImages,MapInteractionManager mapInteractionManager) {
+    public static int IDLE = 0;
+    public static int DEATH = 1;
+    protected Image[][] animationImages;
+    public Enemy4( float x, float y,Image[][] animationImages,MapInteractionManager mapInteractionManager) {
         this.x = x;
         this.y = y;
         width = 64;
@@ -16,21 +18,37 @@ public class Enemy4 extends Enemy {
     
     @Override
     public void render() {
-        gc.drawImage(animationImages[aniIndex], x, y, width, height);      
+        if(!disappear){
+            gc.drawImage(animationImages[enemyAction][aniIndex], x, y, width, height);   
+        }   
     }
 
     @Override
     public void update() {
-        updateAnimationTick();    
+        if(!disappear){
+            setAnimation();
+            updateAnimationTick(); 
+        }   
     }
+    private void setAnimation() {
+        int startAni = enemyAction;
+        if(death){
+            enemyAction = DEATH;
+        }else{
+            enemyAction = IDLE;
+        }
+        if(startAni!=enemyAction){
+            aniIndex = 0;
+        }
+    }
+
     private void updateAnimationTick() {
         aniTick++;
 		if (aniTick >= aniSpeed) {
 			aniTick = 0;
 			aniIndex++;
-			if (aniIndex >= getAmountSpritesOfEnimy4Action()) {
+			if (aniIndex >= getAmountSpritesOfEnimy4Action(enemyAction)) {
 				aniIndex = 0;
-                hit = false;
                 if(death){
                     disappear = true;
                 }
@@ -38,8 +56,14 @@ public class Enemy4 extends Enemy {
 		}
     }
 
-    public static int getAmountSpritesOfEnimy4Action() {
-        return 6;
+    public static int getAmountSpritesOfEnimy4Action(int x) {
+        if(x == IDLE){
+            return 6;
+        }else if(x == DEATH){
+            return 6;
+        }else{
+            return 0;
+        }
     }
     
 }

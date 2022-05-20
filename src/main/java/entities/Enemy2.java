@@ -29,17 +29,17 @@ public class Enemy2 extends Enemy {
         }
     }
     private void setAnimation() {
-        int startAni = enimyAction;
+        int startAni = enemyAction;
         if(run){
-            enimyAction = RUN;
+            enemyAction = RUN;
         }
         if(hit){
-            enimyAction = HIT;
+            enemyAction = HIT;
         }
         if(death){
-            enimyAction = DEATH;
+            enemyAction = DEATH;
         }    
-        if(startAni!=enimyAction){
+        if(startAni!=enemyAction){
             aniIndex = 0;
         }
     }
@@ -48,7 +48,7 @@ public class Enemy2 extends Enemy {
 		if (aniTick >= aniSpeed) {
 			aniTick = 0;
 			aniIndex++;
-			if (aniIndex >= getAmountSpritesOfEnimy2Action(enimyAction)) {
+			if (aniIndex >= getAmountSpritesOfEnimy2Action(enemyAction)) {
 				aniIndex = 0;
                 hit = false;
                 if(death){
@@ -60,7 +60,7 @@ public class Enemy2 extends Enemy {
     @Override
     public void render() {
         if(!disappear){
-            gc.drawImage(animationImages[enimyAction][aniIndex], x, y, width, height);
+            gc.drawImage(animationImages[enemyAction][aniIndex], x, y, width, height);
         }
     }
     public static int getAmountSpritesOfEnimy2Action(int x) {

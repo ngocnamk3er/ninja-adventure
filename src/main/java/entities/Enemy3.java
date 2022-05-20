@@ -24,31 +24,31 @@ public class Enemy3 extends Enemy {
         this.animationImages = animationImages;
     }
     private void setAnimation() {
-        int startAni = enimyAction;
+        int startAni = enemyAction;
         if(right){
             if(run){
-                enimyAction = RUN_R;
+                enemyAction = RUN_R;
             }
             if(hit){
-                enimyAction = HIT_R;
+                enemyAction = HIT_R;
             }
             if(death){
-                enimyAction = DEATH_R;
+                enemyAction = DEATH_R;
             }    
-            if(startAni!=enimyAction){
+            if(startAni!=enemyAction){
                 aniIndex = 0;
             }
         }else{
             if(run){
-                enimyAction = RUN_L;
+                enemyAction = RUN_L;
             }
             if(hit){
-                enimyAction = HIT_L;
+                enemyAction = HIT_L;
             }
             if(death){
-                enimyAction = DEATH_L;
+                enemyAction = DEATH_L;
             }    
-            if(startAni!=enimyAction){
+            if(startAni!=enemyAction){
                 aniIndex = 0;
             }
         }
@@ -58,7 +58,7 @@ public class Enemy3 extends Enemy {
 		if (aniTick >= aniSpeed) {
 			aniTick = 0;
 			aniIndex++;
-			if (aniIndex >= getAmountSpritesOfEnimy3Action(enimyAction)) {
+			if (aniIndex >= getAmountSpritesOfEnimy3Action(enemyAction)) {
 				aniIndex = 0;
                 hit = false;
                 if(death){
@@ -79,7 +79,7 @@ public class Enemy3 extends Enemy {
     @Override
     public void render() {
         if(!disappear){
-            gc.drawImage(animationImages[enimyAction][aniIndex], x, y, width, height);
+            gc.drawImage(animationImages[enemyAction][aniIndex], x, y, width, height);
         }
     }
     public static int getAmountSpritesOfEnimy3Action(int x) {

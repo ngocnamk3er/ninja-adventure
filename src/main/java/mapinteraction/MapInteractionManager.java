@@ -47,7 +47,7 @@ public class MapInteractionManager {
     private Image[][] animationImagesEnimy1;
     private Image[][] animationImagesEnimy2;
     private Image[][] animationImagesEnimy3;
-    private Image[] animationImagesEnimy4;
+    private Image[][] animationImagesEnimy4;
     private void loadAnimations(){
         loadAnimationsPlayer();
         loadAnimationsCoins();
@@ -90,38 +90,29 @@ public class MapInteractionManager {
                 if(MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == 'c'){
                     Coin coin = new Coin(j*64, i*64,this,animationImagesCoin);
                     coins.add(coin);
-                }
-                if(MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == 'p'){
+                }else if(MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == 'p'){
                     player.setProperties(j*64, i*64,animationImagesPlayer,this);
                     
-                }
-                if(MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == 's'){
+                }else if(MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == 's'){
                     Stone stone = new Stone(j*64, i*64,animationImageStone ,this);
                     stones.add(stone);
-                }
-                if(MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == 'b'){
+                }else if(MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == 'b'){
                     Button button = new Button(j*64, i*64,animationImagesButton,this);
                     buttons.add(button);
-                }
-                if(MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == 'd'){
+                }else if(MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == 'd'){
                     door.setProperties(j*64, i*64,animationImagesDoor,this);
-                }
-                if(MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == 'D'){
+                }else if(MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == 'D'){
                     strangeDoor.setProperties(j*64, i*64, gc,animationImageStrangeDoor);
-                }
-                if(MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == '1'){
+                }else if(MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == '1'){
                     Enemy1 enimy1 = new Enemy1(j*64, i*64,animationImagesEnimy1 ,this);
                     enemies.add(enimy1);
-                }
-                if(MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == '2'){
+                }else if(MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == '2'){
                     Enemy2 enimy2 = new Enemy2(j*64, i*64,animationImagesEnimy2 ,this);
                     enemies.add(enimy2);
-                }
-                if(MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == '3'){
+                }else if(MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == '3'){
                     Enemy3 enimy3 = new Enemy3(j*64, i*64,animationImagesEnimy3 ,this);
                     enemies.add(enimy3);
-                }
-                if(MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == '4'){
+                }else if(MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == '4'){
                     Enemy4 enimy4 = new Enemy4(j*64, i*64,animationImagesEnimy4 ,this);
                     enemies.add(enimy4);
                     enimy4 = new Enemy4(j*64, i*64-32,animationImagesEnimy4 ,this);
@@ -174,15 +165,29 @@ public class MapInteractionManager {
         player.render();  
     }
     private void loadAnimationsEnimy4() {
-        animationImagesEnimy4 = new Image[6];
-        try {
-            bufferedImage = ImageIO.read(Enemy4.class.getResourceAsStream("mushroomIdle.png"));
-            int AmountSprites = Enemy4.getAmountSpritesOfEnimy4Action();
-            for(int j=0;j<AmountSprites;j++) {
-                animationImagesEnimy4[j] = SwingFXUtils.toFXImage(bufferedImage.getSubimage(j*16, 0, 16, 16), null);
+        animationImagesEnimy4 = new Image[2][6];
+        for(int i=0;i<2;i++){
+            if(i==Enemy4.IDLE){
+                try {
+                    bufferedImage = ImageIO.read(Enemy4.class.getResourceAsStream("mushroomIdle.png"));
+                    int AmountSprites = Enemy4.getAmountSpritesOfEnimy4Action(i);
+                    for(int j=0;j<AmountSprites;j++) {
+                        animationImagesEnimy4[i][j] = SwingFXUtils.toFXImage(bufferedImage.getSubimage(j*16, 0, 16, 16), null);
+                    }
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
+            }else if(i==Enemy4.DEATH){
+                try {
+                    bufferedImage = ImageIO.read(Enemy4.class.getResourceAsStream("mushroomDeathR.png"));
+                    int AmountSprites = Enemy4.getAmountSpritesOfEnimy4Action(i);
+                    for(int j=0;j<AmountSprites;j++) {
+                        animationImagesEnimy4[i][j] = SwingFXUtils.toFXImage(bufferedImage.getSubimage(j*16, 0, 16, 16), null);
+                    }
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
             }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
         }
     }
     private void loadAnimationsEnimy3() {

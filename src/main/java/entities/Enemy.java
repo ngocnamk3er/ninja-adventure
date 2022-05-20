@@ -14,7 +14,7 @@ public abstract class Enemy extends Enity {
     protected int aniTick = 0;
     protected int aniIndex = 0;
     protected int aniSpeed = 6;
-    protected int enimyAction = 0;
+    protected int enemyAction = 0;
     protected int healthPoints = 2;
     protected ArrayList<Stone> stones;
     protected Door door;

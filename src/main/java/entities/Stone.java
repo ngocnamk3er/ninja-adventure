@@ -66,11 +66,7 @@ public class Stone extends Enity {
         for(int i=0;i<enemies.size();i++){
             Enemy enemy = enemies.get(i);
             if(ySpeed>0&&Math.abs(x-enemy.getX())<=64&y<enemy.getY()&&Math.abs(y-enemy.getY())<height){
-                if(enemy instanceof Enemy1 || enemy instanceof Enemy2 || enemy instanceof Enemy3){
-                    enemy.setDeath(true);
-                }else{
-                    ySpeed = -20;
-                }
+                enemy.setDeath(true);
             }
         }
     }

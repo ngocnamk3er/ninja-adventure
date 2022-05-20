@@ -63,12 +63,12 @@ public class Player extends Enity {
     private Door door;
     private StrangeDoor strangeDoor;
     //handle Collision
-    private int standOnStone = 1000;
-    private int pushStone = 1000;
+    private int standOnStone = -1;
+    private int pushStone = -1;
     private float brakingSpeedByStone = 0;
     private float speedCarried = 0;
     private boolean standOnDoor = false;
-    private int standOnMushRoom = 1000;
+    private int standOnMushRoom = -1;
     private int brakingSpeedByDoor = 0;
 
     public void setProperties( float x, float y,Image[][] animationImages,MapInteractionManager mapInteractionManager) {
@@ -109,7 +109,7 @@ public class Player extends Enity {
     }
 
     private void setInAir(float x, float y, int [][]mapData) {
-        if((!isSolid(x+16, y+66, mapData))&&(!isSolid(x+48, y+66, mapData))&&standOnStone==1000&&standOnDoor==false&&standOnMushRoom==1000){
+        if((!isSolid(x+16, y+66, mapData))&&(!isSolid(x+48, y+66, mapData))&&standOnStone==-1&&standOnDoor==false&&standOnMushRoom==-1){
             inAir = true;
         }else{
             inAir = false;
@@ -139,7 +139,7 @@ public class Player extends Enity {
                         }
                     }
                 }else if(Math.abs(this.y+ySpeed-stone.getY())<=48&&Math.abs(this.x-stone.getX())<=58){
-                    if(pushStone == 1000||pushStone == i){
+                    if(pushStone == -1||pushStone == i){
                         pushStone = i;
                         if(this.x>stone.getX()&&!right){
                             push = true;
@@ -166,13 +166,13 @@ public class Player extends Enity {
                     }
                 }else{
                     if(pushStone==i){
-                        pushStone = 1000;
+                        pushStone = -1;
                         push = false;
                         stone.setxSpeed(0);
                         brakingSpeedByStone = 0;
                     }
                     if(standOnStone == i){
-                        standOnStone = 1000;
+                        standOnStone = -1;
                     }
                 }
             }
@@ -260,7 +260,7 @@ public class Player extends Enity {
                             }
                         }else{
                             if(standOnMushRoom == i){
-                                standOnMushRoom = 1000;
+                                standOnMushRoom = -1;
                                 speedCarried = 0;
                             }
                         }
@@ -272,14 +272,14 @@ public class Player extends Enity {
                             standOnMushRoom = i;
                             y = enemy.getY() - height/2;
                         }else{
-                            if(standOnMushRoom==1000){
+                            if(standOnMushRoom==-1){
                                 y = y - 2;
                                 ySpeed = -20;
                             }
                         }
                     }else{
                         if(standOnMushRoom==i){
-                            standOnMushRoom = 1000;
+                            standOnMushRoom = -1;
                         }
                     }
                 }
@@ -345,7 +345,7 @@ public class Player extends Enity {
                 xSpeed =- playerSpeedX+brakingSpeedByStone+brakingSpeedByDoor+speedCarried;
             }
         }else{
-            if(standOnMushRoom!=1000){
+            if(standOnMushRoom!=-1){
                 xSpeed = speedCarried;
             }
         }
