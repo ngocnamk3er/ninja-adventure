@@ -21,7 +21,10 @@ public abstract class Enemy extends Enity {
     protected int [][] mapData;
     protected float SpeedX;
     protected float xSpeed;
-    
+    protected float ySpeed;
+    protected float gravity = 0.7f;
+    private boolean inAir  = false;
+    private boolean standOnDoor = false;
     public boolean isDeath() {
         return death;
     }
@@ -42,8 +45,14 @@ public abstract class Enemy extends Enity {
         }
     }
     private void checkDoor(){
-        if(Math.abs(x+xSpeed-door.getX())<width&&y+height>door.getyHitBox()&&y<door.getyHitBox()+door.getHeight()-(door.getY()-door.getyHitBox())){
+        if(y+ySpeed-door.getyHitBox()>=-height &&y+ySpeed-door.getyHitBox()<=-height*1/2&Math.abs(x-door.getX())<48){
+            // System.out.println("xxxxxxxxxx");
+            y = door.getyHitBox() - height;
+            standOnDoor = true;
+        }else if(Math.abs(x+xSpeed-door.getX())<48&&y+height>door.getyHitBox()&&y<door.getyHitBox()+door.getHeight()-(door.getY()-door.getyHitBox())){
             right=!right;
+        }else{
+            standOnDoor = false;
         }
     }
     private void checkStones(){
@@ -61,6 +70,8 @@ public abstract class Enemy extends Enity {
         }
     }   
     protected void updatePos() {
+        // System.out.println(inAir);
+        setInAir();
         if(death||hit){
             return;
         }
@@ -72,16 +83,40 @@ public abstract class Enemy extends Enity {
                 xSpeed =- SpeedX;
             }
         }
-        if (canMove(x+xSpeed,y,width,height-1, mapData) == true) {
-            if(isSolid(x+xSpeed, y+height+1, mapData)==false||isSolid(x+xSpeed+width, y+height+1, mapData)==false){
-                right=!right;
-            }else{
-                x += xSpeed;
-            }
+        if(!inAir){
+            ySpeed = 0;
         }else{
-            right = !right;
+            ySpeed = ySpeed + gravity;
         }
-        
+        if(inAir==false){
+            if (canMove(x+xSpeed,y,width,height-1, mapData) == true) {
+                if(isSolid(x+xSpeed, y+height+1, mapData)==false||isSolid(x+xSpeed+width, y+height+1, mapData)==false){
+                    right=!right;
+                }else{
+                    x += xSpeed;
+                }
+            }else{
+                right = !right;
+            }
+        }
+        if (canMove((x),(y+ySpeed),width-1,height-1, mapData) == true) {
+            y += ySpeed;
+        }else{
+            if(standOnDoor==true){
+                death = true;
+            }else{
+                int rowBrick = (int)(y+ySpeed)/64;
+                y = rowBrick*64+(64-height);
+            }
+        }
+    }
+
+    protected void setInAir() {
+        if(!isSolid(x,y+height, mapData)&&!isSolid(x+width-1, y+height, mapData)&&!standOnDoor){
+            inAir = true;
+        }else{
+            inAir = false;
+        }
     }
 
     public float getxSpeed() {

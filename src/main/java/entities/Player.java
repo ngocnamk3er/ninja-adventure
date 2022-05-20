@@ -109,7 +109,7 @@ public class Player extends Enity {
     }
 
     private void setInAir(float x, float y, int [][]mapData) {
-        if((!isSolid(x+16, y+66, mapData))&&(!isSolid(x+48, y+66, mapData))&&standOnStone==-1&&standOnDoor==false&&standOnMushRoom==-1){
+        if((!isSolid(x+16, y+64, mapData))&&(!isSolid(x+48, y+64, mapData))&&standOnStone==-1&&standOnDoor==false&&standOnMushRoom==-1){
             inAir = true;
         }else{
             inAir = false;
@@ -349,10 +349,10 @@ public class Player extends Enity {
                 xSpeed = speedCarried;
             }
         }
-        if (canMove((x+xSpeed+16),(y+2),32,61, mapData) == true) {
+        if (canMove((x+xSpeed+16),(y),32,63, mapData) == true) {
             x += xSpeed;
         }
-        if (canMove((x+16),(y+ySpeed+2),32,61, mapData) == true) {
+        if (canMove((x+16),(y+ySpeed),32,63, mapData) == true) {
 		    y += ySpeed;
         }else{
             if(standOnDoor){
