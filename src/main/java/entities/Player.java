@@ -244,7 +244,7 @@ public class Player extends Enity {
                             }
                         }
                     }else {
-                        if(Math.abs(x+xSpeed-enemy.getX())<=48&&y<enemy.getY()+enemy.getHeight()&&y+height>=enemy.getY()){
+                        if(Math.abs(x+xSpeed-enemy.getX())<=48&&y+ySpeed<enemy.getY()+enemy.getHeight()&&y+ySpeed+height>=enemy.getY()){
                             if(ySpeed>=0&&y<enemy.getY()-height/2){
                                 y = enemy.getY() - height;
                                 if(ySpeed<5){
