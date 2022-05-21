@@ -58,6 +58,7 @@ public class Player extends Enity {
     private ArrayList<Coin> coins;
     private ArrayList<Stone> stones;
     private ArrayList<Enemy> enemies;
+    private ArrayList<Fire> fires;
     private MapInteractionManager mapInteractionManager;
     private MakeMainScene makeMainScene;
     private Door door;
@@ -86,6 +87,7 @@ public class Player extends Enity {
         this.enemies = mapInteractionManager.getEnemies();
         this.animationImages = animationImages;
         this.mapInteractionManager = mapInteractionManager;
+        this.fires = mapInteractionManager.getFires();
     }
 
     public void update() {
@@ -119,6 +121,16 @@ public class Player extends Enity {
         ySpeed = -15;
         inAir = true;
         up = true;
+    }
+    private void checkFires() {
+        for(Fire fire:fires){
+            if(Math.abs(x-fire.getX())<132&&Math.abs(y-fire.getY())<132){
+                fire.setOn(true);
+            }
+            if(Math.abs(x-fire.getX())<48&&Math.abs(y-fire.getY())<48){
+                death = true;
+            }
+        }
     }
     private void checkStones(){
         for(int i=0;i<stones.size();i++){
@@ -308,6 +320,7 @@ public class Player extends Enity {
         checkStones();
         checkDoor();
         checkStrangeDoor();
+        checkFires();
     }
     private void updatePos() {
         moving = false;

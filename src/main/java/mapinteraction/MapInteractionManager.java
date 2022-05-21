@@ -12,6 +12,7 @@ import entities.Enemy2;
 import entities.Enemy3;
 import entities.Enemy4;
 import entities.Enity;
+import entities.Fire;
 import entities.Player;
 import entities.Stone;
 import entities.StrangeDoor;
@@ -31,6 +32,7 @@ public class MapInteractionManager {
     private ArrayList<Stone> stones;
     private ArrayList<Button> buttons;
     private ArrayList<Enemy> enemies;
+    private ArrayList<Fire> fires;
     private Player player;
     private Door door;
     private StrangeDoor strangeDoor;
@@ -48,6 +50,7 @@ public class MapInteractionManager {
     private Image[][] animationImagesEnimy2;
     private Image[][] animationImagesEnimy3;
     private Image[][] animationImagesEnimy4;
+    private Image[][] animationImagesFire;
     private void loadAnimations(){
         loadAnimationsPlayer();
         loadAnimationsCoins();
@@ -59,6 +62,7 @@ public class MapInteractionManager {
         loadAnimationsEnimy2();
         loadAnimationsEnimy3();
         loadAnimationsEnimy4();
+        loadAnimationsFire();
     }
     public MapInteractionManager(GraphicsContext gc,int [][]mapData, MakeMainScene makeMainScene){
         loadAnimations();
@@ -83,6 +87,7 @@ public class MapInteractionManager {
         stones = new ArrayList<>();
         enemies = new ArrayList<>();
         buttons = new ArrayList<>();
+        fires = new ArrayList<>();
         player = new Player();
         door = new Door();
         for(int i=0;i<12;i++){
@@ -117,6 +122,9 @@ public class MapInteractionManager {
                     enemies.add(enimy4);
                     enimy4 = new Enemy4(j*64, i*64-32,animationImagesEnimy4 ,this);
                     enemies.add(enimy4);
+                }else if(MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == 'f'){
+                    Fire fire = new Fire(j*64, i*64,animationImagesFire ,this);
+                    fires.add(fire);
                 }
             }
         }
@@ -136,6 +144,9 @@ public class MapInteractionManager {
         }
         for(Enemy enemy:enemies){
             enemy.update();
+        }
+        for(Fire fire:fires){
+            fire.update();
         }
         door.update();
     }
@@ -161,8 +172,37 @@ public class MapInteractionManager {
         for(Enemy enemy:enemies){
             enemy.render();
         }
+        for(Fire fire:fires){
+            fire.render();
+        }
         door.render();
         player.render();  
+    }
+    private void loadAnimationsFire() {
+        animationImagesFire = new Image[2][4];
+        for(int i=0;i<2;i++){
+            if(i==Fire.ON){
+                try {
+                    bufferedImage = ImageIO.read(Fire.class.getResourceAsStream("fireOn.png"));
+                    int AmountSprites = Fire.getAmountSpritesOfFireAction(i);
+                    for(int j=0;j<AmountSprites;j++) {
+                        animationImagesFire[i][j] = SwingFXUtils.toFXImage(bufferedImage.getSubimage(j*16, 0, 16, 32), null);
+                    }
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
+            }else if(i==Fire.OFF){
+                try {
+                    bufferedImage = ImageIO.read(Fire.class.getResourceAsStream("fireOff.png"));
+                    int AmountSprites = Fire.getAmountSpritesOfFireAction(i);
+                    for(int j=0;j<AmountSprites;j++) {
+                        animationImagesFire[i][j] = SwingFXUtils.toFXImage(bufferedImage.getSubimage(j*16, 0, 16, 32), null);
+                    }
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
     }
     private void loadAnimationsEnimy4() {
         animationImagesEnimy4 = new Image[2][6];
@@ -697,6 +737,12 @@ public class MapInteractionManager {
 
     public void setEnemies(ArrayList<Enemy> enemies) {
         this.enemies = enemies;
+    }
+    public ArrayList<Fire> getFires() {
+        return fires;
+    }
+    public void setFires(ArrayList<Fire> fires) {
+        this.fires = fires;
     }
     
 }
