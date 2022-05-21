@@ -23,6 +23,7 @@ public class Stone extends Enity {
     private boolean nextDoor = false;
     private HashSet<Integer> nextStones = new HashSet<>();
     private HashSet<Integer> underStones = new HashSet<>();
+    private int nextMushRoom4 = -1;
     public Stone(float x, float y,Image animationImage,MapInteractionManager mapInteractionManager) {
         super(x, y);
         this.mapData = mapInteractionManager.getMapData();
@@ -67,6 +68,12 @@ public class Stone extends Enity {
             Enemy enemy = enemies.get(i);
             if(ySpeed>0&&Math.abs(x-enemy.getX())<=64&y<enemy.getY()&&Math.abs(y-enemy.getY())<height){
                 enemy.setDeath(true);
+            }else if(enemy instanceof Enemy4 && Math.abs(x+xSpeed-enemy.getX())<=64&&Math.abs(y-enemy.getY())<height){
+                nextMushRoom4 = i;
+            }else{
+                if(nextMushRoom4 == i){
+                    nextMushRoom4 = -1;
+                }
             }
         }
     }
@@ -77,6 +84,7 @@ public class Stone extends Enity {
         }else{
             nextDoor = false;
         }
+        //chưa thêm tính năng bị door đẩy lên 
     }
     private void handleCollision(){
         checkEnimies();
@@ -91,7 +99,7 @@ public class Stone extends Enity {
         }else{
             ySpeed = 0;
         }
-        if (canMove(x + xSpeed,y,63,63, mapData) == true && nextStones.isEmpty() && nextDoor == false) {
+        if (canMove(x + xSpeed,y,63,63, mapData) == true && nextStones.isEmpty() && nextDoor == false && nextMushRoom4 == -1) {
 		    x += xSpeed;
             canPush = true;
         }else{

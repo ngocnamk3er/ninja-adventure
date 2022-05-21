@@ -266,16 +266,23 @@ public class Player extends Enity {
                         }
                     }
                 }else if(enemy instanceof Enemy4){
-                    // System.out.println(standOnMushRoom);
                     if(Math.abs(x+xSpeed-enemy.getX())<=48&&Math.abs(y-enemy.getY())<=32){
-                        if(ySpeed>0&&ySpeed<4){
-                            standOnMushRoom = i;
-                            y = enemy.getY() - height/2;
+                        setInAir(x, y, mapData);
+                        if(inAir==false&&standOnMushRoom==-1){
+                            y = y - 0.1f; 
+                            ySpeed = -20;
                         }else{
-                            if(standOnMushRoom==-1){
-                                y = y - 2;
-                                ySpeed = -20;
+                            if(standOnMushRoom == -1){
+                                if(ySpeed>=0&&ySpeed<=0.5){
+                                    standOnMushRoom = i;
+                                    y = enemy.getY() - 32;
+                                }else{
+                                    ySpeed = -20;
+                                }
                             }
+                            // else{
+                            //     // y = enemy.getY() - 32;
+                            // }
                         }
                     }else{
                         if(standOnMushRoom==i){
