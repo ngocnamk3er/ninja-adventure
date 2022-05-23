@@ -22,15 +22,8 @@ public class Enemy4 extends Enemy {
             gc.drawImage(animationImages[enemyAction][aniIndex], x, y, width, height);   
         }   
     }
-
     @Override
-    public void update() {
-        if(!disappear){
-            setAnimation();
-            updateAnimationTick(); 
-        }   
-    }
-    private void setAnimation() {
+    protected void setAnimation() {
         int startAni = enemyAction;
         if(death){
             enemyAction = DEATH;
@@ -41,8 +34,8 @@ public class Enemy4 extends Enemy {
             aniIndex = 0;
         }
     }
-
-    private void updateAnimationTick() {
+    @Override
+    protected void updateAnimationTick() {
         aniTick++;
 		if (aniTick >= aniSpeed) {
 			aniTick = 0;
@@ -55,7 +48,10 @@ public class Enemy4 extends Enemy {
 			}
 		}
     }
-
+    @Override
+    protected void handleCollision(){};
+    @Override
+    protected void updatePos(){};
     public static int getAmountSpritesOfEnimy4Action(int x) {
         if(x == IDLE){
             return 6;

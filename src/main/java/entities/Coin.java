@@ -20,7 +20,8 @@ public class Coin extends Enity {
         this.gc = mapInteractionManager.getGc();
         this.animationImages = animationImages;
     }
-    private void setAnimation(){
+    @Override
+    protected void setAnimation(){
         int startAni = coinAction;
         if(pickedUp==false){
             coinAction = IDLE;
@@ -31,7 +32,8 @@ public class Coin extends Enity {
             aniIndex = 0;
         }
     }
-    private void updateAnimationTick() {
+    @Override
+    protected void updateAnimationTick() {
 		aniTick++;
 		if (aniTick >= aniSpeed) {
 			aniTick = 0;
@@ -45,12 +47,14 @@ public class Coin extends Enity {
 
 		}
     }
+    @Override
     public void update(){
         if(!disappear){
             setAnimation();
             updateAnimationTick();
         }
     }
+    @Override
     public void render() {
         if(!disappear){
             if(pickedUp==false){
@@ -65,6 +69,14 @@ public class Coin extends Enity {
     }
     public void setPickedUp(boolean pickedUp) {
         this.pickedUp = pickedUp;
+    }
+    @Override
+    protected void updatePos() {
+        
+    }
+    @Override
+    protected void handleCollision() {
+        
     }
     
 }

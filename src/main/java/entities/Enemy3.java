@@ -23,7 +23,8 @@ public class Enemy3 extends Enemy {
         this.door = mapInteractionManager.getDoor();
         this.animationImages = animationImages;
     }
-    private void setAnimation() {
+    @Override
+    protected void setAnimation() {
         int startAni = enemyAction;
         if(right){
             if(run){
@@ -53,7 +54,8 @@ public class Enemy3 extends Enemy {
             }
         }
     }
-    private void updateAnimationTick() {
+    @Override
+    protected void updateAnimationTick() {
         aniTick++;
 		if (aniTick >= aniSpeed) {
 			aniTick = 0;
@@ -66,15 +68,6 @@ public class Enemy3 extends Enemy {
                 }
 			}
 		}
-    }
-    @Override
-    public void update() {
-        if(!disappear){
-            handleCollision();
-            updatePos();
-            setAnimation();
-            updateAnimationTick();
-        }
     }
     @Override
     public void render() {

@@ -31,8 +31,8 @@ public class Fire extends Enity {
         setAnimation();
         updateAnimationTick();
     }
-
-    private void setAnimation() {
+    @Override
+    protected void setAnimation() {
         int startAni = fireAction;
         if(on==false){
             fireAction = OFF;
@@ -44,8 +44,8 @@ public class Fire extends Enity {
         }
     }
 
-
-    private void updateAnimationTick() {
+    @Override
+    protected void updateAnimationTick() {
         aniTick++;
 		if (aniTick >= aniSpeed) {
 			aniTick = 0;
@@ -73,6 +73,16 @@ public class Fire extends Enity {
 
     public void setOn(boolean on) {
         this.on = on;
+    }
+
+    @Override
+    protected void updatePos() {
+        
+    }
+
+    @Override
+    protected void handleCollision() {
+        
     }
     
 }

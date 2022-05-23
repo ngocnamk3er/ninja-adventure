@@ -63,12 +63,23 @@ public abstract class Enemy extends Enity {
             }
         }
     }
+    @Override
+    public void update() {
+        if(!disappear){
+            updatePos();
+            updateAnimationTick();
+            setAnimation();
+            handleCollision();
+        }
+    }
+    @Override
     protected void handleCollision() {
         if(!death){
             checkDoor();
             checkStones();
         }
     }   
+    @Override
     protected void updatePos() {
         // System.out.println(inAir);
         setInAir();

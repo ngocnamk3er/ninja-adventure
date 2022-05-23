@@ -40,4 +40,8 @@ public abstract class Enity {
     }
     public abstract void render();
     public abstract void update();
+    protected abstract void updateAnimationTick();
+    protected abstract void updatePos();
+    protected abstract void handleCollision();
+    protected abstract void setAnimation();
 }

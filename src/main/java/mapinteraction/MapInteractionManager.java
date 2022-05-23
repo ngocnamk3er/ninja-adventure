@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 import entities.Button;
+import entities.CeilingTrap;
 import entities.Coin;
 import entities.Door;
 import entities.Enemy;
@@ -13,9 +14,14 @@ import entities.Enemy3;
 import entities.Enemy4;
 import entities.Enity;
 import entities.Fire;
+import entities.LightningTrap;
 import entities.Player;
+import entities.SandwormTrap;
+import entities.ShurikenTrap;
+import entities.SpearTrap;
 import entities.Stone;
 import entities.StrangeDoor;
+import entities.Trap;
 import help.Constant.MapInteraction;
 import inputs.SetKeyBoardInputs;
 import javafx.embed.swing.SwingFXUtils;
@@ -33,6 +39,7 @@ public class MapInteractionManager {
     private ArrayList<Button> buttons;
     private ArrayList<Enemy> enemies;
     private ArrayList<Fire> fires;
+    private ArrayList<Trap> traps;
     private Player player;
     private Door door;
     private StrangeDoor strangeDoor;
@@ -51,6 +58,11 @@ public class MapInteractionManager {
     private Image[][] animationImagesEnimy3;
     private Image[][] animationImagesEnimy4;
     private Image[][] animationImagesFire;
+    private Image[] animationImagesLightningTrap;
+    private Image[] animationImagesShurikenTrap;
+    private Image[] animationImagesSandWormTrap;
+    private Image[] animationImagesCeilingTrap;
+    private Image[] animationImagesSpearTrap;
     private void loadAnimations(){
         loadAnimationsPlayer();
         loadAnimationsCoins();
@@ -58,12 +70,20 @@ public class MapInteractionManager {
         loadAnimationsDoor();
         loadAnimationsButton();
         loadAnimationsStrangDoor();
+        //--------------
         loadAnimationsEnimy1();
         loadAnimationsEnimy2();
         loadAnimationsEnimy3();
         loadAnimationsEnimy4();
+        //---------------
         loadAnimationsFire();
+        loadAnimationsLightningTrap();
+        loadAnimationsShurikenTrap();
+        loadAnimationsSandWormTrap();
+        loadAnimationsCeilingTrap();
+        loadAnimationsSpearTrap();
     }
+
     public MapInteractionManager(GraphicsContext gc,int [][]mapData, MakeMainScene makeMainScene){
         loadAnimations();
         this.makeMainScene = makeMainScene;
@@ -88,6 +108,7 @@ public class MapInteractionManager {
         enemies = new ArrayList<>();
         buttons = new ArrayList<>();
         fires = new ArrayList<>();
+        traps = new ArrayList<>();
         player = new Player();
         door = new Door();
         for(int i=0;i<12;i++){
@@ -125,6 +146,21 @@ public class MapInteractionManager {
                 }else if(MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == 'f'){
                     Fire fire = new Fire(j*64, i*64,animationImagesFire ,this);
                     fires.add(fire);
+                }else if(MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == 'l'){
+                    LightningTrap lightningTrap = new LightningTrap(j*64, i*64,animationImagesLightningTrap ,this);
+                    traps.add(lightningTrap);
+                }else if(MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == 'S'){
+                    ShurikenTrap shurikenTrap = new ShurikenTrap(j*64, i*64,animationImagesShurikenTrap ,this);
+                    traps.add(shurikenTrap);
+                }else if(MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == 'w'){
+                    SandwormTrap sandwormTrap = new SandwormTrap(j*64, i*64,animationImagesSandWormTrap ,this);
+                    traps.add(sandwormTrap);
+                }else if(MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == 'C'){
+                    CeilingTrap ceilingTrap = new CeilingTrap(j*64, i*64,animationImagesCeilingTrap ,this);
+                    traps.add(ceilingTrap);
+                }else if(MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == 'P'){
+                    SpearTrap spearTrap = new SpearTrap(j*64, i*64,animationImagesSpearTrap ,this);
+                    traps.add(spearTrap);
                 }
             }
         }
@@ -147,6 +183,9 @@ public class MapInteractionManager {
         }
         for(Fire fire:fires){
             fire.update();
+        }
+        for(Trap trap:traps){
+            trap.update();
         }
         door.update();
     }
@@ -175,8 +214,72 @@ public class MapInteractionManager {
         for(Fire fire:fires){
             fire.render();
         }
+        for(Trap trap:traps){
+            trap.render();
+        }
         door.render();
         player.render();  
+    }
+    private void loadAnimationsSpearTrap(){
+        animationImagesSpearTrap = new Image[12];
+        try {
+            bufferedImage = ImageIO.read(Trap.class.getResourceAsStream("SpearTrap.png"));
+            int AmountSprites =  12;
+            for(int j=0;j<AmountSprites;j++) {
+                animationImagesSpearTrap[j] = SwingFXUtils.toFXImage(bufferedImage.getSubimage(4+j*16, 0, 9, 64), null);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    private void loadAnimationsCeilingTrap() {
+        animationImagesCeilingTrap = new Image[14];
+        try {
+            bufferedImage = ImageIO.read(Trap.class.getResourceAsStream("CeilingTrap.png"));
+            int AmountSprites =  11;
+            for(int j=0;j<AmountSprites;j++) {
+                animationImagesCeilingTrap[j] = SwingFXUtils.toFXImage(bufferedImage.getSubimage(16+j*64, 0, 32, 64), null);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    private void loadAnimationsSandWormTrap() {
+        animationImagesSandWormTrap = new Image[11];
+        try {
+            bufferedImage = ImageIO.read(Trap.class.getResourceAsStream("SandWorm.png"));
+            int AmountSprites =  11;
+            for(int j=0;j<AmountSprites;j++) {
+                animationImagesSandWormTrap[j] = SwingFXUtils.toFXImage(bufferedImage.getSubimage(j*32, 0, 32, 32), null);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    private void loadAnimationsShurikenTrap() {
+        animationImagesShurikenTrap = new Image[8];
+        try {
+            bufferedImage = ImageIO.read(Trap.class.getResourceAsStream("Suriken.png"));
+            int AmountSprites =  8;
+            for(int j=0;j<AmountSprites;j++) {
+                animationImagesShurikenTrap[j] = SwingFXUtils.toFXImage(bufferedImage.getSubimage(j*32, 0, 32, 32), null);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    
+    private void loadAnimationsLightningTrap() {
+        animationImagesLightningTrap = new Image[25];
+        try {
+            bufferedImage = ImageIO.read(Trap.class.getResourceAsStream("LightningTrap.png"));
+            int AmountSprites = 22;
+            for(int j=0;j<AmountSprites;j++) {
+                animationImagesLightningTrap[j] = SwingFXUtils.toFXImage(bufferedImage.getSubimage(24+j*96, 0, 48, 96), null);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     private void loadAnimationsFire() {
         animationImagesFire = new Image[2][4];
@@ -743,6 +846,14 @@ public class MapInteractionManager {
     }
     public void setFires(ArrayList<Fire> fires) {
         this.fires = fires;
+    }
+
+    public ArrayList<Trap> getTraps() {
+        return traps;
+    }
+
+    public void setTraps(ArrayList<Trap> traps) {
+        this.traps = traps;
     }
     
 }

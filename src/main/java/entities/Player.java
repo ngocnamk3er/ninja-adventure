@@ -59,6 +59,7 @@ public class Player extends Enity {
     private ArrayList<Stone> stones;
     private ArrayList<Enemy> enemies;
     private ArrayList<Fire> fires;
+    private ArrayList<Trap> traps;
     private MapInteractionManager mapInteractionManager;
     private MakeMainScene makeMainScene;
     private Door door;
@@ -88,6 +89,7 @@ public class Player extends Enity {
         this.animationImages = animationImages;
         this.mapInteractionManager = mapInteractionManager;
         this.fires = mapInteractionManager.getFires();
+        this.traps = mapInteractionManager.getTraps();
     }
 
     public void update() {
@@ -97,7 +99,8 @@ public class Player extends Enity {
         setAnimation();
         // System.out.println(xSpeed);
     }
-    private void updateAnimationTick() {
+    @Override
+    protected void updateAnimationTick() {
 		aniTick++;
 		if (aniTick >= aniSpeed) {
 			aniTick = 0;
@@ -224,6 +227,17 @@ public class Player extends Enity {
             nextLevel = true;
         }
     }
+    private void checkTraps() {
+        for(Trap trap:traps){
+            float distanceOx;
+            float distanceOy;
+            distanceOx = Math.abs((x+width/2)-(trap.getxDangerHitbox()+trap.getWidthDangerHitbox()/2));
+            distanceOy = Math.abs((y+height/2)-(trap.getyDangerHitbox()+trap.getHeightDangerHitbox()/2));
+            if(distanceOx<=(width+trap.getWidthDangerHitbox())/2&&distanceOy<=(height+trap.getHeightDangerHitbox())/2){
+                death = true;
+            }
+        }
+    }
     private void checkEnemies() {
         for(int i=0;i<enemies.size();i++){
             Enemy enemy = enemies.get(i);
@@ -313,16 +327,18 @@ public class Player extends Enity {
         }
         ySword = y;
     }
-
-    private void handleCollision(){
+    @Override
+    protected void handleCollision(){
         checkEnemies();
         checkCoins();
         checkStones();
         checkDoor();
         checkStrangeDoor();
         checkFires();
+        checkTraps();
     }
-    private void updatePos() {
+    @Override
+    protected void updatePos() {
         moving = false;
         xSpeed = 0;
         setInAir(this.x, this.y, mapData);
@@ -393,8 +409,8 @@ public class Player extends Enity {
         moving = true;
         // System.out.println(y);
 	}
-    
-    private void setAnimation() {
+    @Override
+    protected void setAnimation() {
         int startAni = playerAction;
         if (right) {
             if (moving==false) {

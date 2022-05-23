@@ -29,16 +29,8 @@ public class Enemy1 extends Enemy {
         this.animationImages = animationImages;
         deltaY = 32;
     }
-
-    public void update() {
-        if(!disappear){
-            handleCollision();
-            updateAnimationTick();
-            updatePos();
-            setAnimation();
-        }
-    }
-    private void setAnimation() {
+    @Override
+    protected void setAnimation() {
         int startAni = enemyAction;
         if(right){
             if(run){
@@ -65,7 +57,8 @@ public class Enemy1 extends Enemy {
             aniIndex = 0;
         }
     }
-    private void updateAnimationTick() {
+    @Override
+    protected void updateAnimationTick() {
         aniTick++;
 		if (aniTick >= aniSpeed) {
 			aniTick = 0;

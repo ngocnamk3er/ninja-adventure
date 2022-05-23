@@ -34,7 +34,8 @@ public class Button extends Enity {
         }
         return false;
     }
-    private void handleCollision(){
+    @Override
+    protected void handleCollision(){
         if(checkPlayer()){
             pressed = true;
             return;
@@ -46,6 +47,7 @@ public class Button extends Enity {
         pressed = false;
 
     }
+    @Override
     public void update(){
         handleCollision();
     }
@@ -63,6 +65,18 @@ public class Button extends Enity {
     }
     public void setPressed(boolean pressed) {
         this.pressed = pressed;
+    }
+    @Override
+    protected void updateAnimationTick() {
+                
+    }
+    @Override
+    protected void updatePos() {
+                
+    }
+    @Override
+    protected void setAnimation() {
+                
     }
     
 }

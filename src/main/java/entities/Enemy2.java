@@ -20,15 +20,8 @@ public class Enemy2 extends Enemy {
         this.animationImages = animationImages;
     }
 
-    public void update() {
-        if(!disappear){
-            handleCollision();
-            updatePos();
-            setAnimation();
-            updateAnimationTick();
-        }
-    }
-    private void setAnimation() {
+    @Override
+    protected void setAnimation() {
         int startAni = enemyAction;
         if(run){
             enemyAction = RUN;
@@ -43,7 +36,8 @@ public class Enemy2 extends Enemy {
             aniIndex = 0;
         }
     }
-    private void updateAnimationTick() {
+    @Override
+    protected void updateAnimationTick() {
         aniTick++;
 		if (aniTick >= aniSpeed) {
 			aniTick = 0;

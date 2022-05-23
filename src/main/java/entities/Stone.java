@@ -86,13 +86,13 @@ public class Stone extends Enity {
         }
         //chưa thêm tính năng bị door đẩy lên 
     }
-    private void handleCollision(){
+    protected void handleCollision(){
         checkEnimies();
         checkPlayer();
         checkDoor();
         checkStones();
     }
-    private void updatePos(){
+    protected void updatePos(){
         setInAir();
         if(inAir){
             ySpeed = ySpeed + gravity;
@@ -146,6 +146,14 @@ public class Stone extends Enity {
     }
     public void setySpeed(float ySpeed) {
         this.ySpeed = ySpeed;
+    }
+    @Override
+    protected void updateAnimationTick() {
+        
+    }
+    @Override
+    protected void setAnimation() {
+        
     }
     
 }

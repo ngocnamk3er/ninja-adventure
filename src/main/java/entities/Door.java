@@ -34,12 +34,14 @@ public class Door extends Enity {
         this.buttons = mapInteractionManager.getButtons();
         this.animationImages = animationImages;
     }
+    @Override
     public void update(){
         handleCollision();
         setAnimation();
-        updateDoorAniTick();
+        updateAnimationTick();
     }
-    private void handleCollision() {
+    @Override
+    protected void handleCollision() {
         checkButtons();
     }
     private void checkButtons() {
@@ -60,7 +62,8 @@ public class Door extends Enity {
             direction = DOWN;   
         }
     }
-    private void setAnimation() {
+    @Override
+    protected void setAnimation() {
         int startAni = doorAction;
         if(direction!=0){
             doorAction = MOVING;
@@ -71,7 +74,8 @@ public class Door extends Enity {
             aniDoorIndex = 0;
         }
     }
-    private void updateDoorAniTick() {
+    @Override
+    protected void updateAnimationTick() {
         if(direction == DOWN){
             if(aniDoorIndex < getAmountSpritesOfDoor(doorAction)-1){
                 aniTick++;
@@ -137,6 +141,10 @@ public class Door extends Enity {
     }
     public void setyHitBox(float yHitBox) {
         this.yHitBox = yHitBox;
+    }
+    @Override
+    protected void updatePos() {
+        
     }
     
     
