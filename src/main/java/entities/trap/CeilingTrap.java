@@ -6,7 +6,7 @@ import mapinteraction.MapInteractionManager;
 public class CeilingTrap  extends Trap{
     public CeilingTrap( float x, float y,Image[] animationImages,MapInteractionManager mapInteractionManager) {
         super(x, y, 64, 128, x, y, 64, 8,15,animationImages, mapInteractionManager);
-        aniSpeed = 15;
+        aniSpeed = 10;
     }
     @Override
     protected void updateDangerHitbox() {

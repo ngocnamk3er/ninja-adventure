@@ -236,12 +236,14 @@ public class Player extends Enity {
     }
     private void checkTraps() {
         for(Trap trap:traps){
-            float distanceOx;
-            float distanceOy;
-            distanceOx = Math.abs((x+width/2)-(trap.getxDangerHitbox()+trap.getWidthDangerHitbox()/2));
-            distanceOy = Math.abs((y+height/2)-(trap.getyDangerHitbox()+trap.getHeightDangerHitbox()/2));
-            if(distanceOx<(width+trap.getWidthDangerHitbox())/2&&distanceOy<(height+trap.getHeightDangerHitbox())/2){
-                death = true;
+            if(trap.getHeightDangerHitbox()>0&&trap.getWidthDangerHitbox()>0){
+                float distanceOx;
+                float distanceOy;
+                distanceOx = Math.abs((x+width/2)-(trap.getxDangerHitbox()+trap.getWidthDangerHitbox()/2));
+                distanceOy = Math.abs((y+height/2)-(trap.getyDangerHitbox()+trap.getHeightDangerHitbox()/2));
+                if(distanceOx<(width+trap.getWidthDangerHitbox())/2&&distanceOy<(height+trap.getHeightDangerHitbox())/2){
+                    death = true;
+                }
             }
         }
     }
