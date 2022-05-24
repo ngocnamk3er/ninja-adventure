@@ -14,10 +14,7 @@ public class Coin extends Enity {
     private final int PICKEDUP = 1;
     private boolean disappear = false;
     public Coin(float x, float y, MapInteractionManager mapInteractionManager, Image[][] animationImages) {
-        super(x, y);
-        width = 32;
-        height = 32;
-        this.gc = mapInteractionManager.getGc();
+        super(x, y, 32, 32 ,mapInteractionManager.getGc());
         this.animationImages = animationImages;
     }
     @Override

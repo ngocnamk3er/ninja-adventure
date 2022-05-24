@@ -13,11 +13,7 @@ public class Fire extends Enity {
     public static final int ON = 1;
     private boolean on = false;
     public Fire( float x, float y,Image[][] animationImages,MapInteractionManager mapInteractionManager) {
-        this.x = x;
-        this.y = y;
-        width = 64;
-        height = 132;
-        this.gc = mapInteractionManager.getGc();
+        super(x, y, 64, 132, mapInteractionManager.getGc());
         this.animationImages = animationImages;
     }   
     

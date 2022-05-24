@@ -12,10 +12,7 @@ public class Button extends Enity {
     private Player player;
     private ArrayList<Stone> stones;
     public Button(float x, float y,Image[] animationImages, MapInteractionManager mapInteractionManager) {
-        super(x, y);
-        width = 64;
-        height = 64;
-        this.gc=mapInteractionManager.getGc();
+        super(x, y , 64, 64 , mapInteractionManager.getGc());
         this.stones = mapInteractionManager.getStones();
         this.player = mapInteractionManager.getPlayer();
         this.animationImages = animationImages;

@@ -25,16 +25,13 @@ public class Stone extends Enity {
     private HashSet<Integer> underStones = new HashSet<>();
     private int nextMushRoom4 = -1;
     public Stone(float x, float y,Image animationImage,MapInteractionManager mapInteractionManager) {
-        super(x, y);
+        super(x, y, 64, 64 ,mapInteractionManager.getGc());
         this.mapData = mapInteractionManager.getMapData();
-        this.gc=mapInteractionManager.getGc();
         this.stones = mapInteractionManager.getStones();
         this.player = mapInteractionManager.getPlayer();
         this.enemies = mapInteractionManager.getEnemies();
         this.animationImage = animationImage;
         this.door = mapInteractionManager.getDoor();
-        width = 64;
-        height = 64;
     }
     public void checkPlayer(){
         if(ySpeed>0){
