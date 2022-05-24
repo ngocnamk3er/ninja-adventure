@@ -236,7 +236,7 @@ public class MapInteractionManager {
         animationImagesCeilingTrap = new Image[14];
         try {
             bufferedImage = ImageIO.read(Trap.class.getResourceAsStream("CeilingTrap.png"));
-            int AmountSprites =  11;
+            int AmountSprites = 14;
             for(int j=0;j<AmountSprites;j++) {
                 animationImagesCeilingTrap[j] = SwingFXUtils.toFXImage(bufferedImage.getSubimage(16+j*64, 0, 32, 64), null);
             }
