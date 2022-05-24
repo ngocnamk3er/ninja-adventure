@@ -4,24 +4,24 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 import entities.Button;
-import entities.CeilingTrap;
 import entities.Coin;
 import entities.Door;
-import entities.Enemy;
-import entities.Enemy1;
-import entities.Enemy2;
-import entities.Enemy3;
-import entities.Enemy4;
 import entities.Enity;
 import entities.Fire;
-import entities.LightningTrap;
 import entities.Player;
-import entities.SandwormTrap;
-import entities.ShurikenTrap;
-import entities.SpearTrap;
 import entities.Stone;
 import entities.StrangeDoor;
-import entities.Trap;
+import entities.enemy.Enemy;
+import entities.enemy.Enemy1;
+import entities.enemy.Enemy2;
+import entities.enemy.Enemy3;
+import entities.enemy.Enemy4;
+import entities.trap.CeilingTrap;
+import entities.trap.LightningTrap;
+import entities.trap.SandwormTrap;
+import entities.trap.ShurikenTrap;
+import entities.trap.SpearTrap;
+import entities.trap.Trap;
 import help.Constant.MapInteraction;
 import inputs.SetKeyBoardInputs;
 import javafx.embed.swing.SwingFXUtils;
@@ -221,10 +221,10 @@ public class MapInteractionManager {
         player.render();  
     }
     private void loadAnimationsSpearTrap(){
-        animationImagesSpearTrap = new Image[12];
+        int AmountSprites =  13;
+        animationImagesSpearTrap = new Image[AmountSprites];
         try {
             bufferedImage = ImageIO.read(Trap.class.getResourceAsStream("SpearTrap.png"));
-            int AmountSprites =  12;
             for(int j=0;j<AmountSprites;j++) {
                 animationImagesSpearTrap[j] = SwingFXUtils.toFXImage(bufferedImage.getSubimage(4+j*16, 0, 9, 64), null);
             }
@@ -233,10 +233,10 @@ public class MapInteractionManager {
         }
     }
     private void loadAnimationsCeilingTrap() {
-        animationImagesCeilingTrap = new Image[14];
+        int AmountSprites = 15;
+        animationImagesCeilingTrap = new Image[AmountSprites];
         try {
             bufferedImage = ImageIO.read(Trap.class.getResourceAsStream("CeilingTrap.png"));
-            int AmountSprites = 14;
             for(int j=0;j<AmountSprites;j++) {
                 animationImagesCeilingTrap[j] = SwingFXUtils.toFXImage(bufferedImage.getSubimage(16+j*64, 0, 32, 64), null);
             }
@@ -270,7 +270,7 @@ public class MapInteractionManager {
     }
     
     private void loadAnimationsLightningTrap() {
-        animationImagesLightningTrap = new Image[25];
+        animationImagesLightningTrap = new Image[22];
         try {
             bufferedImage = ImageIO.read(Trap.class.getResourceAsStream("LightningTrap.png"));
             int AmountSprites = 22;

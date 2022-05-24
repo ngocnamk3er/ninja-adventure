@@ -9,6 +9,13 @@ import static help.HelpMethods.*;
 
 import java.util.ArrayList;
 
+import entities.enemy.Enemy;
+import entities.enemy.Enemy1;
+import entities.enemy.Enemy2;
+import entities.enemy.Enemy3;
+import entities.enemy.Enemy4;
+import entities.trap.Trap;
+
 public class Player extends Enity {
     private Image[][] animationImages;
     private float width = 64;
@@ -233,7 +240,7 @@ public class Player extends Enity {
             float distanceOy;
             distanceOx = Math.abs((x+width/2)-(trap.getxDangerHitbox()+trap.getWidthDangerHitbox()/2));
             distanceOy = Math.abs((y+height/2)-(trap.getyDangerHitbox()+trap.getHeightDangerHitbox()/2));
-            if(distanceOx<=(width+trap.getWidthDangerHitbox())/2&&distanceOy<=(height+trap.getHeightDangerHitbox())/2){
+            if(distanceOx<(width+trap.getWidthDangerHitbox())/2&&distanceOy<(height+trap.getHeightDangerHitbox())/2){
                 death = true;
             }
         }

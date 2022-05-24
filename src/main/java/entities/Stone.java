@@ -7,6 +7,9 @@ import static help.HelpMethods.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+import entities.enemy.Enemy;
+import entities.enemy.Enemy4;
+
 public class Stone extends Enity {
 
     private Image animationImage;

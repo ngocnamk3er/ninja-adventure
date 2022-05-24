@@ -1,28 +1,22 @@
-package entities;
+package entities.enemy;
 
 import javafx.scene.image.Image;
 import mapinteraction.MapInteractionManager;
 
-public class Enemy1 extends Enemy {
-    //right
-    public static final int IDLE_R = 0;
-    public static final int RUN_R = 1;
-    public static final int DEATH_R = 2;
-    public static final int HIT_R = 3;
-    //left
-    public static final int IDLE_L = 4;
-    public static final int RUN_L = 5;;
-    public static final int DEATH_L = 6;
-    public static final int HIT_L = 7;
-    
-    private float deltaY;
+public class Enemy3 extends Enemy {
 
-    public Enemy1( float x, float y,Image[][] animationImages,MapInteractionManager mapInteractionManager) {
+    public static final int RUN_R = 0;
+    public static final int DEATH_R = 1;
+    public static final int HIT_R = 2;
+    public static final int RUN_L = 3;
+    public static final int DEATH_L = 4;
+    public static final int HIT_L = 5;
+    
+    public Enemy3( float x, float y,Image[][] animationImages,MapInteractionManager mapInteractionManager) {
         super(x,y,64,64,animationImages,mapInteractionManager.getGc());
         this.mapData = mapInteractionManager.getMapData();
         this.stones = mapInteractionManager.getStones();
         this.door = mapInteractionManager.getDoor();
-        deltaY = 32;
     }
     @Override
     protected void setAnimation() {
@@ -36,6 +30,9 @@ public class Enemy1 extends Enemy {
             }
             if(death){
                 enemyAction = DEATH_R;
+            }    
+            if(startAni!=enemyAction){
+                aniIndex = 0;
             }
         }else{
             if(run){
@@ -46,10 +43,10 @@ public class Enemy1 extends Enemy {
             }
             if(death){
                 enemyAction = DEATH_L;
+            }    
+            if(startAni!=enemyAction){
+                aniIndex = 0;
             }
-        }
-        if(startAni!=enemyAction){
-            aniIndex = 0;
         }
     }
     @Override
@@ -58,7 +55,7 @@ public class Enemy1 extends Enemy {
 		if (aniTick >= aniSpeed) {
 			aniTick = 0;
 			aniIndex++;
-			if (aniIndex >= getAmountSpritesOfEnimy1Action(enemyAction)) {
+			if (aniIndex >= getAmountSpritesOfEnimy3Action(enemyAction)) {
 				aniIndex = 0;
                 hit = false;
                 if(death){
@@ -70,25 +67,19 @@ public class Enemy1 extends Enemy {
     @Override
     public void render() {
         if(!disappear){
-            if(run){
-                gc.drawImage(animationImages[enemyAction][aniIndex], x, y-deltaY, width, height+deltaY);
-            }else{
-                gc.drawImage(animationImages[enemyAction][aniIndex], x, y, width, height);
-            }
+            gc.drawImage(animationImages[enemyAction][aniIndex], x, y, width, height);
         }
     }
-    public static int getAmountSpritesOfEnimy1Action(int x) {
-        if (x == IDLE_L || x == IDLE_R) {
-            return 5;
-        } else if (x == RUN_L || x == RUN_R) {
-            return 15;
-        }else if (x == DEATH_L || x == DEATH_R) {
+    public static int getAmountSpritesOfEnimy3Action(int x) {
+        if (x == RUN_L||x == RUN_R) {
+            return 8;
+        }else if (x == DEATH_L|| x == DEATH_R) {
             return 6;
-        }else if(x == HIT_L || x == HIT_R){
+        }else if(x == HIT_L|| x == HIT_R){
             return 3;
         }else{
             return 0;
         }
     }
-        
+    
 }

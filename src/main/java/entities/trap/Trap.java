@@ -1,18 +1,19 @@
-package entities;
+package entities.trap;
 
+import entities.Enity;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 import mapinteraction.MapInteractionManager;
 
-
-public abstract class Trap extends Enity {
+public abstract class Trap extends Enity{
     protected Image []animationImages;
     protected float xDangerHitbox;
     protected float yDangerHitbox;
     protected float widthDangerHitbox;
     protected float heightDangerHitbox;
     private int aniTick = 0;
-    private int aniSpeed = 6;
-    private int aniIndex = 0;
+    protected int aniSpeed = 4;
+    protected int aniIndex = 0;
     protected  int amountSprites;
     public Trap( float x, float y,float width,float height,float xDangerHitbox,float yDangerHitbox,float widthDangerHitbox,float heightDangerHitbox,int amountSprites,Image[] animationImages,MapInteractionManager mapInteractionManager) {
         this.x = x;
@@ -27,8 +28,16 @@ public abstract class Trap extends Enity {
         this.animationImages = animationImages;
         this.amountSprites = amountSprites;
     }
+    private void renderDangerHitbox(){
+        gc.setFill(Color.RED);
+        gc.fillRect(xDangerHitbox, yDangerHitbox, widthDangerHitbox, heightDangerHitbox);
+        // gc.fill(xDangerHitbox, yDangerHitbox, widthDangerHitbox, heightDangerHitbox);
+
+    }
     @Override
     public void render() {
+        // System.out.println(aniIndex);
+        renderDangerHitbox();
         gc.drawImage(animationImages[aniIndex], x, y, width, height); 
     }
 

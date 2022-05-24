@@ -1,4 +1,4 @@
-package entities;
+package entities.enemy;
 
 import javafx.scene.image.Image;
 import mapinteraction.MapInteractionManager;

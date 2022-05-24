@@ -1,7 +1,10 @@
-package entities;
+package entities.enemy;
 
 import java.util.ArrayList;
 
+import entities.Door;
+import entities.Enity;
+import entities.Stone;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import static help.HelpMethods.*;

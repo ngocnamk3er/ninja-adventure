@@ -1,4 +1,4 @@
-package entities;
+package entities.trap;
 
 import javafx.scene.image.Image;
 import mapinteraction.MapInteractionManager;
