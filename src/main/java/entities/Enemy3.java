@@ -13,15 +13,10 @@ public class Enemy3 extends Enemy {
     public static final int HIT_L = 5;
     
     public Enemy3( float x, float y,Image[][] animationImages,MapInteractionManager mapInteractionManager) {
-        this.x = x;
-        this.y = y;
-        width = 64;
-        height = 64;
-        this.gc = mapInteractionManager.getGc();
+        super(x,y,64,64,animationImages,mapInteractionManager.getGc());
         this.mapData = mapInteractionManager.getMapData();
         this.stones = mapInteractionManager.getStones();
         this.door = mapInteractionManager.getDoor();
-        this.animationImages = animationImages;
     }
     @Override
     protected void setAnimation() {

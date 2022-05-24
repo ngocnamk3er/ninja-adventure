@@ -5,17 +5,7 @@ import mapinteraction.MapInteractionManager;
 
 public class ShurikenTrap extends Trap{
     public ShurikenTrap( float x, float y,Image[] animationImages,MapInteractionManager mapInteractionManager) {
-        this.x = x;
-        this.y = y;
-        width = 128;
-        height = 128;
-        xDangerHitbox = x;
-        yDangerHitbox = y;
-        widthDangerHitbox = width;
-        heightDangerHitbox = height;
-        this.gc = mapInteractionManager.getGc();
-        this.animationImages = animationImages;
-        amountSprites = 8;
+        super(x, y, 128, 128, x, y, 128, 128, 8, animationImages, mapInteractionManager);
     }
 
     @Override

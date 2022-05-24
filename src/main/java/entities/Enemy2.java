@@ -9,15 +9,10 @@ public class Enemy2 extends Enemy {
     public static final int HIT = 2;
     
     public Enemy2( float x, float y,Image[][] animationImages,MapInteractionManager mapInteractionManager) {
-        this.x = x;
-        this.y = y+32;
-        width = 64;
-        height = 32;
-        this.gc = mapInteractionManager.getGc();
+        super(x,y+32,64,32,animationImages,mapInteractionManager.getGc());
         this.mapData = mapInteractionManager.getMapData();
         this.stones = mapInteractionManager.getStones();
         this.door = mapInteractionManager.getDoor();
-        this.animationImages = animationImages;
     }
 
     @Override

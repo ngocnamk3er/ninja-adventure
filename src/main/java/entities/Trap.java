@@ -1,6 +1,7 @@
 package entities;
 
 import javafx.scene.image.Image;
+import mapinteraction.MapInteractionManager;
 
 
 public abstract class Trap extends Enity {
@@ -13,19 +14,19 @@ public abstract class Trap extends Enity {
     private int aniSpeed = 6;
     private int aniIndex = 0;
     protected  int amountSprites;
-    // public Trap( float x, float y,Image[] animationImages,MapInteractionManager mapInteractionManager) {
-    //     this.x = x;
-    //     this.y = y;
-    //     width = 128;
-    //     height = 128;
-    //     xDangerHitbox = x;
-    //     yDangerHitbox = y;
-    //     widthDangerHitbox = width;
-    //     heightDangerHitbox = height;
-    //     this.gc = mapInteractionManager.getGc();
-    //     this.animationImages = animationImages;
-    //     amountSprites = 8;
-    // }
+    public Trap( float x, float y,float width,float height,float xDangerHitbox,float yDangerHitbox,float widthDangerHitbox,float heightDangerHitbox,int amountSprites,Image[] animationImages,MapInteractionManager mapInteractionManager) {
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+        this.xDangerHitbox = xDangerHitbox;
+        this.yDangerHitbox = yDangerHitbox;
+        this.widthDangerHitbox = widthDangerHitbox;
+        this.heightDangerHitbox = heightDangerHitbox;
+        this.gc = mapInteractionManager.getGc();
+        this.animationImages = animationImages;
+        this.amountSprites = amountSprites;
+    }
     @Override
     public void render() {
         gc.drawImage(animationImages[aniIndex], x, y, width, height); 

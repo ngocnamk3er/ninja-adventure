@@ -18,15 +18,10 @@ public class Enemy1 extends Enemy {
     private float deltaY;
 
     public Enemy1( float x, float y,Image[][] animationImages,MapInteractionManager mapInteractionManager) {
-        this.x = x;
-        this.y = y;
-        width = 64;
-        height = 64;
-        this.gc = mapInteractionManager.getGc();
+        super(x,y,64,64,animationImages,mapInteractionManager.getGc());
         this.mapData = mapInteractionManager.getMapData();
         this.stones = mapInteractionManager.getStones();
         this.door = mapInteractionManager.getDoor();
-        this.animationImages = animationImages;
         deltaY = 32;
     }
     @Override

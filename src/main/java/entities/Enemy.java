@@ -2,6 +2,7 @@ package entities;
 
 import java.util.ArrayList;
 
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import static help.HelpMethods.*;
 public abstract class Enemy extends Enity {
@@ -25,6 +26,12 @@ public abstract class Enemy extends Enity {
     protected float gravity = 0.7f;
     private boolean inAir  = false;
     private boolean standOnDoor = false;
+    
+    public Enemy(float x, float y, float width, float height,Image[][] animationImages, GraphicsContext gc) {
+        super(x, y, width, height, gc);
+        this.animationImages = animationImages;
+    }
+
     public boolean isDeath() {
         return death;
     }

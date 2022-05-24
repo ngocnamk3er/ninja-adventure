@@ -8,12 +8,7 @@ public class Enemy4 extends Enemy {
     public static int DEATH = 1;
     protected Image[][] animationImages;
     public Enemy4( float x, float y,Image[][] animationImages,MapInteractionManager mapInteractionManager) {
-        this.x = x;
-        this.y = y;
-        width = 64;
-        height = 64;
-        this.gc = mapInteractionManager.getGc();
-        this.animationImages = animationImages;
+        super(x,y,64,64,animationImages,mapInteractionManager.getGc());
     }
     
     @Override

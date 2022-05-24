@@ -13,6 +13,14 @@ public abstract class Enity {
         this.x = x;
         this.y = y;
     }
+    
+    public Enity(float x, float y, float width, float height, GraphicsContext gc) {
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+        this.gc = gc;
+    }
     public float getX() {
         return x;
     }
