@@ -36,7 +36,7 @@ public abstract class Trap extends Enity{
     }
     @Override
     public void render() {
-        renderDangerHitbox();
+        // renderDangerHitbox();
         gc.drawImage(animationImages[aniIndex], x, y, width, height); 
     }
 

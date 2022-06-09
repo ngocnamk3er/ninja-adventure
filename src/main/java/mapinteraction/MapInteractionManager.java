@@ -31,9 +31,9 @@ import javafx.scene.image.Image;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-import main.MakeMainScene;
+import main.GameScene;
 public class MapInteractionManager {
-    private MakeMainScene makeMainScene;
+    private GameScene makeMainScene;
     private ArrayList<Coin> coins;
     private ArrayList<Stone> stones;
     private ArrayList<Button> buttons;
@@ -84,7 +84,7 @@ public class MapInteractionManager {
         loadAnimationsSpearTrap();
     }
 
-    public MapInteractionManager(GraphicsContext gc,int [][]mapData, MakeMainScene makeMainScene){
+    public MapInteractionManager(GraphicsContext gc,int [][]mapData, GameScene makeMainScene){
         loadAnimations();
         this.makeMainScene = makeMainScene;
         coins = new ArrayList<>();
@@ -809,10 +809,10 @@ public class MapInteractionManager {
     public void setButtons(ArrayList<Button> buttons) {
         this.buttons = buttons;
     }
-    public MakeMainScene getMakeMainScene() {
+    public GameScene getMakeMainScene() {
         return makeMainScene;
     }
-    public void setMakeMainScene(MakeMainScene makeMainScene) {
+    public void setMakeMainScene(GameScene makeMainScene) {
         this.makeMainScene = makeMainScene;
     }
     public Door getDoor() {

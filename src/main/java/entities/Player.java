@@ -2,7 +2,7 @@ package entities;
 
 
 import javafx.scene.image.Image;
-import main.MakeMainScene;
+import main.GameScene;
 import mapinteraction.MapInteractionManager;
 
 import static help.HelpMethods.*;
@@ -68,7 +68,7 @@ public class Player extends Enity {
     private ArrayList<Fire> fires;
     private ArrayList<Trap> traps;
     private MapInteractionManager mapInteractionManager;
-    private MakeMainScene makeMainScene;
+    private GameScene makeMainScene;
     private Door door;
     private StrangeDoor strangeDoor;
     //handle Collision

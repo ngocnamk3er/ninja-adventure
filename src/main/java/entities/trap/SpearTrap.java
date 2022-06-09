@@ -6,7 +6,7 @@ import mapinteraction.MapInteractionManager;
 public class SpearTrap extends Trap {
     public SpearTrap( float x, float y,Image[] animationImages,MapInteractionManager mapInteractionManager) {
         super(x, y, 16, 128, x, y, 16, 16, 13, animationImages, mapInteractionManager);
-        aniSpeed = 30;
+        aniSpeed = 5;
     }
     @Override
     protected void updateDangerHitbox() {
