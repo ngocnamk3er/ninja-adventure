@@ -27,7 +27,7 @@ public class CloseGameButton extends Button {
         setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-                mainStage.setSelectLevelScene();
+                mainStage.backScene();
 			}
 		});
     }

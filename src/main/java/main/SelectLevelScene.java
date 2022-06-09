@@ -1,5 +1,6 @@
 package main;
 
+import buttons.CloseGameButton;
 import buttons.LevelButton;
 import javafx.scene.Group;
 import javafx.scene.ImageCursor;
@@ -16,6 +17,7 @@ public class SelectLevelScene extends Scene {
     private Pane pane;
     private Background background;
     private Background backgroundLevelButton;
+    private CloseGameButton closeGameButton;
     public SelectLevelScene(MainStage mainStage) {
         super(new Group(),1344,768);
         pane = new Pane();
@@ -28,6 +30,10 @@ public class SelectLevelScene extends Scene {
             levelButton.setLayoutX(72+i%12*100);
             levelButton.setLayoutY(300+i/12*120);
         }
+        closeGameButton = new CloseGameButton(mainStage);
+        closeGameButton.setLayoutX(1344-58);
+        closeGameButton.setLayoutY(10);
+        pane.getChildren().add(closeGameButton);
         setRoot(pane);
         setCursor(new ImageCursor(new Image(SelectLevelScene.class.getResourceAsStream("cursorImage.png"))));
     }

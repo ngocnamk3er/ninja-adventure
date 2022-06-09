@@ -31,12 +31,12 @@ public class GameScene extends Scene{
         mapManager=new MapManager(gcbg);
         mapInteractionManager = new MapInteractionManager(gc,mapManager.getMapData(),this);
 
-        Pane stackPane=new Pane();
-        stackPane.getChildren().add(canvasbg);
-        stackPane.getChildren().add(canvas);
-        setRoot(stackPane);
+        Pane pane=new Pane();
+        pane.getChildren().add(canvasbg);
+        pane.getChildren().add(canvas);
+        setRoot(pane);
         closeGameButton = new CloseGameButton(mainStage);
-        stackPane.getChildren().add(closeGameButton);
+        pane.getChildren().add(closeGameButton);
         closeGameButton.setLayoutX(1344-58);
         closeGameButton.setLayoutY(10);
         setCursor(new ImageCursor(new Image(SelectLevelScene.class.getResourceAsStream("cursorImage.png"))));
