@@ -8,6 +8,9 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import map.MapManager;
 import mapinteraction.MapInteractionManager;
 
@@ -18,6 +21,7 @@ public class GameScene extends Scene{
     private GraphicsContext gc;
     private GraphicsContext gcbg;
     private MapManager mapManager;
+    private Text transcript;
     private CloseGameButton closeGameButton;
     private MapInteractionManager mapInteractionManager;
     public GameScene(MainStage mainStage) {
@@ -30,15 +34,23 @@ public class GameScene extends Scene{
         
         mapManager=new MapManager(gcbg);
         mapInteractionManager = new MapInteractionManager(gc,mapManager.getMapData(),this);
-
-        Pane pane=new Pane();
-        pane.getChildren().add(canvasbg);
-        pane.getChildren().add(canvas);
-        setRoot(pane);
+        //
         closeGameButton = new CloseGameButton(mainStage);
-        pane.getChildren().add(closeGameButton);
         closeGameButton.setLayoutX(1344-58);
         closeGameButton.setLayoutY(10);
+        //
+        transcript = new Text();  
+        transcript.setFont(Font.loadFont(GameScene.class.getResourceAsStream("m6x11.ttf"), 40));
+		transcript.setFill(Color.YELLOW);
+        transcript.setLayoutX(50);
+        transcript.setLayoutY(50);
+        //
+        Pane pane=new Pane();
+        setRoot(pane);
+        pane.getChildren().add(canvasbg);
+        pane.getChildren().add(canvas);
+        pane.getChildren().add(closeGameButton);
+        pane.getChildren().add(transcript);
         setCursor(new ImageCursor(new Image(SelectLevelScene.class.getResourceAsStream("cursorImage.png"))));
     }
     public void MakeGameLevel(int levelValue){
@@ -59,5 +71,7 @@ public class GameScene extends Scene{
     public void setGameLoop(GameLoop gameLoop) {
         this.gameLoop = gameLoop;
     }
-    
+    public void setTranscript(int point){
+        this.transcript.setText("Point : "+point);
+    }
 }

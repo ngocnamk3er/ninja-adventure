@@ -38,6 +38,7 @@ public class MainStage extends Stage {
         indexScene--;
         switch (indexScene) {
             case -1:
+                Data.saveData();
                 Platform.exit();
                 System.exit(0);
             case MENU_SCENE:

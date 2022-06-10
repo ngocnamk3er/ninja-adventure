@@ -2,6 +2,7 @@ package entities;
 
 
 import javafx.scene.image.Image;
+import main.Data;
 import main.GameScene;
 import mapinteraction.MapInteractionManager;
 
@@ -79,7 +80,8 @@ public class Player extends Enity {
     private boolean standOnDoor = false;
     private int standOnMushRoom = -1;
     private int brakingSpeedByDoor = 0;
-
+    private int point;
+    private int oldPoint;
     public void setProperties( float x, float y,Image[][] animationImages,MapInteractionManager mapInteractionManager) {
         this.x = x;
         this.y = y;
@@ -97,6 +99,9 @@ public class Player extends Enity {
         this.mapInteractionManager = mapInteractionManager;
         this.fires = mapInteractionManager.getFires();
         this.traps = mapInteractionManager.getTraps();
+        oldPoint = Data.getPoint();
+        point = Data.getPoint();
+        makeMainScene.setTranscript(point);
     }
 
     public void update() {
@@ -208,6 +213,8 @@ public class Player extends Enity {
                 distance = Math.sqrt(Math.pow(x - coin.getX(), 2.0) + Math.pow(y-coin.getY(), 2.0));
                 if(distance<=48){
                     coin.setPickedUp(true);
+                    point++;
+                    makeMainScene.setTranscript(point);
                 }
             }
         }  	
@@ -494,6 +501,7 @@ public class Player extends Enity {
         mapInteractionManager.setInitialState(mapInteractionManager.getLevelValue());
     }
     private void playNextLevel() {
+        Data.setPoint(point);
         makeMainScene.MakeGameNextLevel(mapInteractionManager.getLevelValue()+1);
     }
     public static int getAmountSpritesOfPlayerAction(int x) {

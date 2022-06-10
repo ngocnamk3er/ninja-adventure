@@ -15,10 +15,12 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+        new Data();
         stage = new MainStage();
         stage.setOnCloseRequest((EventHandler<WindowEvent>) new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent t) {
+                Data.saveData();
                 Platform.exit();
                 System.exit(0);
             }
