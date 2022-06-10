@@ -1,9 +1,9 @@
 package main;
 
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import buttons.MenuButton;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 public class MenuScene extends Scene{
@@ -11,28 +11,25 @@ public class MenuScene extends Scene{
     public MenuScene(MainStage mainStage) {
         super(new Group(),1344,768);
         pane = new Pane();
-        Button startButton =  new Button("Start button");
-        startButton.setPrefHeight(50);
-        startButton.setPrefWidth(200);
+        MenuButton startButton =  new MenuButton("Start");
         startButton.setLayoutY(200);
-        startButton.setLayoutX(1344/2-100);
         //
-        Button creditButton =  new Button("Credit Button");
-        creditButton.setPrefHeight(50);
-        creditButton.setPrefWidth(200);
+        MenuButton creditButton =  new MenuButton("Credit");
         creditButton.setLayoutY(300);
-        creditButton.setLayoutX(1344/2-100);
         //
-        Button exitButton =  new Button("Exit Button");
-        exitButton.setPrefHeight(50);
-        exitButton.setPrefWidth(200);
+        MenuButton exitButton =  new MenuButton("Exit");
         exitButton.setLayoutY(400);
-        exitButton.setLayoutX(1344/2-100);
         //
         startButton.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
                 mainStage.nextScene(-1);
+			}
+		});
+        exitButton.setOnMousePressed(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+                mainStage.backScene();
 			}
 		});
         pane.getChildren().addAll(startButton,exitButton,creditButton);

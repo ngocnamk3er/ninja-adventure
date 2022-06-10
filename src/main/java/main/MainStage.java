@@ -3,7 +3,7 @@ package main;
 
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-
+import javafx.application.Platform;
 public class MainStage extends Stage {
     private GameScene gameScene;
     private SelectLevelScene selectLevelScene;
@@ -37,6 +37,9 @@ public class MainStage extends Stage {
     public void backScene(){
         indexScene--;
         switch (indexScene) {
+            case -1:
+                Platform.exit();
+                System.exit(0);
             case MENU_SCENE:
                 setMenuScene();
                 break;
