@@ -11,7 +11,7 @@ public class MainStage extends Stage {
     private final int MENU_SCENE = 0;
     private final int SELECT_LEVEL_SCENE = 1;
     private final int GAME_SCENE = 2;
-    private int indexScene = 0;
+    private int indexScene = 1;
     public MainStage(){
         getIcons().add(new Image(MainStage.class.getResourceAsStream("logo.png")));
         setTitle("Ninja Adventures");
@@ -19,7 +19,7 @@ public class MainStage extends Stage {
         gameScene = new GameScene(this);
         selectLevelScene = new SelectLevelScene(this);
         menuScene = new MenuScene(this);
-        setScene(menuScene);
+        setScene(selectLevelScene);
     }
     public void nextScene(int levelValue){
         indexScene++;

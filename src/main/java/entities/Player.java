@@ -68,6 +68,7 @@ public class Player extends Enity {
     private ArrayList<Enemy> enemies;
     private ArrayList<Fire> fires;
     private ArrayList<Trap> traps;
+    private ArrayList<Platform> platforms;
     private MapInteractionManager mapInteractionManager;
     private GameScene makeMainScene;
     private Door door;
@@ -76,12 +77,14 @@ public class Player extends Enity {
     private int standOnStone = -1;
     private int pushStone = -1;
     private float brakingSpeedByStone = 0;
-    private float speedCarried = 0;
+    private float speedCarriedByEnemy = 0;
+    private float speedCarriedByPlatform= 0;
     private boolean standOnDoor = false;
+    private int standOnPlatform= -1;
     private int standOnMushRoom = -1;
     private int brakingSpeedByDoor = 0;
     private int point;
-    private int oldPoint;
+    private float speedCarriedByStone;
     public void setProperties( float x, float y,Image[][] animationImages,MapInteractionManager mapInteractionManager) {
         this.x = x;
         this.y = y;
@@ -99,7 +102,7 @@ public class Player extends Enity {
         this.mapInteractionManager = mapInteractionManager;
         this.fires = mapInteractionManager.getFires();
         this.traps = mapInteractionManager.getTraps();
-        oldPoint = Data.getPoint();
+        this.platforms = mapInteractionManager.getPlatforms();
         point = Data.getPoint();
         makeMainScene.setTranscript(point);
     }
@@ -109,7 +112,6 @@ public class Player extends Enity {
         updatePos();
         handleCollision();
         setAnimation();
-        // System.out.println(xSpeed);
     }
     @Override
     protected void updateAnimationTick() {
@@ -126,7 +128,7 @@ public class Player extends Enity {
     }
 
     private void setInAir(float x, float y, int [][]mapData) {
-        if((!isSolid(x+16, y+64, mapData))&&(!isSolid(x+48, y+64, mapData))&&standOnStone==-1&&standOnDoor==false&&standOnMushRoom==-1){
+        if((!isSolid(x+16, y+64, mapData))&&(!isSolid(x+48, y+64, mapData))&&standOnStone==-1&&standOnDoor==false&&standOnMushRoom==-1&&standOnPlatform==-1){
             inAir = true;
         }else{
             inAir = false;
@@ -136,6 +138,21 @@ public class Player extends Enity {
         ySpeed = -15;
         inAir = true;
         up = true;
+    }
+    private void checkPlatforms() {
+        for(int i = 0 ;i < platforms.size(); i++){
+            Platform platform = platforms.get(i);
+            if(!up&&this.y+ySpeed-platform.getY()>=-64 &&this.y+ySpeed/4-platform.getY()<=-48&&x+8<platform.getX()+platform.getWidth()&&x+56>platform.getX()){
+                standOnPlatform = i;
+                y = platform.getY() - 64;
+                speedCarriedByPlatform = platform.getxSpeed();
+            }else{
+                if(standOnPlatform==i){
+                    speedCarriedByPlatform = 0;
+                    standOnPlatform = -1;
+                }
+            }
+        }
     }
     private void checkFires() {
         for(Fire fire:fires){
@@ -153,6 +170,7 @@ public class Player extends Enity {
             if(Math.abs(x+xSpeed-stone.getX())<=132&&Math.abs(y+ySpeed-stone.getY())<=132){
                 if(!up&&this.y+ySpeed-stone.getY()>=-64 &&this.y+ySpeed/4-stone.getY()<=-48&&Math.abs(this.x+xSpeed-stone.getX())<=48){
                     standOnStone = i;
+                    speedCarriedByStone = stone.getxSpeed();
                     stone.setySpeed(0);
                     y = stone.getY() - 64;
                 }else if(this.y+ySpeed-stone.getY()<=64&&this.y+ySpeed-stone.getY()>0&&Math.abs(this.x+xSpeed-stone.getX())<=48){
@@ -172,22 +190,26 @@ public class Player extends Enity {
                             push = true;
                             x = stone.getX() + 58;
                             if(stone.isCanPush()){
-                                stone.setxSpeed(-2f);
+                                stone.setXSpeedByPush(-2f);
                                 brakingSpeedByStone = 6f;
+                                // System.out.println(xSpeed);
                             }else{
                                 brakingSpeedByStone = 8f;
-                                stone.setxSpeed(0);
+                                stone.setXSpeedByPush(0);
+                                // System.out.println(xSpeed);
                             }
                         }
                         if(this.x<stone.getX()&&right){
                             push = true;
                             x = stone.getX() - 58;
                             if(stone.isCanPush()){
-                                stone.setxSpeed(2f);
+                                stone.setXSpeedByPush(2f);
                                 brakingSpeedByStone = -6f;
+                                // System.out.println(xSpeed);
                             }else{
                                 brakingSpeedByStone = -8f;
-                                stone.setxSpeed(0);
+                                stone.setXSpeedByPush(0);
+                                // System.out.println(xSpeed);
                             }
                         }
                     }
@@ -195,11 +217,12 @@ public class Player extends Enity {
                     if(pushStone==i){
                         pushStone = -1;
                         push = false;
-                        stone.setxSpeed(0);
+                        stone.setXSpeedByPush(0);
                         brakingSpeedByStone = 0;
                     }
                     if(standOnStone == i){
                         standOnStone = -1;
+                        speedCarriedByStone = 0;
                     }
                 }
             }
@@ -223,7 +246,7 @@ public class Player extends Enity {
         if(!up&&this.y+ySpeed-door.getyHitBox()>=-64 &&this.y+ySpeed/4-door.getyHitBox()<=-48&&Math.abs(this.x+xSpeed-door.getX())<48){
             standOnDoor = true;
             y = door.getyHitBox() - 64;
-        }else if(y+64>door.getyHitBox()&&y<door.getY()+192&&Math.abs(this.x+xSpeed-door.getX())<=48){
+        }else if(y+64>door.getyHitBox()&&y<door.getY()+door.getHeight()&&Math.abs(this.x+xSpeed-door.getX())<=48){
             if(right&&x<door.getX()){
                 x = door.getX() - 48;
                 brakingSpeedByDoor = -8;
@@ -291,7 +314,7 @@ public class Player extends Enity {
                                 y = enemy.getY() - height;
                                 if(ySpeed<5){
                                     standOnMushRoom = i;
-                                    speedCarried = enemy.getxSpeed();
+                                    speedCarriedByEnemy = enemy.getxSpeed();
                                 }else{
                                     ySpeed = -20;  
                                 }      
@@ -303,7 +326,7 @@ public class Player extends Enity {
                         }else{
                             if(standOnMushRoom == i){
                                 standOnMushRoom = -1;
-                                speedCarried = 0;
+                                speedCarriedByEnemy = 0;
                             }
                         }
                     }
@@ -322,9 +345,6 @@ public class Player extends Enity {
                                     ySpeed = -20;
                                 }
                             }
-                            // else{
-                            //     // y = enemy.getY() - 32;
-                            // }
                         }
                     }else{
                         if(standOnMushRoom==i){
@@ -345,6 +365,7 @@ public class Player extends Enity {
     }
     @Override
     protected void handleCollision(){
+        // System.out.println(xSpeed);
         checkEnemies();
         checkCoins();
         checkStones();
@@ -352,7 +373,9 @@ public class Player extends Enity {
         checkStrangeDoor();
         checkFires();
         checkTraps();
+        checkPlatforms();
     }
+    
     @Override
     protected void updatePos() {
         moving = false;
@@ -390,15 +413,21 @@ public class Player extends Enity {
             }
         } 
         if (run) {
-            playerSpeedX = 8;
             if (right) {
-                xSpeed = playerSpeedX+brakingSpeedByStone+brakingSpeedByDoor+speedCarried;
+                playerSpeedX = 8;
             } else {
-                xSpeed =- playerSpeedX+brakingSpeedByStone+brakingSpeedByDoor+speedCarried;
+                playerSpeedX = -8;
             }
+            xSpeed = playerSpeedX+brakingSpeedByStone+brakingSpeedByDoor+speedCarriedByEnemy+speedCarriedByPlatform+speedCarriedByStone;
         }else{
             if(standOnMushRoom!=-1){
-                xSpeed = speedCarried;
+                xSpeed = speedCarriedByEnemy;
+            }
+            if(standOnPlatform!=-1){
+                xSpeed = speedCarriedByPlatform;
+            }
+            if(standOnStone!=-1){
+                xSpeed = speedCarriedByStone;
             }
         }
         if (canMove((x+xSpeed+16),(y),32,63, mapData) == true) {

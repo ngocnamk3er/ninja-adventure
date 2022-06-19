@@ -17,16 +17,21 @@ public class Stone extends Enity {
     private float gravity = 0.7f;
     private float ySpeed = 0;
     private float xSpeed = 0;
+    private float xSpeedByPush = 0;
     private boolean inAir;
     private boolean canPush = true;
     private ArrayList<Stone> stones;
     private ArrayList<Enemy> enemies;
+    private ArrayList<Platform> platforms;
     private Player player;
     private Door door;
     private boolean nextDoor = false;
     private HashSet<Integer> nextStones = new HashSet<>();
     private HashSet<Integer> underStones = new HashSet<>();
+
     private int nextMushRoom4 = -1;
+    private int standOnPlatform = -1;
+    private int speedCarriedByPlatform = 0;
     public Stone(float x, float y,Image animationImage,MapInteractionManager mapInteractionManager) {
         super(x, y, 64, 64 ,mapInteractionManager.getGc());
         this.mapData = mapInteractionManager.getMapData();
@@ -35,6 +40,23 @@ public class Stone extends Enity {
         this.enemies = mapInteractionManager.getEnemies();
         this.animationImage = animationImage;
         this.door = mapInteractionManager.getDoor();
+        this.platforms = mapInteractionManager.getPlatforms();
+    }
+    private void checkPlatforms() {
+        for(int i = 0 ; i < platforms.size() ; i++){
+            Platform platform = platforms.get(i);
+            if(ySpeed>=0&&this.y+ySpeed-platform.getY()>=-64&&this.y+ySpeed/4-platform.getY()<-48&&x<platform.getX()+platform.getWidth()&&x+width>platform.getX()){
+                standOnPlatform = i;
+                y = platform.getY() - 64;
+                speedCarriedByPlatform = platform.getxSpeed();
+                // System.out.println("XXXX");
+            }else{
+                if(standOnPlatform==i){
+                    speedCarriedByPlatform = 0;
+                    standOnPlatform = -1;
+                }
+            }
+        }
     }
     public void checkPlayer(){
         if(ySpeed>0){
@@ -87,19 +109,25 @@ public class Stone extends Enity {
         //chưa thêm tính năng bị door đẩy lên 
     }
     protected void handleCollision(){
+        // if(xSpeed!=0){
+        //     System.out.println(xSpeed);
+        // }
         checkEnimies();
         checkPlayer();
         checkDoor();
         checkStones();
+        checkPlatforms();
     }
+    
     protected void updatePos(){
         setInAir();
+        xSpeed = xSpeedByPush + speedCarriedByPlatform;
         if(inAir){
             ySpeed = ySpeed + gravity;
         }else{
             ySpeed = 0;
         }
-        if (canMove(x + xSpeed,y,63,63, mapData) == true && nextStones.isEmpty() && nextDoor == false && nextMushRoom4 == -1) {
+        if (canMove(x + xSpeed,y,63,63, mapData) == true && nextStones.isEmpty() && nextDoor == false && nextMushRoom4 == -1){
 		    x += xSpeed;
             canPush = true;
         }else{
@@ -115,7 +143,7 @@ public class Stone extends Enity {
         
     }
     private void setInAir() {
-        if((!isSolid(x, y + 64, mapData))&&(!isSolid(x + 63, y + 64, mapData))&&underStones.isEmpty()){
+        if((!isSolid(x, y + 64, mapData))&&(!isSolid(x + 63, y + 64, mapData))&&underStones.isEmpty()&&standOnPlatform == -1){
             inAir = true;
         }else{
             inAir = false;
@@ -129,11 +157,11 @@ public class Stone extends Enity {
     public void render() {
         gc.drawImage(animationImage,x, y, width, height);
     }
-    public float getxSpeed() {
-        return xSpeed;
+    public float getXSpeedByPush() {
+        return xSpeedByPush;
     }
-    public void setxSpeed(float xSpeed) {
-        this.xSpeed = xSpeed;
+    public void setXSpeedByPush(float xSpeedByPush) {
+        this.xSpeedByPush = xSpeedByPush;
     }
     public boolean isCanPush() {
         return canPush;
@@ -154,6 +182,12 @@ public class Stone extends Enity {
     @Override
     protected void setAnimation() {
         
+    }
+    public float getxSpeed() {
+        return xSpeed;
+    }
+    public void setxSpeed(float xSpeed) {
+        this.xSpeed = xSpeed;
     }
     
 }

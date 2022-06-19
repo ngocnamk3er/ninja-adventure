@@ -8,6 +8,7 @@ import entities.Coin;
 import entities.Door;
 import entities.Enity;
 import entities.Fire;
+import entities.Platform;
 import entities.Player;
 import entities.Stone;
 import entities.StrangeDoor;
@@ -20,6 +21,7 @@ import entities.trap.CeilingTrap;
 import entities.trap.LightningTrap;
 import entities.trap.SandwormTrap;
 import entities.trap.ShurikenTrap;
+import entities.trap.SmallSpike;
 import entities.trap.SpearTrap;
 import entities.trap.Trap;
 import help.Constant.MapInteraction;
@@ -40,6 +42,7 @@ public class MapInteractionManager {
     private ArrayList<Enemy> enemies;
     private ArrayList<Fire> fires;
     private ArrayList<Trap> traps;
+    private ArrayList<Platform> platforms;
     private Player player;
     private Door door;
     private StrangeDoor strangeDoor;
@@ -63,6 +66,8 @@ public class MapInteractionManager {
     private Image[] animationImagesSandWormTrap;
     private Image[] animationImagesCeilingTrap;
     private Image[] animationImagesSpearTrap;
+    private Image animationImageSmallSpike;
+    private Image[][] animationImagesPlatform;
     private void loadAnimations(){
         loadAnimationsPlayer();
         loadAnimationsCoins();
@@ -70,6 +75,7 @@ public class MapInteractionManager {
         loadAnimationsDoor();
         loadAnimationsButton();
         loadAnimationsStrangDoor();
+        loadAnimationsPlatform();
         //--------------
         loadAnimationsEnimy1();
         loadAnimationsEnimy2();
@@ -82,6 +88,7 @@ public class MapInteractionManager {
         loadAnimationsSandWormTrap();
         loadAnimationsCeilingTrap();
         loadAnimationsSpearTrap();
+        loadAnimationsSmallSpike();
     }
 
     public MapInteractionManager(GraphicsContext gc,int [][]mapData, GameScene makeMainScene){
@@ -106,6 +113,7 @@ public class MapInteractionManager {
         coins = new ArrayList<>();
         stones = new ArrayList<>();
         enemies = new ArrayList<>();
+        platforms = new ArrayList<>();
         buttons = new ArrayList<>();
         fires = new ArrayList<>();
         traps = new ArrayList<>();
@@ -161,6 +169,12 @@ public class MapInteractionManager {
                 }else if(MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == 'P'){
                     SpearTrap spearTrap = new SpearTrap(j*64, i*64,animationImagesSpearTrap ,this);
                     traps.add(spearTrap);
+                }else if(MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == 'm'){
+                    SmallSpike smallSpike = new SmallSpike(j*64, i*64,animationImageSmallSpike ,this);
+                    traps.add(smallSpike);
+                }else if(MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == 'F'){
+                    Platform platform = new Platform(j*64, i*64,animationImagesPlatform ,this);
+                    platforms.add(platform);
                 }
             }
         }
@@ -186,6 +200,9 @@ public class MapInteractionManager {
         }
         for(Trap trap:traps){
             trap.update();
+        }
+        for(Platform platform:platforms){
+            platform.update();
         }
         door.update();
     }
@@ -217,8 +234,45 @@ public class MapInteractionManager {
         for(Trap trap:traps){
             trap.render();
         }
+        for(Platform platform:platforms){
+            platform.render();
+        }
         door.render();
         player.render();  
+    }
+    private void loadAnimationsPlatform() {
+        animationImagesPlatform = new Image[2][4];
+        for(int i=0;i<2;i++){
+            if(i==Platform.RUN_R){
+                try {
+                    bufferedImage = ImageIO.read(Platform.class.getResourceAsStream("PlatformR.png"));
+                    int AmountSprites = Platform.getAmountSpritesOfPlatformAction(i);
+                    for(int j=0;j<AmountSprites;j++) {
+                        animationImagesPlatform[i][j] = SwingFXUtils.toFXImage(bufferedImage.getSubimage(j*32, 0, 32, 10), null);
+                    }
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
+            }else if(i==Platform.RUN_L){
+                try {
+                    bufferedImage = ImageIO.read(Platform.class.getResourceAsStream("PlatformL.png"));
+                    int AmountSprites = Platform.getAmountSpritesOfPlatformAction(i);
+                    for(int j=0;j<AmountSprites;j++) {
+                        animationImagesPlatform[i][j] = SwingFXUtils.toFXImage(bufferedImage.getSubimage((AmountSprites-1-j)*32, 0, 32, 10), null);
+                    }
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+    }
+    private void loadAnimationsSmallSpike() {
+        try {
+            bufferedImage = ImageIO.read(Trap.class.getResourceAsStream("SmallSpike.png"));
+            animationImageSmallSpike = SwingFXUtils.toFXImage(bufferedImage,null);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     private void loadAnimationsSpearTrap(){
         int AmountSprites =  13;
@@ -855,6 +909,15 @@ public class MapInteractionManager {
     public void setTraps(ArrayList<Trap> traps) {
         this.traps = traps;
     }
+
+    public ArrayList<Platform> getPlatforms() {
+        return platforms;
+    }
+
+    public void setPlatforms(ArrayList<Platform> platforms) {
+        this.platforms = platforms;
+    }
+    
     
 }
 

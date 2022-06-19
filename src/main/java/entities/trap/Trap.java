@@ -15,6 +15,9 @@ public abstract class Trap extends Enity{
     protected int aniSpeed = 4;
     protected int aniIndex = 0;
     protected  int amountSprites;
+    public Trap(){
+        
+    }
     public Trap( float x, float y,float width,float height,float xDangerHitbox,float yDangerHitbox,float widthDangerHitbox,float heightDangerHitbox,int amountSprites,Image[] animationImages,MapInteractionManager mapInteractionManager) {
         this.x = x;
         this.y = y;
@@ -28,7 +31,7 @@ public abstract class Trap extends Enity{
         this.animationImages = animationImages;
         this.amountSprites = amountSprites;
     }
-    private void renderDangerHitbox(){
+    protected void renderDangerHitbox(){
         gc.setFill(Color.RED);
         gc.fillRect(xDangerHitbox, yDangerHitbox, widthDangerHitbox, heightDangerHitbox);
         // gc.fill(xDangerHitbox, yDangerHitbox, widthDangerHitbox, heightDangerHitbox);
@@ -36,7 +39,7 @@ public abstract class Trap extends Enity{
     }
     @Override
     public void render() {
-        // renderDangerHitbox();
+        renderDangerHitbox();
         gc.drawImage(animationImages[aniIndex], x, y, width, height); 
     }
 
