@@ -418,18 +418,10 @@ public class Player extends Enity {
             } else {
                 playerSpeedX = -8;
             }
-            xSpeed = playerSpeedX+brakingSpeedByStone+brakingSpeedByDoor+speedCarriedByEnemy+speedCarriedByPlatform+speedCarriedByStone;
         }else{
-            if(standOnMushRoom!=-1){
-                xSpeed = speedCarriedByEnemy;
-            }
-            if(standOnPlatform!=-1){
-                xSpeed = speedCarriedByPlatform;
-            }
-            if(standOnStone!=-1){
-                xSpeed = speedCarriedByStone;
-            }
+            playerSpeedX = 0;
         }
+        xSpeed = playerSpeedX+brakingSpeedByStone+brakingSpeedByDoor+speedCarriedByEnemy+speedCarriedByPlatform+speedCarriedByStone;
         if (canMove((x+xSpeed+16),(y),32,63, mapData) == true) {
             x += xSpeed;
         }

@@ -20,13 +20,14 @@ public class Platform extends Enity{
 
     private Door door;
     private ArrayList<Stone> stones;
-
+    private ArrayList<Platform> platforms;
     public Platform(float x, float y,Image[][] animationImages ,MapInteractionManager mapInteractionManager) {
         super(x, y, 128, 40 ,mapInteractionManager.getGc());
         this.animationImages = animationImages;
         this.mapData = mapInteractionManager.getMapData();
         this.door = mapInteractionManager.getDoor();
         this.stones = mapInteractionManager.getStones();
+        this.platforms = mapInteractionManager.getPlatforms();
     }
     @Override
     public void render() {
@@ -60,9 +61,9 @@ public class Platform extends Enity{
             right=!right;
         }
         if(right){
-            xSpeed = 4;
+            xSpeed = 3;
         }else{
-            xSpeed = -4;
+            xSpeed = -3;
         }
         x = x + xSpeed;
     }
@@ -71,8 +72,21 @@ public class Platform extends Enity{
     protected void handleCollision() {
         checkStones();
         checkDoor();
+        checkPlatforms();
     }
 
+    private void checkPlatforms() {
+        for(Platform platform:platforms){
+            if(!platform.equals(this)){
+                if(y+height>platform.getY()&&y<platform.getY()+platform.getHeight()){
+                    if((platform.getX()<x+xSpeed&&x+xSpeed<platform.getX()+platform.getWidth())||(platform.getX()<x+width+xSpeed&&x+width+xSpeed<platform.getX()+platform.getWidth())){
+                        right=!right;
+                        // System.out.println("platform.java");
+                    }
+                }
+            }
+        }
+    }
     private void checkDoor() {
         if(y+height>door.getyHitBox()&&y<door.getY()+door.getHeight()){
             if((door.getX()<x+xSpeed&&x+xSpeed<door.getX()+door.getWidth())||(door.getX()<x+width+xSpeed&&x+width+xSpeed<door.getX()+door.getWidth())){
