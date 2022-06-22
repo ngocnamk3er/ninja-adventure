@@ -35,7 +35,7 @@ import java.io.IOException;
 
 import main.GameScene;
 public class MapInteractionManager {
-    private GameScene makeMainScene;
+    private GameScene gameScene;
     private ArrayList<Coin> coins;
     private ArrayList<Stone> stones;
     private ArrayList<Button> buttons;
@@ -91,9 +91,9 @@ public class MapInteractionManager {
         loadAnimationsSmallSpike();
     }
 
-    public MapInteractionManager(GraphicsContext gc,int [][]mapData, GameScene makeMainScene){
+    public MapInteractionManager(GraphicsContext gc,int [][]mapData, GameScene gameScene){
         loadAnimations();
-        this.makeMainScene = makeMainScene;
+        this.gameScene = gameScene;
         coins = new ArrayList<>();
         stones = new ArrayList<>();
         buttons = new ArrayList<>();
@@ -268,7 +268,7 @@ public class MapInteractionManager {
     }
     private void loadAnimationsSmallSpike() {
         try {
-            bufferedImage = ImageIO.read(Trap.class.getResourceAsStream("SmallSpike.png"));
+            bufferedImage = ImageIO.read(Trap.class.getResourceAsStream("smallSpike.png"));
             animationImageSmallSpike = SwingFXUtils.toFXImage(bufferedImage,null);
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -863,11 +863,11 @@ public class MapInteractionManager {
     public void setButtons(ArrayList<Button> buttons) {
         this.buttons = buttons;
     }
-    public GameScene getMakeMainScene() {
-        return makeMainScene;
+    public GameScene getGameScene() {
+        return gameScene;
     }
-    public void setMakeMainScene(GameScene makeMainScene) {
-        this.makeMainScene = makeMainScene;
+    public void setGameScene(GameScene GameScene) {
+        this.gameScene = GameScene;
     }
     public Door getDoor() {
         return door;

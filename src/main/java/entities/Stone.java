@@ -46,12 +46,15 @@ public class Stone extends Enity {
         for(int i = 0 ; i < platforms.size() ; i++){
             Platform platform = platforms.get(i);
             if(ySpeed>=0&&this.y+ySpeed-platform.getY()>=-64&&this.y+ySpeed/4-platform.getY()<-48&&x<platform.getX()+platform.getWidth()&&x+width>platform.getX()){
-                y = platform.getY() - 64;
-                speedCarriedByPlatform = platform.getxSpeed();
-                standOnPlatform = i;
+                // System.out.println(speedCarriedByPlatform);
+                // if(standOnPlatform!=i){
+                    y = platform.getY() - 64;
+                    speedCarriedByPlatform = platform.getxSpeed();
+                    standOnPlatform = i;
+                // }
             }else{
                 if(standOnPlatform==i){
-                    System.out.println("y");
+                    // System.out.println("y");
                     speedCarriedByPlatform = 0;
                     standOnPlatform = -1;
                 }

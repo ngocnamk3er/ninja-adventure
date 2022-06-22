@@ -8,6 +8,8 @@ import javafx.stage.WindowEvent;
 
 import java.io.IOException;
 
+import data.Data;
+
 /**
  * JavaFX App
  */

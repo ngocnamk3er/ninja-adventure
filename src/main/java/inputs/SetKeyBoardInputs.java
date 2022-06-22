@@ -14,7 +14,7 @@ public class SetKeyBoardInputs {
     private boolean pressedD;
     public SetKeyBoardInputs(MapInteractionManager mapInteractionManager){
         this.player=mapInteractionManager.getPlayer();
-        this.scene=mapInteractionManager.getMakeMainScene();
+        this.scene=mapInteractionManager.getGameScene();
         scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
 
             @Override

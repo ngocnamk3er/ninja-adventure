@@ -2,7 +2,6 @@ package entities;
 
 
 import javafx.scene.image.Image;
-import main.Data;
 import main.GameScene;
 import mapinteraction.MapInteractionManager;
 
@@ -10,6 +9,7 @@ import static help.HelpMethods.*;
 
 import java.util.ArrayList;
 
+import data.Data;
 import entities.enemy.Enemy;
 import entities.enemy.Enemy1;
 import entities.enemy.Enemy2;
@@ -70,7 +70,7 @@ public class Player extends Enity {
     private ArrayList<Trap> traps;
     private ArrayList<Platform> platforms;
     private MapInteractionManager mapInteractionManager;
-    private GameScene makeMainScene;
+    private GameScene gameScene;
     private Door door;
     private StrangeDoor strangeDoor;
     //handle Collision
@@ -95,7 +95,7 @@ public class Player extends Enity {
         this.coins = mapInteractionManager.getCoins();
         this.stones = mapInteractionManager.getStones();
         this.door = mapInteractionManager.getDoor();
-        this.makeMainScene = mapInteractionManager.getMakeMainScene();
+        this.gameScene = mapInteractionManager.getGameScene();
         this.strangeDoor = mapInteractionManager.getStrangeDoor();
         this.enemies = mapInteractionManager.getEnemies();
         this.animationImages = animationImages;
@@ -104,7 +104,7 @@ public class Player extends Enity {
         this.traps = mapInteractionManager.getTraps();
         this.platforms = mapInteractionManager.getPlatforms();
         point = Data.getPoint();
-        makeMainScene.setTranscript(point);
+        gameScene.setTranscript(point);
     }
 
     public void update() {
@@ -237,7 +237,7 @@ public class Player extends Enity {
                 if(distance<=48){
                     coin.setPickedUp(true);
                     point++;
-                    makeMainScene.setTranscript(point);
+                    gameScene.setTranscript(point);
                 }
             }
         }  	
@@ -522,8 +522,11 @@ public class Player extends Enity {
         mapInteractionManager.setInitialState(mapInteractionManager.getLevelValue());
     }
     private void playNextLevel() {
+        if(mapInteractionManager.getLevelValue()==Data.getLevel()){
+            Data.setLevel(Data.getLevel()+1);
+        }
         Data.setPoint(point);
-        makeMainScene.MakeGameNextLevel(mapInteractionManager.getLevelValue()+1);
+        gameScene.MakeGameNextLevel(mapInteractionManager.getLevelValue()+1);
     }
     public static int getAmountSpritesOfPlayerAction(int x) {
         if (x == IDLE_L || x == IDLE_R) {

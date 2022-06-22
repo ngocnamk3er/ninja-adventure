@@ -26,7 +26,7 @@ public class SmallSpike extends Trap {
 
     @Override
     public void render() {
-        renderDangerHitbox();
+        // renderDangerHitbox();
         gc.drawImage(animationImage, x, y, width, height); 
     }
 

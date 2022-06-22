@@ -3,6 +3,7 @@ package main;
 
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import data.Data;
 import javafx.application.Platform;
 public class MainStage extends Stage {
     private GameScene gameScene;
@@ -11,7 +12,7 @@ public class MainStage extends Stage {
     private final int MENU_SCENE = 0;
     private final int SELECT_LEVEL_SCENE = 1;
     private final int GAME_SCENE = 2;
-    private int indexScene = 1;
+    private int indexScene = 0;
     public MainStage(){
         getIcons().add(new Image(MainStage.class.getResourceAsStream("logo.png")));
         setTitle("Ninja Adventures");
@@ -19,7 +20,7 @@ public class MainStage extends Stage {
         gameScene = new GameScene(this);
         selectLevelScene = new SelectLevelScene(this);
         menuScene = new MenuScene(this);
-        setScene(selectLevelScene);
+        setScene(menuScene);
     }
     public void nextScene(int levelValue){
         indexScene++;
@@ -52,6 +53,7 @@ public class MainStage extends Stage {
         }
     }
     public void setSelectLevelScene(){
+        selectLevelScene.tickLevel();
         setScene(selectLevelScene);
         if(gameScene.getGameLoop()!=null){
             gameScene.getGameLoop().interrupt();
