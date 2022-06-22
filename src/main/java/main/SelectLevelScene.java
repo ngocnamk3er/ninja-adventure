@@ -23,7 +23,7 @@ public class SelectLevelScene extends Scene {
     private Background background;
     private Background backgroundLevelButton;
     private CloseGameButton closeGameButton;
-    private ArrayList<LevelButton> levelButtons;
+    private static ArrayList<LevelButton> levelButtons;
     public SelectLevelScene(MainStage mainStage) {
         super(new Group(),1344,768);
         levelButtons = new ArrayList<>();
@@ -46,7 +46,7 @@ public class SelectLevelScene extends Scene {
         setCursor(new ImageCursor(new Image(SelectLevelScene.class.getResourceAsStream("cursorImage.png"))));
         tickLevel();
     }
-    public void tickLevel(){
+    public static void tickLevel(){
         for(LevelButton levelButton:levelButtons){
             if(levelButton.getLevelValue()<=Data.getLevel()){
                 levelButton.setTextFill(Color.WHITE);

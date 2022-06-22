@@ -10,6 +10,7 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.Pane;
 import buttons.MenuButton;
+import data.Data;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 public class MenuScene extends Scene{
@@ -46,6 +47,15 @@ public class MenuScene extends Scene{
 			@Override
 			public void handle(MouseEvent event) {
                 mainStage.backScene();
+			}
+		});
+        newGameButton.setOnMousePressed(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+                Data.resetData();
+                Data.loadData();
+                SelectLevelScene.tickLevel();
+                mainStage.nextScene(-1);
 			}
 		});
         pane.setBackground(background);

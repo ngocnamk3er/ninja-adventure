@@ -10,28 +10,7 @@ public class Data {
     private static int point = 0;
     private static int level = 0;
     public Data(){
-        try {
- 
-            // Create an object of filereader
-            // class with CSV file as a parameter.
-            FileReader filereader = new FileReader("data.txt");
-     
-            // create csvReader object passing
-            // file reader as a parameter
-            CSVReader csvReader = new CSVReader(filereader);
-            String[] nextRecord;
-     
-            // we are going to read data line by line
-            while ((nextRecord = csvReader.readNext()) != null) {
-                point = Integer.valueOf(nextRecord[0]);
-                level = Integer.valueOf(nextRecord[1]);
-            }
-            csvReader.close();
-        }
-        catch (IOException e) {
-            point = 0;
-            level = 0;
-        }
+        
     }
     
     public static int getPoint() {
@@ -58,6 +37,32 @@ public class Data {
         } catch (IOException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
+        }
+    }
+    public static void resetData(){
+        try {
+            FileWriter myWriter = new FileWriter("data.txt");
+            myWriter.write("0,0");
+            myWriter.close();
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+    }
+    public static void loadData(){
+        try {
+            FileReader filereader = new FileReader("data.txt");
+            CSVReader csvReader = new CSVReader(filereader);
+            String[] nextRecord;
+            while ((nextRecord = csvReader.readNext()) != null) {
+                point = Integer.valueOf(nextRecord[0]);
+                level = Integer.valueOf(nextRecord[1]);
+            }
+            csvReader.close();
+        }
+        catch (IOException e) {
+            point = 0;
+            level = 0;
         }
     }
 }
