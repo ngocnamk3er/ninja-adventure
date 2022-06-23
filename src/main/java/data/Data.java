@@ -9,6 +9,7 @@ import com.opencsv.CSVReader;
 public class Data {
     private static int point = 0;
     private static int level = 0;
+    private static int heart = 0;
     public Data(){
         
     }
@@ -32,7 +33,7 @@ public class Data {
     public static void saveData(){
         try {
             FileWriter myWriter = new FileWriter("data.txt");
-            myWriter.write(String.valueOf(point)+","+String.valueOf(level));
+            myWriter.write(String.valueOf(point)+","+String.valueOf(level)+",0");
             myWriter.close();
         } catch (IOException e) {
             System.out.println("An error occurred.");
@@ -42,7 +43,7 @@ public class Data {
     public static void resetData(){
         try {
             FileWriter myWriter = new FileWriter("data.txt");
-            myWriter.write("0,0");
+            myWriter.write("0,0,0");
             myWriter.close();
         } catch (IOException e) {
             System.out.println("An error occurred.");
@@ -57,6 +58,8 @@ public class Data {
             while ((nextRecord = csvReader.readNext()) != null) {
                 point = Integer.valueOf(nextRecord[0]);
                 level = Integer.valueOf(nextRecord[1]);
+                heart = Integer.valueOf(nextRecord[2]);
+                System.out.println(heart);
             }
             csvReader.close();
         }

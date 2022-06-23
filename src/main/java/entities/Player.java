@@ -112,7 +112,16 @@ public class Player extends Enity {
         updatePos();
         handleCollision();
         setAnimation();
+        updateLevel();
     }
+    private void updateLevel() {
+        if(death==true&&aniIndex==7){
+            playAgain();
+        }else if(nextLevel==true&&aniIndex==7){
+            playNextLevel();
+        }
+    }
+
     @Override
     protected void updateAnimationTick() {
 		aniTick++;
@@ -509,12 +518,6 @@ public class Player extends Enity {
             }
         }else{
             gc.drawImage(animationImages[playerAction][aniIndex], x, y, width, height);
-            if(death==true&&aniIndex==7){
-                playAgain();
-            }
-            if(nextLevel==true&&aniIndex==7){
-                playNextLevel();
-            }
         }
     }
 
