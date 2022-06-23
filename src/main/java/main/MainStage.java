@@ -53,16 +53,19 @@ public class MainStage extends Stage {
         }
     }
     public void setSelectLevelScene(){
-        selectLevelScene.tickLevel();
+        indexScene = SELECT_LEVEL_SCENE;
+        SelectLevelScene.tickLevel();
         setScene(selectLevelScene);
         if(gameScene.getGameLoop()!=null){
             gameScene.getGameLoop().interrupt();
         }
     }
     public void setMenuScene(){
+        indexScene = MENU_SCENE;
         setScene(menuScene);
     }
     public void setgameScene(int levelValue){
+        indexScene = GAME_SCENE;
         setScene(gameScene);
         gameScene.MakeGameLevel(levelValue);
     }

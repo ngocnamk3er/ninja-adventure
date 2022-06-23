@@ -258,6 +258,8 @@ public class Player extends Enity {
                     coin.setPickedUp(true);
                     point++;
                     gameScene.setTranscript(point);
+                    // Data.setHeart(Data.getHeart()+1);
+                    // gameScene.setHudHeart(Data.getHeart());
                 }
             }
         }  	

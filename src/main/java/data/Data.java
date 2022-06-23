@@ -68,7 +68,7 @@ public class Data {
                 level = Integer.valueOf(nextRecord[1]);
                 heart = Integer.valueOf(nextRecord[2]);
             }
-            System.out.println(heart);
+            // System.out.println(heart);
             csvReader.close();
         }
         catch (IOException e) {

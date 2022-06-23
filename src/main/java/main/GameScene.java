@@ -29,8 +29,8 @@ public class GameScene extends Scene{
     private ImageView hudCoin;
     private ImageView[] hudHearts;
     private Image heartiImage;
-    private Image noHeartiImage;
     private int oldHearts;
+    private Pane pane;
     public GameScene(MainStage mainStage) {
         super(new Group(),1344,768);
         canvas=new Canvas(1344,768);
@@ -58,7 +58,7 @@ public class GameScene extends Scene{
         hudCoin.setFitWidth(48);
         hudCoin.setFitHeight(48);
         //
-        Pane pane=new Pane();
+        pane=new Pane();
         setRoot(pane);
         pane.getChildren().add(canvasbg);
         pane.getChildren().add(canvas);
@@ -68,17 +68,18 @@ public class GameScene extends Scene{
         //
         hudHearts = new ImageView[15];
         heartiImage = new Image(GameScene.class.getResourceAsStream("hearts_hud.png"));
-        noHeartiImage = new Image(GameScene.class.getResourceAsStream("no_hearts_hud.png"));
         oldHearts = Data.getHeart();
-        for(int i = 0; i < oldHearts; i++){
-            hudHearts[i] = new ImageView(heartiImage);
-        }
-        for(int i = 0; i < oldHearts; i++){
+        // System.out.println(oldHearts);
+        for(int i=0;i<15;i++){
+            hudHearts[i] = new ImageView();
             hudHearts[i].setFitWidth(48);
             hudHearts[i].setFitHeight(48);
             hudHearts[i].setLayoutY(16);
             hudHearts[i].setLayoutX(16+64*i);
             pane.getChildren().add(hudHearts[i]);
+        }
+        for(int i = 0; i < oldHearts; i++){
+            hudHearts[i].setImage(heartiImage);
         }
         //
         setCursor(new ImageCursor(new Image(SelectLevelScene.class.getResourceAsStream("cursorImage.png"))));
@@ -105,12 +106,19 @@ public class GameScene extends Scene{
         this.transcript.setText(String.valueOf(point));
     }
     public void setHudHeart(int hearts){
-        for(int i = Data.getHeart(); i < oldHearts; i++){
-            hudHearts[i].setVisible(false);
+        // System.out.println("hearts : "+hearts);
+        // System.out.println("old-hearts : "+oldHearts);
+        for(int i = hearts; i < oldHearts; i++){
+            try {
+                hudHearts[i].setVisible(false);
+            } catch (Exception e) {
+                System.out.println(i);
+            }
         }
-        for(int i = 0; i < Data.getHeart(); i++){
+        for(int i = 0; i < hearts; i++){//bug  
             hudHearts[i].setVisible(true);
             hudHearts[i].setImage(heartiImage);
         }
+        oldHearts = hearts;
     }
 }
