@@ -29,11 +29,19 @@ public class Data {
     public static void setLevel(int level) {
         Data.level = level;
     }
+    
+    public static int getHeart() {
+        return heart;
+    }
+
+    public static void setHeart(int heart) {
+        Data.heart = heart;
+    }
 
     public static void saveData(){
         try {
             FileWriter myWriter = new FileWriter("data.txt");
-            myWriter.write(String.valueOf(point)+","+String.valueOf(level)+",0");
+            myWriter.write(String.valueOf(point)+","+String.valueOf(level)+","+Data.heart);
             myWriter.close();
         } catch (IOException e) {
             System.out.println("An error occurred.");
@@ -43,7 +51,7 @@ public class Data {
     public static void resetData(){
         try {
             FileWriter myWriter = new FileWriter("data.txt");
-            myWriter.write("0,0,0");
+            myWriter.write("0,0,5");
             myWriter.close();
         } catch (IOException e) {
             System.out.println("An error occurred.");
@@ -59,8 +67,8 @@ public class Data {
                 point = Integer.valueOf(nextRecord[0]);
                 level = Integer.valueOf(nextRecord[1]);
                 heart = Integer.valueOf(nextRecord[2]);
-                System.out.println(heart);
             }
+            System.out.println(heart);
             csvReader.close();
         }
         catch (IOException e) {

@@ -2,6 +2,7 @@ package entities;
 
 
 import javafx.scene.image.Image;
+import javafx.scene.input.DataFormat;
 import main.GameScene;
 import mapinteraction.MapInteractionManager;
 
@@ -105,6 +106,7 @@ public class Player extends Enity {
         this.platforms = mapInteractionManager.getPlatforms();
         point = Data.getPoint();
         gameScene.setTranscript(point);
+        gameScene.setHudHeart(Data.getHeart());
     }
 
     public void update() {
@@ -116,10 +118,19 @@ public class Player extends Enity {
     }
     private void updateLevel() {
         if(death==true&&aniIndex==7){
-            playAgain();
+            if(Data.getHeart()==1){
+                gameOver();
+            }else{
+                Data.setHeart(Data.getHeart()-1);
+                playAgain();
+            }
         }else if(nextLevel==true&&aniIndex==7){
             playNextLevel();
         }
+    }
+
+    private void gameOver() {
+        // System.out.println("BAN DA THUA");
     }
 
     @Override
