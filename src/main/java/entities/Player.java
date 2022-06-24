@@ -2,7 +2,6 @@ package entities;
 
 
 import javafx.scene.image.Image;
-import javafx.scene.input.DataFormat;
 import main.GameScene;
 import mapinteraction.MapInteractionManager;
 

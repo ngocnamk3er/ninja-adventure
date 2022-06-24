@@ -74,6 +74,7 @@ public class Data {
         catch (IOException e) {
             point = 0;
             level = 0;
+            heart = 5;
         }
     }
 }

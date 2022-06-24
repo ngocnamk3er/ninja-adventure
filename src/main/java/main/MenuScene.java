@@ -1,14 +1,18 @@
 package main;
 
 import javafx.scene.Scene;
+import javafx.scene.SubScene;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.Pane;
+import subScene.SubMenuScene;
 import buttons.MenuButton;
 import data.Data;
 import javafx.event.EventHandler;
@@ -17,6 +21,7 @@ public class MenuScene extends Scene{
     private Pane pane;
     private Background menuButtonBackground;
     private Background background;
+    private SubMenuScene subMenuScene;
     public MenuScene(MainStage mainStage) {
         super(new Group(),1344,768);
         pane = new Pane();
@@ -37,6 +42,17 @@ public class MenuScene extends Scene{
         MenuButton exitButton =  new MenuButton("Exit",menuButtonBackground);
         exitButton.setLayoutY(600);
         //
+        subMenuScene = new SubMenuScene();
+        subMenuScene.getConfirmButton().setOnMousePressed(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+                Data.resetData();
+                Data.loadData();
+                SelectLevelScene.tickLevel();
+                mainStage.nextScene(-1);
+			}
+		});
+        //
         startButton.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
@@ -52,14 +68,13 @@ public class MenuScene extends Scene{
         newGameButton.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-                Data.resetData();
-                Data.loadData();
-                SelectLevelScene.tickLevel();
-                mainStage.nextScene(-1);
+                subMenuScene.setVisible(true);
 			}
 		});
         pane.setBackground(background);
         pane.getChildren().addAll(startButton,exitButton,newGameButton,skinButton,settingButton);
+        pane.getChildren().add(subMenuScene);
+        
         setRoot(pane);
     }
 }
