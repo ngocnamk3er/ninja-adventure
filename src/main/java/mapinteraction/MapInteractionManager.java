@@ -12,6 +12,8 @@ import entities.Platform;
 import entities.Player;
 import entities.Stone;
 import entities.StrangeDoor;
+import entities.Switch;
+import entities.WoodyBox;
 import entities.enemy.Enemy;
 import entities.enemy.Enemy1;
 import entities.enemy.Enemy2;
@@ -43,6 +45,8 @@ public class MapInteractionManager {
     private ArrayList<Fire> fires;
     private ArrayList<Trap> traps;
     private ArrayList<Platform> platforms;
+    private ArrayList<Switch> switchs;
+    private ArrayList<WoodyBox> woodyBoxs;
     private Player player;
     private Door door;
     private StrangeDoor strangeDoor;
@@ -68,6 +72,8 @@ public class MapInteractionManager {
     private Image[] animationImagesSpearTrap;
     private Image animationImageSmallSpike;
     private Image[][] animationImagesPlatform;
+    private Image[] animationImagesWoodyBox;
+    private Image[] animationImagesSwitch;
     private void loadAnimations(){
         loadAnimationsPlayer();
         loadAnimationsCoins();
@@ -76,6 +82,8 @@ public class MapInteractionManager {
         loadAnimationsButton();
         loadAnimationsStrangDoor();
         loadAnimationsPlatform();
+        loadAnimationImagesWoodyBox();
+        loadAnimationImagesSwitch();
         //--------------
         loadAnimationsEnimy1();
         loadAnimationsEnimy2();
@@ -90,6 +98,7 @@ public class MapInteractionManager {
         loadAnimationsSpearTrap();
         loadAnimationsSmallSpike();
     }
+
 
     public MapInteractionManager(GraphicsContext gc,int [][]mapData, GameScene gameScene){
         loadAnimations();
@@ -117,6 +126,8 @@ public class MapInteractionManager {
         buttons = new ArrayList<>();
         fires = new ArrayList<>();
         traps = new ArrayList<>();
+        switchs = new ArrayList<>();
+        woodyBoxs = new ArrayList<>();
         player = new Player();
         door = new Door();
         for(int i=0;i<12;i++){
@@ -175,6 +186,12 @@ public class MapInteractionManager {
                 }else if(MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == 'F'){
                     Platform platform = new Platform(j*64, i*64,animationImagesPlatform ,this);
                     platforms.add(platform);
+                }else if(MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == 'B'){
+                    WoodyBox woodyBox = new WoodyBox(j*64, i*64, animationImagesWoodyBox, this);
+                    woodyBoxs.add(woodyBox);
+                }else if(MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == 'W'){
+                    Switch Switch = new Switch(j*64, i*64, animationImagesSwitch, this);
+                    switchs.add(Switch);
                 }
             }
         }
@@ -201,10 +218,17 @@ public class MapInteractionManager {
         for(Trap trap:traps){
             trap.update();
         }
+        for(Switch switch1:switchs){
+            switch1.update();
+        }
+        for(WoodyBox woodyBox:woodyBoxs){
+            woodyBox.update();
+        }
         for(Platform platform:platforms){
             platform.update();
         }
         door.update();
+        
     }
     public void render(){
         try {
@@ -234,11 +258,37 @@ public class MapInteractionManager {
         for(Trap trap:traps){
             trap.render();
         }
+        for(Switch switch1:switchs){
+            switch1.render();
+        }
+        for(WoodyBox woodyBox:woodyBoxs){
+            woodyBox.render();
+        }
         for(Platform platform:platforms){
             platform.render();
         }
         door.render();
         player.render();  
+    }
+    private void loadAnimationImagesSwitch() {
+        animationImagesSwitch = new Image[2];
+        try {
+            animationImagesSwitch[0] = new Image(Switch.class.getResourceAsStream("switchLeft.png"));
+            animationImagesSwitch[1] = new Image(Switch.class.getResourceAsStream("switchRight.png"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    private void loadAnimationImagesWoodyBox() {
+        animationImagesWoodyBox = new Image[2];
+        try {
+            bufferedImage = ImageIO.read(WoodyBox.class.getResourceAsStream("WoodyBox.png"));
+            for(int j=0;j<2;j++) {
+                animationImagesWoodyBox[j] = SwingFXUtils.toFXImage(bufferedImage.getSubimage(j*64, 0, 64, 64), null);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     private void loadAnimationsPlatform() {
         animationImagesPlatform = new Image[2][4];
@@ -916,6 +966,26 @@ public class MapInteractionManager {
 
     public void setPlatforms(ArrayList<Platform> platforms) {
         this.platforms = platforms;
+    }
+
+
+    public ArrayList<Switch> getSwitchs() {
+        return switchs;
+    }
+
+
+    public ArrayList<WoodyBox> getWoodyBoxs() {
+        return woodyBoxs;
+    }
+
+
+    public void setWoodyBoxs(ArrayList<WoodyBox> woodyBoxs) {
+        this.woodyBoxs = woodyBoxs;
+    }
+
+
+    public void setSwitchs(ArrayList<Switch> switchs) {
+        this.switchs = switchs;
     }
     
     

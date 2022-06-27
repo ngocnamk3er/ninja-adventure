@@ -46,6 +46,7 @@ public class MenuScene extends Scene{
         subMenuScene.getConfirmButton().setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
+                subMenuScene.setVisible(false);
                 Data.resetData();
                 Data.loadData();
                 SelectLevelScene.tickLevel();

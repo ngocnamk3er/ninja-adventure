@@ -54,6 +54,7 @@ public class Player extends Enity {
     private boolean death = false;
     private boolean nextLevel = false;
     private boolean run,up,down,push,attacking1,attacking2;
+    private boolean click = false;
 
     //Mapdata
     private int [][] mapData;
@@ -69,6 +70,7 @@ public class Player extends Enity {
     private ArrayList<Fire> fires;
     private ArrayList<Trap> traps;
     private ArrayList<Platform> platforms;
+    private ArrayList<Switch> switchs;
     private MapInteractionManager mapInteractionManager;
     private GameScene gameScene;
     private Door door;
@@ -103,6 +105,7 @@ public class Player extends Enity {
         this.fires = mapInteractionManager.getFires();
         this.traps = mapInteractionManager.getTraps();
         this.platforms = mapInteractionManager.getPlatforms();
+        this.switchs = mapInteractionManager.getSwitchs();
         point = Data.getPoint();
         gameScene.setTranscript(point);
         gameScene.setHudHeart(Data.getHeart());
@@ -141,6 +144,7 @@ public class Player extends Enity {
 			if (aniIndex >= getAmountSpritesOfPlayerAction(playerAction)) {
 				aniIndex = 0;
 				attacking2 = false;
+                click = false;
 			}
 
 		}
@@ -157,6 +161,17 @@ public class Player extends Enity {
         ySpeed = -15;
         inAir = true;
         up = true;
+    }
+    private void checkPwitchs() {
+        for(Switch switch1:switchs){
+            if(attacking2==true&&click==false){
+                setSwordPos();
+                if(Math.abs(xSword-switch1.getX())<32&&Math.abs((ySword+height/2)-(switch1.getY()+switch1.getHeight()/2))<32){
+                    switch1.click();
+                    click=true;
+                }          
+            }
+        }
     }
     private void checkPlatforms() {
         for(int i = 0 ;i < platforms.size(); i++){
@@ -395,8 +410,10 @@ public class Player extends Enity {
         checkFires();
         checkTraps();
         checkPlatforms();
+        checkPwitchs();
     }
     
+
     @Override
     protected void updatePos() {
         moving = false;
@@ -454,6 +471,8 @@ public class Player extends Enity {
             }else{
                 if(up){
                     ySpeed = 0;
+                    int rowBrick = (int)y/64;
+                    y = rowBrick*64;
                 }else{
                     // System.out.println(y+"-------------");
                     int rowBrick = (int)(y+ySpeed)/64;

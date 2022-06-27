@@ -38,11 +38,21 @@ public class MapManager {
         }
     }
     private void loadAllBrick(){
-        allBrick=new Image[48];
+        allBrick=new Image[72];
         try {
             bufferedImage = ImageIO.read(MapManager.class.getResourceAsStream("AllBricks.png"));
-            for(int i=0;i<48;i++){
+            for(int i=0;i<68;i++){
                 allBrick[i]=SwingFXUtils.toFXImage(bufferedImage.getSubimage(i%12*64, i/12*64, 64, 64), null);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            bufferedImage = ImageIO.read(MapManager.class.getResourceAsStream("AllBricks2.png"));
+            for(int i=0;i<3;i++){
+                for(int j=0;j<3;j++){
+                    allBrick[12*i+45+j]=SwingFXUtils.toFXImage(bufferedImage.getSubimage(j*64, i*64, 64, 64), null);
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
