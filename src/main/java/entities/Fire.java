@@ -1,7 +1,7 @@
 package entities;
 
 import javafx.scene.image.Image;
-import mapinteraction.MapInteractionManager;
+import map.MapInteractionManager;
 
 public class Fire extends Enity {
     private int aniTick;
@@ -12,11 +12,12 @@ public class Fire extends Enity {
     public static final int OFF = 0;
     public static final int ON = 1;
     private boolean on = false;
-    public Fire( float x, float y,Image[][] animationImages,MapInteractionManager mapInteractionManager) {
+
+    public Fire(float x, float y, Image[][] animationImages, MapInteractionManager mapInteractionManager) {
         super(x, y, 64, 132, mapInteractionManager.getGc());
         this.animationImages = animationImages;
-    }   
-    
+    }
+
     @Override
     public void render() {
         gc.drawImage(animationImages[fireAction][aniIndex], x, y, width, height);
@@ -27,15 +28,16 @@ public class Fire extends Enity {
         setAnimation();
         updateAnimationTick();
     }
+
     @Override
     protected void setAnimation() {
         int startAni = fireAction;
-        if(on==false){
+        if (on == false) {
             fireAction = OFF;
-        }else{
+        } else {
             fireAction = ON;
         }
-        if(startAni != fireAction){
+        if (startAni != fireAction) {
             aniIndex = 0;
         }
     }
@@ -43,22 +45,22 @@ public class Fire extends Enity {
     @Override
     protected void updateAnimationTick() {
         aniTick++;
-		if (aniTick >= aniSpeed) {
-			aniTick = 0;
-			aniIndex++;
+        if (aniTick >= aniSpeed) {
+            aniTick = 0;
+            aniIndex++;
             if (aniIndex >= getAmountSpritesOfFireAction(fireAction)) {
-				aniIndex = 0;
-			}
+                aniIndex = 0;
+            }
 
-		}
+        }
     }
 
     public static int getAmountSpritesOfFireAction(int fireAction) {
-        if(fireAction==OFF){
+        if (fireAction == OFF) {
             return 4;
-        }else if(fireAction==ON){
+        } else if (fireAction == ON) {
             return 3;
-        }else{
+        } else {
             return 0;
         }
     }
@@ -73,12 +75,12 @@ public class Fire extends Enity {
 
     @Override
     protected void updatePos() {
-        
+
     }
 
     @Override
     protected void handleCollision() {
-        
+
     }
-    
+
 }

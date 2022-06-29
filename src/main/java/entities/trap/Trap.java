@@ -3,7 +3,7 @@ package entities.trap;
 import entities.Enity;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
-import mapinteraction.MapInteractionManager;
+import map.MapInteractionManager;
 
 public abstract class Trap extends Enity{
     protected Image []animationImages;

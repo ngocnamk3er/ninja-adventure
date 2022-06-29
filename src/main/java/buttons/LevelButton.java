@@ -9,25 +9,28 @@ import main.MainStage;
 
 public class LevelButton extends Button {
 	private int levelValue;
-    public LevelButton(String text,MainStage mainStage,Background backgroundLevelButton){
-        setText(text);
-		levelValue = Integer.parseInt(text)-1;
+
+	public LevelButton(String text, MainStage mainStage, Background backgroundLevelButton) {
+		setText(text);
+		levelValue = Integer.parseInt(text) - 1;
 		setPrefWidth(80);
 		setPrefHeight(80);
 		setBackground(backgroundLevelButton);
 		setFont(Font.loadFont(LevelButton.class.getResourceAsStream("m6x11.ttf"), 25));
-        setOnMousePressed(new EventHandler<MouseEvent>() {
+		setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-                mainStage.nextScene(levelValue);
+				mainStage.nextScene(levelValue);
 			}
 		});
-    }
+	}
+
 	public int getLevelValue() {
 		return levelValue;
 	}
+
 	public void setLevelValue(int levelValue) {
 		this.levelValue = levelValue;
 	}
-	
+
 }

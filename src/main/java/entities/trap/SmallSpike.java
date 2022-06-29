@@ -2,7 +2,7 @@ package entities.trap;
 
 
 import javafx.scene.image.Image;
-import mapinteraction.MapInteractionManager;
+import map.MapInteractionManager;
 
 public class SmallSpike extends Trap {
     private Image animationImage;

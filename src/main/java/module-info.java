@@ -3,6 +3,8 @@ module main {
     requires javafx.fxml;
     requires javafx.swing;
     requires opencsv;
+
     opens main to javafx.fxml;
+
     exports main;
 }

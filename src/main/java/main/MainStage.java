@@ -1,10 +1,10 @@
 package main;
 
-
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import data.Data;
 import javafx.application.Platform;
+
 public class MainStage extends Stage {
     private GameScene gameScene;
     private SelectLevelScene selectLevelScene;
@@ -13,16 +13,18 @@ public class MainStage extends Stage {
     private final int SELECT_LEVEL_SCENE = 1;
     private final int GAME_SCENE = 2;
     private int indexScene = 0;
-    public MainStage(){
+
+    public MainStage() {
         getIcons().add(new Image(MainStage.class.getResourceAsStream("logo.png")));
         setTitle("Ninja Adventures");
         setResizable(false);
-        gameScene = new GameScene(this);
         selectLevelScene = new SelectLevelScene(this);
+        gameScene = new GameScene(this);
         menuScene = new MenuScene(this);
-        setScene(menuScene);
+        setMenuScene();
     }
-    public void nextScene(int levelValue){
+
+    public void nextScene(int levelValue) {
         indexScene++;
         switch (indexScene) {
             case SELECT_LEVEL_SCENE:
@@ -34,8 +36,9 @@ public class MainStage extends Stage {
             default:
                 break;
         }
-    } 
-    public void backScene(){
+    }
+
+    public void backScene() {
         indexScene--;
         switch (indexScene) {
             case -1:
@@ -52,19 +55,22 @@ public class MainStage extends Stage {
                 break;
         }
     }
-    public void setSelectLevelScene(){
+
+    public void setSelectLevelScene() {
         indexScene = SELECT_LEVEL_SCENE;
         SelectLevelScene.tickLevel();
         setScene(selectLevelScene);
-        if(gameScene.getGameLoop()!=null){
+        if (gameScene.getGameLoop() != null) {
             gameScene.getGameLoop().interrupt();
         }
     }
-    public void setMenuScene(){
+
+    public void setMenuScene() {
         indexScene = MENU_SCENE;
         setScene(menuScene);
     }
-    public void setgameScene(int levelValue){
+
+    public void setgameScene(int levelValue) {
         indexScene = GAME_SCENE;
         setScene(gameScene);
         gameScene.MakeGameLevel(levelValue);

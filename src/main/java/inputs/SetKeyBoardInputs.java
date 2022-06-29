@@ -5,40 +5,41 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import mapinteraction.MapInteractionManager;
+import map.MapInteractionManager;
 
 public class SetKeyBoardInputs {
     private Player player;
     private Scene scene;
     private boolean pressedA;
     private boolean pressedD;
-    public SetKeyBoardInputs(MapInteractionManager mapInteractionManager){
-        this.player=mapInteractionManager.getPlayer();
-        this.scene=mapInteractionManager.getGameScene();
+
+    public SetKeyBoardInputs(MapInteractionManager mapInteractionManager) {
+        this.player = mapInteractionManager.getPlayer();
+        this.scene = mapInteractionManager.getGameScene();
         scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
 
             @Override
             public void handle(KeyEvent event) {
-                if(event.getCode()==KeyCode.A){
+                if (event.getCode() == KeyCode.A) {
                     pressedA = false;
-                    if(pressedD == true){
+                    if (pressedD == true) {
                         player.setRight(true);
                     }
                 }
-                if(event.getCode()==KeyCode.D){
+                if (event.getCode() == KeyCode.D) {
                     pressedD = false;
-                    if(pressedA == true){
+                    if (pressedA == true) {
                         player.setRight(false);
                     }
                 }
-                if(event.getCode()==KeyCode.W){
+                if (event.getCode() == KeyCode.W) {
                     player.setJump(false);
                 }
-                if(pressedA==false&&pressedD==false){
+                if (pressedA == false && pressedD == false) {
                     player.setRun(false);
                 }
-            }   
-            
+            }
+
         });
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
 
@@ -66,7 +67,7 @@ public class SetKeyBoardInputs {
                         break;
                 }
             }
-            
+
         });
     }
 }

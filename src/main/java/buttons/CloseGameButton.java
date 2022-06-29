@@ -13,22 +13,22 @@ import main.MainStage;
 
 public class CloseGameButton extends Button {
 	private Background background;
-    public CloseGameButton(MainStage mainStage){
+
+	public CloseGameButton(MainStage mainStage) {
 		setPrefWidth(48);
 		setPrefHeight(48);
 		background = new Background(
-		new BackgroundImage(
-		new Image(CloseGameButton.class.getResourceAsStream("back.png"))
-		,BackgroundRepeat.REPEAT,
-		BackgroundRepeat.NO_REPEAT,
-		BackgroundPosition.DEFAULT,
-        BackgroundSize.DEFAULT));
+				new BackgroundImage(
+						new Image(CloseGameButton.class.getResourceAsStream("back.png")), BackgroundRepeat.REPEAT,
+						BackgroundRepeat.NO_REPEAT,
+						BackgroundPosition.DEFAULT,
+						BackgroundSize.DEFAULT));
 		setBackground(background);
-        setOnMousePressed(new EventHandler<MouseEvent>() {
+		setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-                mainStage.backScene();
+				mainStage.backScene();
 			}
 		});
-    }
+	}
 }

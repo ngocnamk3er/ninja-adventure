@@ -3,14 +3,15 @@ package entities;
 import java.util.ArrayList;
 
 import javafx.scene.image.Image;
-import mapinteraction.MapInteractionManager;
+import map.MapInteractionManager;
 
 public class Switch extends Enity {
     private Image[] animationImages;
     private ArrayList<WoodyBox> woodyBoxs;
     private int countClick = 0;
     private boolean left = true;
-    public Switch(float x,float y, Image[] animationImages,MapInteractionManager mapInteractionManager){
+
+    public Switch(float x, float y, Image[] animationImages, MapInteractionManager mapInteractionManager) {
         this.x = x;
         this.y = y;
         this.gc = mapInteractionManager.getGc();
@@ -19,49 +20,54 @@ public class Switch extends Enity {
         this.animationImages = animationImages;
         this.woodyBoxs = mapInteractionManager.getWoodyBoxs();
     }
+
     @Override
     public void render() {
-        if(left){
+        if (left) {
             gc.drawImage(animationImages[0], x, y, width, height);
-        }else{
+        } else {
             gc.drawImage(animationImages[1], x, y, width, height);
         }
     }
 
     @Override
     public void update() {
-        
+
     }
-    public void click(){
+
+    public void click() {
         left = !left;
-        for(WoodyBox woodyBox:woodyBoxs){
+        for (WoodyBox woodyBox : woodyBoxs) {
             woodyBox.changeSize();
         }
     }
+
     @Override
     protected void updateAnimationTick() {
-        
+
     }
 
     @Override
     protected void updatePos() {
-        
+
     }
 
     @Override
     protected void handleCollision() {
-        
+
     }
 
     @Override
     protected void setAnimation() {
-        
+
     }
+
     public int getCountClick() {
         return countClick;
     }
+
     public void setCountClick(int countClick) {
         this.countClick = countClick;
     }
-    
+
 }

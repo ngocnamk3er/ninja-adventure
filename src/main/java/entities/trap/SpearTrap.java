@@ -1,7 +1,7 @@
 package entities.trap;
 
 import javafx.scene.image.Image;
-import mapinteraction.MapInteractionManager;
+import map.MapInteractionManager;
 
 public class SpearTrap extends Trap {
     public SpearTrap( float x, float y,Image[] animationImages,MapInteractionManager mapInteractionManager) {
