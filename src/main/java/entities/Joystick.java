@@ -5,13 +5,13 @@ import java.util.ArrayList;
 import javafx.scene.image.Image;
 import map.MapInteractionManager;
 
-public class Switch extends Enity {
+public class Joystick extends Enity {
     private Image[] animationImages;
     private ArrayList<WoodyBox> woodyBoxs;
     private int countClick = 0;
     private boolean left = true;
 
-    public Switch(float x, float y, Image[] animationImages, MapInteractionManager mapInteractionManager) {
+    public Joystick(float x, float y, Image[] animationImages, MapInteractionManager mapInteractionManager) {
         this.x = x;
         this.y = y;
         this.gc = mapInteractionManager.getGc();

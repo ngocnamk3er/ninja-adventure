@@ -9,11 +9,12 @@ import entities.Coin;
 import entities.Door;
 import entities.Enity;
 import entities.Fire;
+import entities.Heart;
 import entities.Platform;
 import entities.Player;
 import entities.Stone;
 import entities.StrangeDoor;
-import entities.Switch;
+import entities.Joystick;
 import entities.WoodyBox;
 import entities.enemy.Enemy;
 import entities.enemy.Enemy1;
@@ -27,7 +28,7 @@ import entities.trap.ShurikenTrap;
 import entities.trap.SmallSpike;
 import entities.trap.SpearTrap;
 import entities.trap.Trap;
-import help.Constant.MapInteraction;
+import static help.Constant.*;
 import inputs.SetKeyBoardInputs;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.canvas.GraphicsContext;
@@ -47,8 +48,9 @@ public class MapInteractionManager {
     private ArrayList<Fire> fires;
     private ArrayList<Trap> traps;
     private ArrayList<Platform> platforms;
-    private ArrayList<Switch> switchs;
+    private ArrayList<Joystick> joysticks;
     private ArrayList<WoodyBox> woodyBoxs;
+    private ArrayList<Heart> hearts;
     private Player player;
     private Door door;
     private StrangeDoor strangeDoor;
@@ -75,7 +77,8 @@ public class MapInteractionManager {
     private Image animationImageSmallSpike;
     private Image[][] animationImagesPlatform;
     private Image[] animationImagesWoodyBox;
-    private Image[] animationImagesSwitch;
+    private Image[] animationImagesJoystick;
+    private Image[] animationImagesHeart;
 
     private void loadAnimations() {
         loadAnimationsPlayer();
@@ -86,7 +89,7 @@ public class MapInteractionManager {
         loadAnimationsStrangDoor();
         loadAnimationsPlatform();
         loadAnimationImagesWoodyBox();
-        loadAnimationImagesSwitch();
+        loadAnimationImagesJoystick();
         // --------------
         loadAnimationsEnimy1();
         loadAnimationsEnimy2();
@@ -100,7 +103,9 @@ public class MapInteractionManager {
         loadAnimationsCeilingTrap();
         loadAnimationsSpearTrap();
         loadAnimationsSmallSpike();
+        loadAnimationsHeart();
     }
+
 
     public MapInteractionManager(GraphicsContext gc, int[][] mapData, GameScene gameScene) {
         loadAnimations();
@@ -123,73 +128,77 @@ public class MapInteractionManager {
         buttons = new ArrayList<>();
         fires = new ArrayList<>();
         traps = new ArrayList<>();
-        switchs = new ArrayList<>();
+        joysticks = new ArrayList<>();
         woodyBoxs = new ArrayList<>();
+        hearts = new ArrayList<>();
         player = new Player();
         door = new Door();
         strangeDoor = new StrangeDoor();
         for (int i = 0; i < 12; i++) {
             for (int j = 0; j < 21; j++) {
-                if (MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == 'c') {
+                if (MAP_INTERAC_DATA[levelValue][i][j] == 'c') {
                     Coin coin = new Coin(j * 64, i * 64, this, animationImagesCoin);
                     coins.add(coin);
-                } else if (MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == 'p') {
+                } else if (MAP_INTERAC_DATA[levelValue][i][j] == 'p') {
                     player.setProperties(j * 64, i * 64, animationImagesPlayer, this);
 
-                } else if (MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == 's') {
+                } else if (MAP_INTERAC_DATA[levelValue][i][j] == 's') {
                     Stone stone = new Stone(j * 64, i * 64, animationImageStone, this);
                     stones.add(stone);
-                } else if (MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == 'b') {
+                } else if (MAP_INTERAC_DATA[levelValue][i][j] == 'b') {
                     Button button = new Button(j * 64, i * 64, animationImagesButton, this);
                     buttons.add(button);
-                } else if (MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == 'd') {
+                } else if (MAP_INTERAC_DATA[levelValue][i][j] == 'd') {
                     door.setProperties(j * 64, i * 64, animationImagesDoor, this);
-                } else if (MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == 'D') {
+                } else if (MAP_INTERAC_DATA[levelValue][i][j] == 'D') {
                     strangeDoor.setProperties(j * 64, i * 64, gc, animationImageStrangeDoor);
-                } else if (MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == '1') {
+                } else if (MAP_INTERAC_DATA[levelValue][i][j] == '1') {
                     Enemy1 enimy1 = new Enemy1(j * 64, i * 64, animationImagesEnimy1, this);
                     enemies.add(enimy1);
-                } else if (MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == '2') {
+                } else if (MAP_INTERAC_DATA[levelValue][i][j] == '2') {
                     Enemy2 enimy2 = new Enemy2(j * 64, i * 64, animationImagesEnimy2, this);
                     enemies.add(enimy2);
-                } else if (MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == '3') {
+                } else if (MAP_INTERAC_DATA[levelValue][i][j] == '3') {
                     Enemy3 enimy3 = new Enemy3(j * 64, i * 64, animationImagesEnimy3, this);
                     enemies.add(enimy3);
-                } else if (MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == '4') {
+                } else if (MAP_INTERAC_DATA[levelValue][i][j] == '4') {
                     Enemy4 enimy4 = new Enemy4(j * 64, i * 64, animationImagesEnimy4, this);
                     enemies.add(enimy4);
                     enimy4 = new Enemy4(j * 64, i * 64 - 32, animationImagesEnimy4, this);
                     enemies.add(enimy4);
-                } else if (MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == 'f') {
+                } else if (MAP_INTERAC_DATA[levelValue][i][j] == 'f') {
                     Fire fire = new Fire(j * 64, i * 64, animationImagesFire, this);
                     fires.add(fire);
-                } else if (MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == 'l') {
+                } else if (MAP_INTERAC_DATA[levelValue][i][j] == 'l') {
                     LightningTrap lightningTrap = new LightningTrap(j * 64, i * 64, animationImagesLightningTrap, this);
                     traps.add(lightningTrap);
-                } else if (MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == 'S') {
+                } else if (MAP_INTERAC_DATA[levelValue][i][j] == 'S') {
                     ShurikenTrap shurikenTrap = new ShurikenTrap(j * 64, i * 64, animationImagesShurikenTrap, this);
                     traps.add(shurikenTrap);
-                } else if (MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == 'w') {
+                } else if (MAP_INTERAC_DATA[levelValue][i][j] == 'w') {
                     SandwormTrap sandwormTrap = new SandwormTrap(j * 64, i * 64, animationImagesSandWormTrap, this);
                     traps.add(sandwormTrap);
-                } else if (MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == 'C') {
+                } else if (MAP_INTERAC_DATA[levelValue][i][j] == 'C') {
                     CeilingTrap ceilingTrap = new CeilingTrap(j * 64, i * 64, animationImagesCeilingTrap, this);
                     traps.add(ceilingTrap);
-                } else if (MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == 'P') {
+                } else if (MAP_INTERAC_DATA[levelValue][i][j] == 'P') {
                     SpearTrap spearTrap = new SpearTrap(j * 64, i * 64, animationImagesSpearTrap, this);
                     traps.add(spearTrap);
-                } else if (MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == 'm') {
+                } else if (MAP_INTERAC_DATA[levelValue][i][j] == 'm') {
                     SmallSpike smallSpike = new SmallSpike(j * 64, i * 64, animationImageSmallSpike, this);
                     traps.add(smallSpike);
-                } else if (MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == 'F') {
+                } else if (MAP_INTERAC_DATA[levelValue][i][j] == 'F') {
                     Platform platform = new Platform(j * 64, i * 64, animationImagesPlatform, this);
                     platforms.add(platform);
-                } else if (MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == 'B') {
+                } else if (MAP_INTERAC_DATA[levelValue][i][j] == 'B') {
                     WoodyBox woodyBox = new WoodyBox(j * 64, i * 64, animationImagesWoodyBox, this);
                     woodyBoxs.add(woodyBox);
-                } else if (MapInteraction.MAP_INTERAC_DATA[levelValue][i][j] == 'W') {
-                    Switch Switch = new Switch(j * 64, i * 64, animationImagesSwitch, this);
-                    switchs.add(Switch);
+                } else if (MAP_INTERAC_DATA[levelValue][i][j] == 'W') {
+                    Joystick Switch = new Joystick(j * 64, i * 64, animationImagesJoystick, this);
+                    joysticks.add(Switch);
+                } else if (MAP_INTERAC_DATA[levelValue][i][j] == 'h') {
+                    Heart heart = new Heart(j * 64, i * 64, animationImagesHeart, this);
+                    hearts.add(heart);
                 }
             }
         }
@@ -221,8 +230,8 @@ public class MapInteractionManager {
             trap.update();
         }
 
-        for (Switch switch1 : switchs) {
-            switch1.update();
+        for (Joystick joystick : joysticks) {
+            joystick.update();
         }
 
         for (WoodyBox woodyBox : woodyBoxs) {
@@ -231,6 +240,9 @@ public class MapInteractionManager {
 
         for (Platform platform : platforms) {
             platform.update();
+        }
+        for (Heart heart : hearts) {
+            heart.update();
         }
 
         door.update();
@@ -249,7 +261,7 @@ public class MapInteractionManager {
             stone.render();
         }
 
-        for (Enity coin : coins) {
+        for (Coin coin : coins) {
             coin.render();
         }
 
@@ -269,8 +281,8 @@ public class MapInteractionManager {
             trap.render();
         }
 
-        for (Switch switch1 : switchs) {
-            switch1.render();
+        for (Joystick joystick : joysticks) {
+            joystick.render();
         }
 
         for (WoodyBox woodyBox : woodyBoxs) {
@@ -280,16 +292,28 @@ public class MapInteractionManager {
         for (Platform platform : platforms) {
             platform.render();
         }
-
+        for (Heart heart : hearts) {
+            heart.render();
+        }
         door.render();
         player.render();
     }
-
-    private void loadAnimationImagesSwitch() {
-        animationImagesSwitch = new Image[2];
+    private void loadAnimationsHeart() {
+        animationImagesHeart = new Image[3];
         try {
-            animationImagesSwitch[0] = new Image(Switch.class.getResourceAsStream("switchLeft.png"));
-            animationImagesSwitch[1] = new Image(Switch.class.getResourceAsStream("switchRight.png"));
+            bufferedImage = ImageIO.read(Heart.class.getResourceAsStream("heart.png"));
+            for (int j = 0; j < 3; j++) {
+                animationImagesHeart[j] = SwingFXUtils.toFXImage(bufferedImage.getSubimage(j * 16, 0, 16, 16), null);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    private void loadAnimationImagesJoystick() {
+        animationImagesJoystick = new Image[2];
+        try {
+            animationImagesJoystick[0] = new Image(Joystick.class.getResourceAsStream("switchLeft.png"));
+            animationImagesJoystick[1] = new Image(Joystick.class.getResourceAsStream("switchRight.png"));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1046,9 +1070,6 @@ public class MapInteractionManager {
         this.platforms = platforms;
     }
 
-    public ArrayList<Switch> getSwitchs() {
-        return switchs;
-    }
 
     public ArrayList<WoodyBox> getWoodyBoxs() {
         return woodyBoxs;
@@ -1058,8 +1079,24 @@ public class MapInteractionManager {
         this.woodyBoxs = woodyBoxs;
     }
 
-    public void setSwitchs(ArrayList<Switch> switchs) {
-        this.switchs = switchs;
+
+    public ArrayList<Joystick> getJoysticks() {
+        return joysticks;
     }
 
+
+    public void setJoysticks(ArrayList<Joystick> joysticks) {
+        this.joysticks = joysticks;
+    }
+
+
+    public ArrayList<Heart> getHearts() {
+        return hearts;
+    }
+
+
+    public void setHearts(ArrayList<Heart> hearts) {
+        this.hearts = hearts;
+    }
+    
 }

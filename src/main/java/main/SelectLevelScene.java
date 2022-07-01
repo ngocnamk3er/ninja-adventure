@@ -2,7 +2,7 @@ package main;
 
 import java.util.ArrayList;
 
-import buttons.CloseGameButton;
+import buttons.BackButton;
 import buttons.LevelButton;
 import data.Data;
 import javafx.scene.Group;
@@ -21,7 +21,7 @@ public class SelectLevelScene extends Scene {
     private Pane pane;
     private Background background;
     private Background backgroundLevelButton;
-    private CloseGameButton closeGameButton;
+    private BackButton closeGameButton;
     private static ArrayList<LevelButton> levelButtons;
 
     public SelectLevelScene(MainStage mainStage) {
@@ -51,7 +51,7 @@ public class SelectLevelScene extends Scene {
             levelButton.setLayoutY(300 + i / 12 * 120);
             levelButtons.add(levelButton);
         }
-        closeGameButton = new CloseGameButton(mainStage);
+        closeGameButton = new BackButton(mainStage);
         closeGameButton.setLayoutX(1344 - 58);
         closeGameButton.setLayoutY(10);
         pane.getChildren().add(closeGameButton);

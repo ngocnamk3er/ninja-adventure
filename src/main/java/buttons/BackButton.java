@@ -11,15 +11,15 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import main.MainStage;
 
-public class CloseGameButton extends Button {
+public class BackButton extends Button {
 	private Background background;
 
-	public CloseGameButton(MainStage mainStage) {
+	public BackButton(MainStage mainStage) {
 		setPrefWidth(48);
 		setPrefHeight(48);
 		background = new Background(
 				new BackgroundImage(
-						new Image(CloseGameButton.class.getResourceAsStream("back.png")), BackgroundRepeat.REPEAT,
+						new Image(BackButton.class.getResourceAsStream("back.png")), BackgroundRepeat.REPEAT,
 						BackgroundRepeat.NO_REPEAT,
 						BackgroundPosition.DEFAULT,
 						BackgroundSize.DEFAULT));

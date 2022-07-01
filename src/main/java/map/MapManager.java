@@ -1,6 +1,6 @@
 package map;
 
-import help.Constant.Map;
+import static help.Constant.*;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -36,7 +36,7 @@ public class MapManager {
     public void loadDataMap(int levelValue) {
         for (int i = 0; i < 12; i++) {
             for (int j = 0; j < 21; j++) {
-                mapData[i][j] = Map.MAPDATA[levelValue][i][j];
+                mapData[i][j] = MAPDATA[levelValue][i][j];
             }
         }
     }

@@ -1,8 +1,6 @@
 package main;
 
-
-
-import buttons.CloseGameButton;
+import buttons.BackButton;
 import data.Data;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -29,7 +27,7 @@ public class GameScene extends Scene {
     private GraphicsContext gcbg;
     private MapManager mapManager;
     private Text transcript;
-    private CloseGameButton closeGameButton;
+    private BackButton backButton;
     private MapInteractionManager mapInteractionManager;
     private ImageView hudCoin;
     private ImageView[] hudHearts;
@@ -37,6 +35,7 @@ public class GameScene extends Scene {
     private int oldHearts;
     private Pane pane;
     private GameOverSubScene gameOverSubScene;
+
     public GameScene(MainStage mainStage) {
         super(new Group(), 1344, 768);
         canvas = new Canvas(1344, 768);
@@ -50,9 +49,9 @@ public class GameScene extends Scene {
         mapManager = new MapManager(gcbg);
         mapInteractionManager = new MapInteractionManager(gc, mapManager.getMapData(), this);
 
-        closeGameButton = new CloseGameButton(mainStage);
-        closeGameButton.setLayoutX(1344 - 58);
-        closeGameButton.setLayoutY(10);
+        backButton = new BackButton(mainStage);
+        backButton.setLayoutX(1344 - 58);
+        backButton.setLayoutY(10);
 
         transcript = new Text();
         transcript.setFont(Font.loadFont(GameScene.class.getResourceAsStream("m6x11.ttf"), 40));
@@ -80,7 +79,7 @@ public class GameScene extends Scene {
 
         pane.getChildren().add(canvasbg);
         pane.getChildren().add(canvas);
-        pane.getChildren().add(closeGameButton);
+        pane.getChildren().add(backButton);
         pane.getChildren().add(transcript);
         pane.getChildren().add(hudCoin);
         pane.getChildren().add(gameOverSubScene);
@@ -115,6 +114,7 @@ public class GameScene extends Scene {
         mapManager.render();
         mapInteractionManager.setInitialState(levelValue);
     }
+
     public void setHudHeart(int hearts) {
         for (int i = hearts; i < oldHearts; i++) {
             try {
@@ -123,12 +123,13 @@ public class GameScene extends Scene {
                 System.out.println(i);
             }
         }
-        for (int i = 0; i < hearts; i++) {// bug
+        for (int i = 0; i < hearts; i++) {
             hudHearts[i].setVisible(true);
             hudHearts[i].setImage(heartiImage);
         }
         oldHearts = hearts;
     }
+
     public GameLoop getGameLoop() {
         return gameLoop;
     }
@@ -148,5 +149,5 @@ public class GameScene extends Scene {
     public void setGameOverSubScene(GameOverSubScene gameOverSubScene) {
         this.gameOverSubScene = gameOverSubScene;
     }
-    
+
 }

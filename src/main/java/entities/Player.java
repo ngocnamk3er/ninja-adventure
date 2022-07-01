@@ -69,7 +69,8 @@ public class Player extends Enity {
     private ArrayList<Fire> fires;
     private ArrayList<Trap> traps;
     private ArrayList<Platform> platforms;
-    private ArrayList<Switch> switchs;
+    private ArrayList<Joystick> joysticks;
+    private ArrayList<Heart> hearts;
     private MapInteractionManager mapInteractionManager;
     private GameScene gameScene;
     private Door door;
@@ -106,7 +107,8 @@ public class Player extends Enity {
         this.fires = mapInteractionManager.getFires();
         this.traps = mapInteractionManager.getTraps();
         this.platforms = mapInteractionManager.getPlatforms();
-        this.switchs = mapInteractionManager.getSwitchs();
+        this.joysticks = mapInteractionManager.getJoysticks();
+        this.hearts = mapInteractionManager.getHearts();
         point = Data.getPoint();
         gameScene.setTranscript(point);
         gameScene.setHudHeart(Data.getHeart());
@@ -163,15 +165,30 @@ public class Player extends Enity {
         checkTraps();
         checkPlatforms();
         checkPwitchs();
+        checkHearts();
+    }
+
+    private void checkHearts() {
+        double distance;
+        for (Heart heart : hearts) {
+            if (heart.isPickedUp() == false) {
+                distance = Math.sqrt(Math.pow(x - heart.getX(), 2.0) + Math.pow(y - heart.getY(), 2.0));
+                if (distance <= 48) {
+                    heart.setPickedUp(true);
+                    Data.setHeart(Data.getHeart() + 1);
+                    gameScene.setHudHeart(Data.getHeart());
+                }
+            }
+        }
     }
 
     private void checkPwitchs() {
-        for (Switch switch1 : switchs) {
+        for (Joystick joystick : joysticks) {
             if (attacking2 == true && click == false) {
                 setSwordPos();
-                if (Math.abs(xSword - switch1.getX()) < 32
-                        && Math.abs((ySword + height / 2) - (switch1.getY() + switch1.getHeight() / 2)) < 32) {
-                    switch1.click();
+                if (Math.abs(xSword - joystick.getX()) < 32
+                        && Math.abs((ySword + height / 2) - (joystick.getY() + joystick.getHeight() / 2)) < 32) {
+                    joystick.click();
                     click = true;
                 }
             }
@@ -275,16 +292,13 @@ public class Player extends Enity {
 
     private void checkCoins() {
         double distance;
-        for (int i = 0; i < coins.size(); i++) {
-            Coin coin = coins.get(i);
+        for (Coin coin : coins) {
             if (coin.isPickedUp() == false) {
                 distance = Math.sqrt(Math.pow(x - coin.getX(), 2.0) + Math.pow(y - coin.getY(), 2.0));
                 if (distance <= 48) {
                     coin.setPickedUp(true);
                     point++;
                     gameScene.setTranscript(point);
-                    // Data.setHeart(Data.getHeart()+1);
-                    // gameScene.setHudHeart(Data.getHeart());
                 }
             }
         }
@@ -584,11 +598,16 @@ public class Player extends Enity {
     }
 
     private void playNextLevel() {
-        if (mapInteractionManager.getLevelValue() == Data.getLevel()) {
-            Data.setLevel(Data.getLevel() + 1);
+        int dataLevel = Data.getLevel();
+        if (dataLevel == 35) {
+            playAgain();
+        } else {
+            if (mapInteractionManager.getLevelValue() == Data.getLevel()) {
+                Data.setLevel(dataLevel + 1);
+            }
+            Data.setPoint(point);
+            gameScene.MakeGameNextLevel(mapInteractionManager.getLevelValue() + 1);
         }
-        Data.setPoint(point);
-        gameScene.MakeGameNextLevel(mapInteractionManager.getLevelValue() + 1);
     }
 
     public static int getAmountSpritesOfPlayerAction(int x) {

@@ -12,9 +12,8 @@ import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import main.App;
 
 public class GameOverSubScene extends SubScene {
     private Pane pane;
@@ -40,7 +39,7 @@ public class GameOverSubScene extends SubScene {
         text.setX(130);  
         text.setY(180);  
         text.setWrappingWidth(400);
-        text.setFont(Font.font("Abyssinica SIL",FontWeight.BOLD,FontPosture.REGULAR,50));  
+        text.setFont(Font.loadFont(App.class.getResourceAsStream("m6x11.ttf"), 80));
         text.setFill(Color.WHITE);
         text.setText("GAME OVER");  
         pane.getChildren().addAll(text,confirmButton);
