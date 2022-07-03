@@ -29,7 +29,7 @@ public class Data {
     public static void resetData() {
         try {
             FileWriter myWriter = new FileWriter("data.txt");
-            myWriter.write("0,0,5");
+            myWriter.write("0,0,10");
             myWriter.close();
         } catch (IOException e) {
             System.out.println("An error occurred.");
@@ -52,7 +52,7 @@ public class Data {
         } catch (IOException e) {
             point = 0;
             level = 0;
-            heart = 5;
+            heart = 10;
         }
     }
 

@@ -1,7 +1,6 @@
 package entities;
 
 import javafx.scene.image.Image;
-import javafx.scene.paint.CycleMethod;
 import main.GameScene;
 import map.MapInteractionManager;
 
