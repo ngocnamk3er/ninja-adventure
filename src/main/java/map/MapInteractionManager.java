@@ -192,8 +192,13 @@ public class MapInteractionManager {
                     platforms.add(platform);
                 } else if (MAP_INTERAC_DATA[levelValue][i][j] == 'B') {
                     WoodyBox woodyBox = new WoodyBox(j * 64, i * 64, animationImagesWoodyBox, this);
+                    woodyBox.setBigSize(true);
                     woodyBoxs.add(woodyBox);
-                } else if (MAP_INTERAC_DATA[levelValue][i][j] == 'W') {
+                } else if (MAP_INTERAC_DATA[levelValue][i][j] == 'N') {
+                    WoodyBox woodyBox = new WoodyBox(j * 64, i * 64, animationImagesWoodyBox, this);
+                    woodyBox.setBigSize(false);
+                    woodyBoxs.add(woodyBox);
+                }else if (MAP_INTERAC_DATA[levelValue][i][j] == 'W') {
                     Joystick Switch = new Joystick(j * 64, i * 64, animationImagesJoystick, this);
                     joysticks.add(Switch);
                 } else if (MAP_INTERAC_DATA[levelValue][i][j] == 'h') {

@@ -46,6 +46,7 @@ public class Data {
                 point = Integer.valueOf(nextRecord[0]);
                 level = Integer.valueOf(nextRecord[1]);
                 heart = Integer.valueOf(nextRecord[2]);
+                // System.out.println(heart);
             }
             csvReader.close();
         } catch (IOException e) {

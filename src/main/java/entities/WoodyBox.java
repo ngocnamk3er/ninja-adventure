@@ -70,4 +70,8 @@ public class WoodyBox extends Enity {
 
     }
 
+    public void setBigSize(boolean bigSize) {
+        this.bigSize = bigSize;
+    }
+    
 }

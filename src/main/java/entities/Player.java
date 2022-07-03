@@ -1,6 +1,7 @@
 package entities;
 
 import javafx.scene.image.Image;
+import javafx.scene.paint.CycleMethod;
 import main.GameScene;
 import map.MapInteractionManager;
 
@@ -61,7 +62,6 @@ public class Player extends Enity {
     private float gravity = 0.7f;
     private boolean jump = false;
     private boolean inAir = false;
-    private boolean jumpInAir = false;
     // other objects
     private ArrayList<Coin> coins;
     private ArrayList<Stone> stones;
@@ -87,6 +87,7 @@ public class Player extends Enity {
     private int brakingSpeedByDoor = 0;
     private int point;
     private float speedCarriedByStone;
+    private int  currheart;
 
     public void setProperties(float x, float y, Image[][] animationImages,
             MapInteractionManager mapInteractionManager) {
@@ -110,8 +111,10 @@ public class Player extends Enity {
         this.joysticks = mapInteractionManager.getJoysticks();
         this.hearts = mapInteractionManager.getHearts();
         point = Data.getPoint();
+        currheart = Data.getHeart();
         gameScene.setTranscript(point);
-        gameScene.setHudHeart(Data.getHeart());
+        gameScene.setHudHeart(currheart);
+        gameScene.getBackButton().setVisible(true);
     }
 
     public void update() {
@@ -127,7 +130,6 @@ public class Player extends Enity {
             if (Data.getHeart() == 1) {
                 gameOver();
             } else {
-                Data.setHeart(Data.getHeart() - 1);
                 playAgain();
             }
         } else if (nextLevel == true && aniIndex == 7) {
@@ -136,9 +138,30 @@ public class Player extends Enity {
     }
 
     private void gameOver() {
+        gameScene.getGameLoop().interrupt();
+        gameScene.getBackButton().setVisible(false);
+        gameScene.setHudHeart(0);
+        Data.resetData();
+        Data.loadData();
         gameScene.getGameOverSubScene().setVisible(true);
     }
+    private void playAgain() {
+        Data.setHeart(Data.getHeart() - 1);
+        mapInteractionManager.setInitialState(mapInteractionManager.getLevelValue());
+    }
 
+    private void playNextLevel() {
+        if (mapInteractionManager.getLevelValue() == 35) {
+            playAgain();
+        } else {
+            if (mapInteractionManager.getLevelValue() == Data.getLevel()) {
+                Data.setLevel(Data.getLevel() + 1);
+            }
+            Data.setHeart(currheart);
+            Data.setPoint(point);
+            gameScene.MakeGameNextLevel(mapInteractionManager.getLevelValue() + 1);
+        }
+    }
     @Override
     protected void updateAnimationTick() {
         aniTick++;
@@ -175,8 +198,8 @@ public class Player extends Enity {
                 distance = Math.sqrt(Math.pow(x - heart.getX(), 2.0) + Math.pow(y - heart.getY(), 2.0));
                 if (distance <= 48) {
                     heart.setPickedUp(true);
-                    Data.setHeart(Data.getHeart() + 1);
-                    gameScene.setHudHeart(Data.getHeart());
+                    currheart++;
+                    gameScene.setHudHeart(currheart);
                 }
             }
         }
@@ -408,14 +431,14 @@ public class Player extends Enity {
                         setInAir(x, y, mapData);
                         if (inAir == false && standOnMushRoom == -1) {
                             y = y - 0.1f;
-                            ySpeed = -20;
+                            ySpeed = -21;
                         } else {
                             if (standOnMushRoom == -1) {
                                 if (ySpeed >= 0 && ySpeed <= 0.5) {
                                     standOnMushRoom = i;
                                     y = enemy.getY() - 32;
                                 } else {
-                                    ySpeed = -20;
+                                    ySpeed = -21;
                                 }
                             }
                         }
@@ -444,7 +467,6 @@ public class Player extends Enity {
             up = false;
             if (jump) {
                 turnUp();
-                jumpInAir = false;
             }
         }
         if (inAir) {
@@ -455,14 +477,6 @@ public class Player extends Enity {
             } else {
                 up = false;
                 down = true;
-            }
-            if (down) {
-                if (jumpInAir == false) {
-                    if (jump) {
-                        turnUp();
-                        jumpInAir = true;
-                    }
-                }
             }
         }
         if (run) {
@@ -481,14 +495,17 @@ public class Player extends Enity {
         }
         if (canMove((x + 16), (y + ySpeed), 32, 63, mapData) == true) {
             y += ySpeed;
+            // System.out.println(y);
         } else {
-            if (standOnDoor) {
+            if (standOnDoor&&door.getDirection()==1) {
                 death = true;
             } else {
                 if (up) {
                     ySpeed = 0;
                     int rowBrick = (int) y / 64;
-                    y = rowBrick * 64;
+                    if(rowBrick!=-0){
+                         y = rowBrick * 64;
+                    }
                 } else {
                     // System.out.println(y+"-------------");
                     int rowBrick = (int) (y + ySpeed) / 64;
@@ -513,7 +530,7 @@ public class Player extends Enity {
     }
 
     private void turnUp() {
-        ySpeed = -15;
+        ySpeed = -18;
         inAir = true;
         up = true;
     }
@@ -590,23 +607,6 @@ public class Player extends Enity {
             }
         } else {
             gc.drawImage(animationImages[playerAction][aniIndex], x, y, width, height);
-        }
-    }
-
-    private void playAgain() {
-        mapInteractionManager.setInitialState(mapInteractionManager.getLevelValue());
-    }
-
-    private void playNextLevel() {
-        int dataLevel = Data.getLevel();
-        if (dataLevel == 35) {
-            playAgain();
-        } else {
-            if (mapInteractionManager.getLevelValue() == Data.getLevel()) {
-                Data.setLevel(dataLevel + 1);
-            }
-            Data.setPoint(point);
-            gameScene.MakeGameNextLevel(mapInteractionManager.getLevelValue() + 1);
         }
     }
 

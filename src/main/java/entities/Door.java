@@ -10,7 +10,7 @@ public class Door extends Enity {
     private Image[][] animationImages;
     private int aniDoorIndex;
     private int aniTick;
-    private int aniSpeed = 15;
+    private int aniSpeed = 10;
     private float yHitBox;
     public static final int CLOSED = 0;
     private static final int MOVING = 1;
@@ -152,6 +152,12 @@ public class Door extends Enity {
 
     public void setyHitBox(float yHitBox) {
         this.yHitBox = yHitBox;
+    }
+    
+
+
+    public int getDirection() {
+        return direction;
     }
 
     @Override

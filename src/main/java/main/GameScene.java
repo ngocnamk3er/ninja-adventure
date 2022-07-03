@@ -70,9 +70,6 @@ public class GameScene extends Scene {
             @Override
             public void handle(MouseEvent event) {
                 gameOverSubScene.setVisible(false);
-                Data.resetData();
-                Data.loadData();
-                SelectLevelScene.tickLevel();
                 mainStage.setMenuScene();
             }
         });
@@ -150,4 +147,8 @@ public class GameScene extends Scene {
         this.gameOverSubScene = gameOverSubScene;
     }
 
+    public BackButton getBackButton() {
+        return backButton;
+    }
+    
 }

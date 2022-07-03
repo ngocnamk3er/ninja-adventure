@@ -4,6 +4,8 @@ public class HelpMethods {
     public static boolean isSolid(float x, float y, int mapData[][]) {
         int columnBrick = (int) x / 64;
         int rowBrick = (int) y / 64;
+        // System.out.println(y);
+        // System.out.println(rowBrick);
         if (rowBrick < 0 || rowBrick >= 12) {
             return true;
         }

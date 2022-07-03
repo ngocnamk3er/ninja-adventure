@@ -33,6 +33,7 @@ public class Stone extends Enity {
     private int nextMushRoom4 = -1;
     private int standOnPlatform = -1;
     private int speedCarriedByPlatform = 0;
+    private boolean standOnDoor = false;
 
     public Stone(float x, float y, Image animationImage, MapInteractionManager mapInteractionManager) {
         super(x, y, 64, 64, mapInteractionManager.getGc());
@@ -109,7 +110,13 @@ public class Stone extends Enity {
     }
 
     private void checkDoor() {
-
+        if (this.y + ySpeed - door.getyHitBox() >= -64 && this.y + ySpeed / 4 - door.getyHitBox() <= -48
+                && Math.abs(this.x + xSpeed - door.getX()) < 64) {
+            standOnDoor = true;
+            y = door.getyHitBox() - 64;
+        }else{
+            standOnDoor = false;
+        }
         if (Math.abs(x - door.getX()) <= 64 && y + height > door.getyHitBox() && y < door.getY() + door.getHeight()) {
             nextDoor = true;
         } else {
@@ -136,7 +143,7 @@ public class Stone extends Enity {
             ySpeed = 0;
         }
         if (canMove(x + xSpeed, y, 63, 63, mapData) == true && nextStones.isEmpty() && nextDoor == false
-                && nextMushRoom4 == -1) {
+                && nextMushRoom4 == -1 ) {
             x += xSpeed;
             canPush = true;
         } else {
@@ -153,7 +160,7 @@ public class Stone extends Enity {
 
     private void setInAir() {
         if ((!isSolid(x, y + 64, mapData)) && (!isSolid(x + 63, y + 64, mapData)) && underStones.isEmpty()
-                && standOnPlatform == -1) {
+                && standOnPlatform == -1 && standOnDoor == false) {
             inAir = true;
         } else {
             inAir = false;

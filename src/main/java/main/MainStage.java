@@ -68,6 +68,9 @@ public class MainStage extends Stage {
     public void setMenuScene() {
         indexScene = MENU_SCENE;
         setScene(menuScene);
+        if (gameScene.getGameLoop() != null) {
+            gameScene.getGameLoop().interrupt();
+        }
     }
 
     public void setgameScene(int levelValue) {
