@@ -16,7 +16,7 @@ public class MainStage extends Stage {
 
     public MainStage() {
         getIcons().add(new Image(MainStage.class.getResourceAsStream("logo.png")));
-        setTitle("Ninja Adventures");
+        setTitle("Ninja Adventure");
         setResizable(false);
         selectLevelScene = new SelectLevelScene(this);
         gameScene = new GameScene(this);

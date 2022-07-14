@@ -3,7 +3,7 @@ package entities;
 import javafx.scene.image.Image;
 import map.MapInteractionManager;
 
-public class Fire extends Enity {
+public class Fire extends Entity {
     private int aniTick;
     private int aniSpeed = 10;
     private int aniIndex;

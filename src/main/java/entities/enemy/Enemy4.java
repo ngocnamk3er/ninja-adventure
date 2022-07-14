@@ -4,8 +4,8 @@ import javafx.scene.image.Image;
 import map.MapInteractionManager;
 
 public class Enemy4 extends Enemy {
-    public static int IDLE = 0;
-    public static int DEATH = 1;
+    public final static int IDLE = 0;
+    public final static int DEATH = 1;
 
     public Enemy4(float x, float y, Image[][] animationImages, MapInteractionManager mapInteractionManager) {
         super(x, y, 64, 64, animationImages, mapInteractionManager.getGc());

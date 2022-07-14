@@ -1,11 +1,11 @@
 package entities.trap;
 
-import entities.Enity;
+import entities.Entity;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import map.MapInteractionManager;
 
-public abstract class Trap extends Enity{
+public abstract class Trap extends Entity{
     protected Image []animationImages;
     protected float xDangerHitbox;
     protected float yDangerHitbox;
@@ -34,7 +34,6 @@ public abstract class Trap extends Enity{
     protected void renderDangerHitbox(){
         gc.setFill(Color.RED);
         gc.fillRect(xDangerHitbox, yDangerHitbox, widthDangerHitbox, heightDangerHitbox);
-        // gc.fill(xDangerHitbox, yDangerHitbox, widthDangerHitbox, heightDangerHitbox);
 
     }
     @Override

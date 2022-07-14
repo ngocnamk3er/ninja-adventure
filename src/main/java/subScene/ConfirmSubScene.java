@@ -18,6 +18,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import main.App;
 
 public class ConfirmSubScene extends SubScene {
     private Pane pane;
@@ -56,9 +57,9 @@ public class ConfirmSubScene extends SubScene {
         text.setX(50);  
         text.setY(120);  
         text.setWrappingWidth(400);
-        text.setFont(Font.font("Abyssinica SIL",FontWeight.BOLD,FontPosture.REGULAR,30));  
+        text.setFont(Font.loadFont(App.class.getResourceAsStream("m6x11.ttf"), 40));
         text.setFill(Color.WHITE);
-        text.setText("Bắt đầu 1 game mới sẽ mất hết dữ liệu của game cũ, bạn có muốn tiếp tục ?");  
+        text.setText("Starting a new game will lose all old game data, do you want to continue ?");  
         pane.getChildren().addAll(cancelButton,text,confirmButton);
     }
     public Button getConfirmButton() {

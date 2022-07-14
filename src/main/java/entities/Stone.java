@@ -11,7 +11,7 @@ import java.util.HashSet;
 import entities.enemy.Enemy;
 import entities.enemy.Enemy4;
 
-public class Stone extends Enity {
+public class Stone extends Entity {
 
     private Image animationImage;
     private int[][] mapData;

@@ -81,7 +81,8 @@ public class GameScene extends Scene {
         pane.getChildren().add(hudCoin);
         pane.getChildren().add(gameOverSubScene);
         hudHearts = new ImageView[15];
-        heartiImage = new Image(GameScene.class.getResourceAsStream("hearts_hud.png"));
+        heartiImage = new Image(getClass().getResource("hearts_hud.png").toString());
+        System.out.println(getClass().getResource("hearts_hud.png").toString());
         oldHearts = Data.getHeart();
 
         for (int i = 0; i < 15; i++) {

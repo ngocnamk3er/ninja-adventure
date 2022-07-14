@@ -3,7 +3,7 @@ package entities;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
-public class StrangeDoor extends Enity {
+public class StrangeDoor extends Entity {
     private Image animationImage;
 
     public void setProperties(float x, float y, GraphicsContext gc, Image animationImage) {

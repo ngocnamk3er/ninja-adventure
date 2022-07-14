@@ -7,7 +7,7 @@ import static help.HelpMethods.*;
 
 import java.util.ArrayList;
 
-public class Platform extends Enity {
+public class Platform extends Entity {
     private Image[][] animationImages;
     public static final int RUN_R = 0;
     public static final int RUN_L = 1;

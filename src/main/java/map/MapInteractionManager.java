@@ -7,7 +7,7 @@ import javax.imageio.ImageIO;
 import entities.Button;
 import entities.Coin;
 import entities.Door;
-import entities.Enity;
+import entities.Entity;
 import entities.Fire;
 import entities.Heart;
 import entities.Platform;
@@ -106,7 +106,6 @@ public class MapInteractionManager {
         loadAnimationsHeart();
     }
 
-
     public MapInteractionManager(GraphicsContext gc, int[][] mapData, GameScene gameScene) {
         loadAnimations();
         this.gameScene = gameScene;
@@ -198,7 +197,7 @@ public class MapInteractionManager {
                     WoodyBox woodyBox = new WoodyBox(j * 64, i * 64, animationImagesWoodyBox, this);
                     woodyBox.setBigSize(false);
                     woodyBoxs.add(woodyBox);
-                }else if (MAP_INTERAC_DATA[levelValue][i][j] == 'W') {
+                } else if (MAP_INTERAC_DATA[levelValue][i][j] == 'W') {
                     Joystick Switch = new Joystick(j * 64, i * 64, animationImagesJoystick, this);
                     joysticks.add(Switch);
                 } else if (MAP_INTERAC_DATA[levelValue][i][j] == 'h') {
@@ -303,6 +302,7 @@ public class MapInteractionManager {
         door.render();
         player.render();
     }
+
     private void loadAnimationsHeart() {
         animationImagesHeart = new Image[3];
         try {
@@ -314,6 +314,7 @@ public class MapInteractionManager {
             e.printStackTrace();
         }
     }
+
     private void loadAnimationImagesJoystick() {
         animationImagesJoystick = new Image[2];
         try {
@@ -1075,7 +1076,6 @@ public class MapInteractionManager {
         this.platforms = platforms;
     }
 
-
     public ArrayList<WoodyBox> getWoodyBoxs() {
         return woodyBoxs;
     }
@@ -1084,24 +1084,20 @@ public class MapInteractionManager {
         this.woodyBoxs = woodyBoxs;
     }
 
-
     public ArrayList<Joystick> getJoysticks() {
         return joysticks;
     }
-
 
     public void setJoysticks(ArrayList<Joystick> joysticks) {
         this.joysticks = joysticks;
     }
 
-
     public ArrayList<Heart> getHearts() {
         return hearts;
     }
 
-
     public void setHearts(ArrayList<Heart> hearts) {
         this.hearts = hearts;
     }
-    
+
 }

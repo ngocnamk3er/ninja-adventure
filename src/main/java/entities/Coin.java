@@ -3,7 +3,7 @@ package entities;
 import javafx.scene.image.Image;
 import map.MapInteractionManager;
 
-public class Coin extends Enity {
+public class Coin extends Entity {
     private Image[][] animationImages;
     private int aniTick = 0;
     private int aniSpeed = 5;

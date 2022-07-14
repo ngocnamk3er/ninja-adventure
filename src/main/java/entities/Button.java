@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import javafx.scene.image.Image;
 import map.MapInteractionManager;
 
-public class Button extends Enity {
+public class Button extends Entity {
     private boolean pressed;
     private Image[] animationImages;
     private Player player;

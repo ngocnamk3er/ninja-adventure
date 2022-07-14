@@ -6,7 +6,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
 import map.MapInteractionManager;
 
-public class Door extends Enity {
+public class Door extends Entity {
     private Image[][] animationImages;
     private int aniDoorIndex;
     private int aniTick;

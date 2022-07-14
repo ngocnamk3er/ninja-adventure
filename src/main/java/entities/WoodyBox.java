@@ -3,7 +3,7 @@ package entities;
 import javafx.scene.image.Image;
 import map.MapInteractionManager;
 
-public class WoodyBox extends Enity {
+public class WoodyBox extends Entity {
     private Image[] animationImages;
     private boolean bigSize = true;
     private int[][] mapData;
@@ -72,6 +72,11 @@ public class WoodyBox extends Enity {
 
     public void setBigSize(boolean bigSize) {
         this.bigSize = bigSize;
+        if (bigSize) {
+            mapData[indexY][indexX] = 22;
+        } else {
+            mapData[indexY][indexX] = 16;
+        }
     }
     
 }

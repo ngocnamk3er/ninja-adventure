@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import javafx.scene.image.Image;
 import map.MapInteractionManager;
 
-public class Joystick extends Enity {
+public class Joystick extends Entity {
     private Image[] animationImages;
     private ArrayList<WoodyBox> woodyBoxs;
     private int countClick = 0;

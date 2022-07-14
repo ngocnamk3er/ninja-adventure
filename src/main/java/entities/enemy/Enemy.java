@@ -3,13 +3,13 @@ package entities.enemy;
 import java.util.ArrayList;
 
 import entities.Door;
-import entities.Enity;
+import entities.Entity;
 import entities.Stone;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import static help.HelpMethods.*;
 
-public abstract class Enemy extends Enity {
+public abstract class Enemy extends Entity {
     protected Image[][] animationImages;
     protected boolean run = true;// death,hit,right,disappear=false;
     protected boolean death = false;

@@ -16,7 +16,7 @@ import entities.enemy.Enemy3;
 import entities.enemy.Enemy4;
 import entities.trap.Trap;
 
-public class Player extends Enity {
+public class Player extends Entity {
     private Image[][] animationImages;
     private float width = 64;
     private float height = 64;
